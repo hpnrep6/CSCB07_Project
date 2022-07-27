@@ -1,9 +1,12 @@
 package com.example.sports_space.data;
 
+import android.content.Intent;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.sports_space.Login;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
@@ -30,11 +33,15 @@ public class User {
         // TODO: Add rest of user name, password etc. validation below
     }
 
-    public void register() {
+    public void register(AppCompatActivity context) {
         FirebaseAuth auth = FirebaseAuth.getInstance();
 
         if (auth.getCurrentUser() != null) {
             // TODO: redirect to main page
+            Log.d("user", "already logged in 0");
+            Intent intent = new Intent(context, Login.class);
+            context.startActivity(intent);
+
             Log.d("user", "already logged in");
             return;
         }
@@ -54,7 +61,7 @@ public class User {
         );
     }
 
-    public static void login(String email, String password) {
+    public static void login(AppCompatActivity context, String email, String password) {
         FirebaseAuth auth = FirebaseAuth.getInstance();
 
         if (auth.getCurrentUser() != null) {
