@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "916267437765",
+    "project_id": "sportsspace0",
+    "storage_bucket": "sportsspace0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:916267437765:android:5e4dfb21a5f790e189eaac",
+        "android_client_info": {
+          "package_name": "com.example.sports_space"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "916267437765-bclrk7mui3l7jf8g0cbsp7ou0iqup29p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBQdBGXCeOrNXYe0A2OJRX3rvOfTTf6KW8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "916267437765-bclrk7mui3l7jf8g0cbsp7ou0iqup29p.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
