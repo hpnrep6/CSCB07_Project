@@ -32,7 +32,7 @@ public class Register extends AppCompatActivity {
                                  password.getText().toString()
             );
 
-            user.register();
+            user.register(Register.this);
         }
     };
 }

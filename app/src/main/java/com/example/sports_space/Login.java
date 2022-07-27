@@ -14,7 +14,7 @@ public class Login extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.register);
+        setContentView(R.layout.login);
 
         Button login = (Button) findViewById(R.id.loginButton);
         login.setOnClickListener(loginClick);
@@ -26,7 +26,7 @@ public class Login extends AppCompatActivity {
             TextView email = (TextView) findViewById((R.id.loginEmail));
             TextView password = (TextView) findViewById((R.id.loginPassword));
 
-            User.login(email.getText().toString(), password.getText().toString());
+            User.login(Login.this, email.getText().toString(), password.getText().toString());
         }
     };
 }
