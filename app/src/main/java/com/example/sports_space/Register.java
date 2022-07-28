@@ -27,12 +27,9 @@ public class Register extends AppCompatActivity {
             TextView password = (TextView) findViewById((R.id.registerPassword));
             TextView fullname = (TextView) findViewById((R.id.registerFullName));
 
-            User user = new User(email.getText().toString(),
-                                 fullname.getText().toString(),
-                                 password.getText().toString()
-            );
-
-            user.register(Register.this);
+            User.register(Register.this, email.getText().toString(),
+                          fullname.getText().toString(),
+                          password.getText().toString());
         }
     };
 }

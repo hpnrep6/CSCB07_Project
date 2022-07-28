@@ -14,29 +14,39 @@ import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.Executor;
 
-public class User {
-    private String email;
-    private String fullname;
-    // Birthday?
-    // Events they're registered in
-    private String password;
+public class User extends Table {
+    public static final String tableName = "Users";
+    public String fullname;
+    public String userID;
+    public List<String> events;
+    public int userLevel;
 
-    public User(@NonNull String email, @NonNull String fullname, @NonNull String password) {
-        this.email = email;
+    public User() {
+
+    }
+    public User(@NonNull String userID, @NonNull String fullname) {
         this.fullname = fullname;
-        this.password = password;
+        this.userID = userID;
+        this.userLevel = 0;
+        this.events = new ArrayList<>();
 
-        if (email.isEmpty() || fullname.isEmpty() || password.isEmpty()) {
-            throw new IllegalArgumentException("You can't have an empty field");
-        }
+//        if (email.isEmpty() || fullname.isEmpty() || password.isEmpty()) {
+//            throw new IllegalArgumentException("You can't have an empty field");
+//        }
 
         // TODO: Add rest of user name, password etc. validation below
     }
 
-    public void register(AppCompatActivity context) {
+    public static void register(AppCompatActivity context,
+                                String email,
+                                String fullname,
+                                String password) {
         FirebaseAuth auth = FirebaseAuth.getInstance();
 
         if (auth.getCurrentUser() != null) {
@@ -55,6 +65,9 @@ public class User {
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()) {
                         FirebaseUser user = auth.getCurrentUser();
+
+                        User userObject = new User(user.getUid(), fullname);
+                        FirebaseDatabase.getInstance().getReference().child(User.tableName).child(user.getUid()).setValue(userObject);
                         Log.d("user", "registered");
                     } else {
                         Log.d("user", "registration failed " + task.getException());

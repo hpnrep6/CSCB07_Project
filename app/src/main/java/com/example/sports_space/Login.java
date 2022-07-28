@@ -3,11 +3,13 @@ package com.example.sports_space;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.sports_space.data.User;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class Login extends AppCompatActivity {
 
@@ -21,6 +23,8 @@ public class Login extends AppCompatActivity {
 
         Button logout = (Button) findViewById(R.id.userLogout);
         logout.setOnClickListener(logoutClick);
+
+        Log.d("user", FirebaseAuth.getInstance().getCurrentUser().getUid());
     }
 
     private View.OnClickListener loginClick = new View.OnClickListener() {

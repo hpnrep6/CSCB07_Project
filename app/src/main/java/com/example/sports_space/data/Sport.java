@@ -1,4 +1,47 @@
 package com.example.sports_space.data;
 
-public class Sport {
+import androidx.annotation.NonNull;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.FirebaseDatabase;
+
+public class Sport extends Table {
+    public static final String tableName = "Sports";
+
+    public String name;
+    public int occupancy;
+
+    public Sport() {}
+
+    public Sport(String name, int occupancy) {
+        this.name = name;
+        this.occupancy = occupancy;
+    }
+
+    public static void getSport(String name, DataCallback<Sport> callback) {
+        FirebaseDatabase.getInstance().getReference().
+            child(name).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+               @Override
+               public void onComplete(@NonNull Task<DataSnapshot> task) {
+
+                   if (!task.isSuccessful()) {
+                       // TODO: handle failure just like in cscb36
+                       return;
+                   }
+
+                   callback.fetchedData((Sport) task.getResult().getValue());
+               }
+           }
+        );
+    }
+
+    public static void createSport(String name, int occupancy) {
+        Sport sport = new Sport(name, occupancy);
+        FirebaseDatabase.getInstance().getReference().
+                child(Sport.tableName).
+                child(name).setValue(occupancy);
+    }
+
 }
