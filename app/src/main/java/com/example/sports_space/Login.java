@@ -18,6 +18,9 @@ public class Login extends AppCompatActivity {
 
         Button login = (Button) findViewById(R.id.loginButton);
         login.setOnClickListener(loginClick);
+
+        Button logout = (Button) findViewById(R.id.userLogout);
+        logout.setOnClickListener(logoutClick);
     }
 
     private View.OnClickListener loginClick = new View.OnClickListener() {
@@ -27,6 +30,13 @@ public class Login extends AppCompatActivity {
             TextView password = (TextView) findViewById((R.id.loginPassword));
 
             User.login(Login.this, email.getText().toString(), password.getText().toString());
+        }
+    };
+
+    private View.OnClickListener logoutClick = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            User.logout((AppCompatActivity) Login.this);
         }
     };
 }

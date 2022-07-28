@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.sports_space.Login;
+import com.example.sports_space.Register;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
@@ -19,6 +20,8 @@ import java.util.concurrent.Executor;
 public class User {
     private String email;
     private String fullname;
+    // Birthday?
+    // Events they're registered in
     private String password;
 
     public User(@NonNull String email, @NonNull String fullname, @NonNull String password) {
@@ -82,5 +85,21 @@ public class User {
                 }
             }
         );
+    }
+
+    public static void logout(AppCompatActivity context) {
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+
+        if (auth.getCurrentUser() == null) {
+            Log.d("user", "no user logged in");
+            return;
+        }
+
+        auth.signOut();
+
+        Intent intent = new Intent(context, Register.class);
+        context.startActivity(intent);
+
+        Log.d("user", "signed out");
     }
 }
