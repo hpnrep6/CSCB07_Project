@@ -1,6 +1,7 @@
 package com.example.sports_space.data;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -20,7 +21,7 @@ public class Sport extends Table {
         this.occupancy = occupancy;
     }
 
-    public static void getSport(String name, DataCallback<Sport> callback) {
+    public static void getSport(String name, AppCompatActivity activity, DataCallback<Task<DataSnapshot>> callback) {
         FirebaseDatabase.getInstance().getReference().
             child(name).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                @Override
@@ -31,7 +32,7 @@ public class Sport extends Table {
                        return;
                    }
 
-                   callback.fetchedData((Sport) task.getResult().getValue());
+                   callback.fetchedData(task, activity);
                }
            }
         );

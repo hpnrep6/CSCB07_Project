@@ -1,6 +1,7 @@
 package com.example.sports_space.data;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -13,6 +14,7 @@ public class Event extends Table {
     public static final String tableName = "Events";
 
     public String title;
+    public String sport;
     public long venueID;
     public long startTime, endTime;
     public int occupancy;
@@ -28,7 +30,7 @@ public class Event extends Table {
         this.occupancy = occupancy;
     }
 
-    public static void getEvent(long eventID, DataCallback<Event> callback) {
+    public static void getEvent(long eventID, AppCompatActivity activity, DataCallback<Task<DataSnapshot>> callback) {
         FirebaseDatabase.getInstance().getReference().
             child(Long.valueOf(eventID).toString()).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                 @Override
@@ -39,7 +41,7 @@ public class Event extends Table {
                         return;
                     }
 
-                    callback.fetchedData((Event) task.getResult().getValue());
+                    callback.fetchedData(task, activity);
                 }
             }
         );
