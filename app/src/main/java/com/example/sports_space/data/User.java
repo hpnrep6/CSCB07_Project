@@ -1,5 +1,7 @@
 package com.example.sports_space.data;
 
+import static com.example.sports_space.data.Validator.validateFullName;
+
 import android.content.Intent;
 import android.util.Log;
 
@@ -58,6 +60,12 @@ public class User extends Table {
             Log.d("user", "already logged in");
             return;
         }
+
+        if (!validateFullName(fullname)) {
+            // TODO: Handle report to user
+            return;
+        }
+
 
         auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(
             new OnCompleteListener<AuthResult>() {
