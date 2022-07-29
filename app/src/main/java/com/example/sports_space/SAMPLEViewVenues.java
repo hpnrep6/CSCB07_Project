@@ -25,9 +25,9 @@ public class SAMPLEViewVenues extends AppCompatActivity {
                 String text = "";
 
                 for (DataSnapshot snap: snapshot.getChildren()) {
-                    text += snap.child("name").getValue() + "\n\n";
-                    text += snap.child("location").getValue() + "\n\n";
                     text += snap.child("venueName").getValue() + "\n\n";
+                    text += snap.child("location").getValue() + "\n\n";
+                    text += snap.child("description").getValue() + "\n\n";
                     text += "========================\n";
                 }
 
