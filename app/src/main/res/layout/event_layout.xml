@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_width="411dp"
+    android:layout_height="97dp"
+    tools:layout_editor_absoluteY="96dp"
+
+    <EditText
+        android:id="@+id/eventEnd"
+        android:layout_width="91dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:inputType="time"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/eventVenue"
+        tools:text="end time" />
+
+    <EditText
+        android:id="@+id/eventDate"
+        android:layout_width="141dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="12dp"
+        android:clickable="false"
+        android:ems="10"
+        android:inputType="date"
+        android:text="July 21, 2022"
+        app:layout_constraintEnd_toStartOf="@+id/eventStart"
+        app:layout_constraintHorizontal_bias="0.011"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/eventName" />
+
+    <EditText
+        android:id="@+id/eventStart"
+        android:layout_width="91dp"
+        android:layout_height="45dp"
+        android:ems="10"
+        android:inputType="time"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/eventEnd"
+        tools:text="start time" />
+
+    <TextView
+        android:id="@+id/eventVenue"
+        android:layout_width="77dp"
+        android:layout_height="33dp"
+        android:layout_marginTop="8dp"
+        android:text="Venue"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.911"
+        app:layout_constraintStart_toEndOf="@+id/eventName"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/eventName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:text="Name of Event"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
