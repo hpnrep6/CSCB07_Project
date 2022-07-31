@@ -1,14 +1,16 @@
 package com.example.sports_space.data;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Venue extends Table {
     public static final String tableName = "Venues";
@@ -28,8 +30,8 @@ public class Venue extends Table {
         this.sportsOffered = sports;
     }
 
-    public static void getVenue(long id, DataCallback<Venue> callback) {
-        FirebaseDatabase.getInstance().getReference().
+    public static void getVenue(long id, AppCompatActivity activity, DataCallback<Task<DataSnapshot>> callback) {
+        FirebaseDatabase.getInstance().getReference().child(Venue.tableName).
             child(Long.valueOf(id).toString()).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<DataSnapshot> task) {
@@ -39,13 +41,30 @@ public class Venue extends Table {
                         return;
                     }
 
-                    callback.fetchedData((Venue) task.getResult().getValue());
+                    callback.fetchedData(task, activity);
                 }
             }
         );
     }
 
-    public static void createVenue(String name, String location, String description, List<String> sports) throws DatabaseException {
+    public static void getAllVenues(AppCompatActivity activity, DataCallback<Task<DataSnapshot>> callback) {
+        FirebaseDatabase.getInstance().getReference().child(Venue.tableName).
+            get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DataSnapshot> task) {
+
+                   if (!task.isSuccessful()) {
+                       // TODO: handle failure just like in cscb36
+                       return;
+                   }
+
+                   callback.fetchedData(task, activity);
+                }
+           }
+        );
+    }
+
+    public static void createVenue(String name, String location, String description, List<String> sports) {
         Venue venue = new Venue(name, location, description, sports);
         FirebaseDatabase.getInstance().getReference().
                 child(Venue.tableName).
