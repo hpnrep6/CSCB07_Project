@@ -6,4 +6,9 @@
     android:layout_height="match_parent"
     tools:context=".ViewBySport">
 
+    <LinearLayout
+        android:id="@+id/viewSportContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"></LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

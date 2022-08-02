@@ -24,7 +24,8 @@ import b07.sportsevents.db.Venue;
 public class ViewEvents extends AppCompatActivity {
     public static enum Filter {
         ALL,
-        USER
+        USER,
+        SPORT
     }
 
     @Override
@@ -41,18 +42,29 @@ public class ViewEvents extends AppCompatActivity {
                 Iterable<DataSnapshot> events = task.getResult().getChildren();
                 Iterator eventIterator = events.iterator();
 
-                boolean filterByUser = false;
-
-                if (((Filter) bundle.get("filter")) == Filter.USER) {
-                    filterByUser = true;
-                }
+                Filter filter = ((Filter) bundle.get("filter"));
 
                 while (eventIterator.hasNext()) {
                     DataSnapshot event = (DataSnapshot) eventIterator.next();
                     String key = event.getKey();
                     Event readEvent = event.getValue(Event.class);
 
-                    addEventToScreen(key, readEvent, filterByUser);
+                    switch (filter) {
+                        case ALL: {
+                            addEventToScreen(key, readEvent);
+                            break;
+                        }
+
+                        case USER: {
+                            addEventToScreenFilterByUser(key, readEvent);
+                            break;
+                        }
+
+                        case SPORT: {
+                            addEventToScreenFilterBySport(key, readEvent, (String) bundle.get("sport"));
+                            break;
+                        }
+                    }
                 }
             }
         });
@@ -63,12 +75,14 @@ public class ViewEvents extends AppCompatActivity {
         return numberEnrolled + "/" + event.maxPlayers;
     }
 
-    private void addEventToScreen(String id, Event event, boolean filterByUser) {
-        if (!filterByUser) {
+    private void addEventToScreenFilterBySport(String id, Event event, String sport) {
+        if (event.sport.equals(sport)) {
+            Log.d("events", sport);
             addEventToScreen(id, event);
-            return;
         }
+    }
 
+    private void addEventToScreenFilterByUser(String id, Event event) {
         if (event.registeredUsers == null) {
             return;
         }

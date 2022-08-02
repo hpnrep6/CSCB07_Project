@@ -38,7 +38,6 @@ public class ViewVenues extends AppCompatActivity {
                     String key = venue.getKey();
                     Venue readVenue = venue.getValue(Venue.class);
 
-//                    Log.d("view venue", readVenue.toString());
                     addVenueToScreen(key, readVenue);
                 }
             }

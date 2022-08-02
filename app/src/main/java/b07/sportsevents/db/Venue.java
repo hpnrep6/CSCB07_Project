@@ -6,7 +6,7 @@ public class Venue extends DBTable<Venue> {
     public String name;
     public String location;
     public String description;
-    public List<Long> sportsOfferedIDs;
+    public List<String> sportsOfferedList;
 
     public Venue() {}
 
@@ -27,6 +27,6 @@ public class Venue extends DBTable<Venue> {
 
     @Override
     public String toString() {
-        return name + " " + location + " " + description + " " + sportsOfferedIDs;
+        return name + " " + location + " " + description + " " + sportsOfferedList;
     }
 }

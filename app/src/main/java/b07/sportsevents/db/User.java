@@ -1,5 +1,7 @@
 package b07.sportsevents.db;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -39,6 +41,7 @@ public class User extends DBTable<User> {
         return "Users";
     }
 
+    @Exclude
     public User getInstance() {
         return new User();
     }
@@ -77,6 +80,7 @@ public class User extends DBTable<User> {
             new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
+                    Log.d("user", "login attempted");
                     if (task.isSuccessful()) {
                         FirebaseUser user = auth.getCurrentUser();
                         User userSend = new User(name);
@@ -86,6 +90,7 @@ public class User extends DBTable<User> {
                                 child(user.getUid()).setValue(userSend);
                         callback.userStatus(UserStatus.REGISTER_SUCCESS, activity);
                     } else {
+                        Log.d("user", "login failed");
                         callback.userStatus(UserStatus.REGISTER_FAILED, activity);
                     }
                 }

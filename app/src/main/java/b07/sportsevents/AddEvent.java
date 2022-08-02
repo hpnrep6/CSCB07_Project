@@ -1,6 +1,9 @@
 package b07.sportsevents;
 
+import b07.sportsevents.db.DBCallback;
 import b07.sportsevents.db.Event;
+import b07.sportsevents.db.Sport;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
@@ -14,6 +17,9 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
 
 import java.util.Calendar;
 
@@ -50,16 +56,23 @@ public class  AddEvent extends AppCompatActivity implements DatePickerDialog.OnD
     View.OnClickListener onConfirmClick = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
+            String sport = ((TextView) findViewById(R.id.addEventSport)).getText().toString();
             Event createdEvent = new Event(
                     ((TextView) findViewById(R.id.addEventName)).getText().toString(),
-                    ((TextView) findViewById(R.id.addEventSport)).getText().toString(),
+                    sport,
                     ((TextView) findViewById(R.id.addEventDescription)).getText().toString(),
                     Long.parseLong(venueID),
                     startTime,
                     endTime,
                     Integer.parseInt(((TextView) findViewById(R.id.addEventPlayers)).getText().toString()));
 
-            Event.getInstance().writeOne(createdEvent,Event.getTableName(), AddEvent.this);
+            Event.getInstance().writeOne(createdEvent, Event.getTableName(), AddEvent.this);
+            Sport.addSportToVenue(sport, Long.parseLong(venueID), AddEvent.this, new DBCallback<Task<DataSnapshot>>() {
+                @Override
+                public void queriedData(Task<DataSnapshot> value, AppCompatActivity activity) {
+
+                }
+            });
         }
     };
 

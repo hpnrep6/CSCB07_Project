@@ -35,7 +35,7 @@ public class Register extends AppCompatActivity {
         ((Button) findViewById(R.id.registerConfirm)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Log.d("user", "register button clicked");
                 User.register(
                         ((TextView) Register.this.findViewById(R.id.registerEmail)).getText().toString(),
                         ((TextView) Register.this.findViewById(R.id.registerPassword)).getText().toString(),
