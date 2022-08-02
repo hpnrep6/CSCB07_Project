@@ -62,7 +62,10 @@ public class ViewBySport extends AppCompatActivity {
         ((Button) createdView.findViewById(R.id.viewSportSportSearchVenue)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent intent = new Intent(ViewBySport.this, ViewVenues.class);
+                intent.putExtra("filter", ViewVenues.Filter.SPORT);
+                intent.putExtra("sport", sportName);
+                startActivity(intent);
             }
         });
     }

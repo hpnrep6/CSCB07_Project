@@ -11,7 +11,6 @@ import android.widget.TextView;
 import b07.sportsevents.db.Venue;
 
 public class AddVenue extends AppCompatActivity {
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -36,7 +36,7 @@ public class Event extends DBTable<Event> {
         this.endTime = endTime;
         this.maxPlayers = players;
 
-        this.ID = getUniqueID();
+//        this.ID = getUniqueID();
     }
 
     public static String getTableName() {

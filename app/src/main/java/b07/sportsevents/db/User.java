@@ -21,7 +21,8 @@ public class User extends DBTable<User> {
         LOGIN_SUCCESS,
         LOGIN_FAILED,
         REGISTER_SUCCESS,
-        REGISTER_FAILED
+        REGISTER_FAILED,
+        IS_ADMIN
     };
 
     @Exclude
@@ -104,5 +105,9 @@ public class User extends DBTable<User> {
 
     public static boolean isLoggedIn() {
         return FirebaseAuth.getInstance().getCurrentUser() != null;
+    }
+
+    public static void isAdmin(UserCallback callback) {
+
     }
 }

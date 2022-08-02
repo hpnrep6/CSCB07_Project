@@ -20,12 +20,18 @@ import b07.sportsevents.db.DBCallback;
 import b07.sportsevents.db.Venue;
 
 public class ViewVenues extends AppCompatActivity {
+    public static enum Filter {
+        ALL,
+        SPORT
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_venues);
 
+        Bundle bundle = getIntent().getExtras();
+        Log.d("venue", "asd");
         Venue.getInstance().queryAll(Venue.getTableName(), this, new DBCallback<Task<DataSnapshot>>() {
             @Override
             public void queriedData(Task<DataSnapshot> task, AppCompatActivity activity) {
@@ -38,10 +44,30 @@ public class ViewVenues extends AppCompatActivity {
                     String key = venue.getKey();
                     Venue readVenue = venue.getValue(Venue.class);
 
-                    addVenueToScreen(key, readVenue);
+                    switch ((Filter) bundle.get("filter")) {
+                        case ALL: {
+                            addVenueToScreen(key, readVenue);
+                            break;
+                        }
+
+                        case SPORT: {
+                            addVenueToStringFilterBySport(key, readVenue, (String) bundle.get("sport"));
+                            break;
+                        }
+                    }
                 }
             }
         });
+    }
+
+    public void addVenueToStringFilterBySport(String id, Venue venue, String sport) {
+        if (venue.sportsOfferedList == null) {
+            return;
+        }
+
+        if (venue.sportsOfferedList.contains(sport)) {
+            addVenueToScreen(id, venue);
+        }
     }
 
     private void addVenueToScreen(String id, Venue venue) {
