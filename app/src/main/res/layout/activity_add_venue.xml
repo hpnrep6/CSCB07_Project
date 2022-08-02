@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AddVenue"
+    android:background="@drawable/gradient_bkg">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_margin="16dp">
+
+        <TextView
+            android:layout_marginTop="20dp"
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/venue_name"
+            android:textColor="@color/white"
+            android:textSize="17dp"/>
+
+        <EditText
+            android:layout_marginTop="10dp"
+            android:id="@+id/addVenueName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:padding="8dp"
+            android:inputType="textMultiLine"
+            android:background="@drawable/text_input_box"
+            android:hint="Name"
+            android:textColor="#dee3e3"
+            android:textColorHint="#ecbbf2"/>
+
+        <TextView
+            android:layout_marginTop="20dp"
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/venue_location"
+            android:textColor="@color/white"
+            android:textSize="17dp"/>
+
+        <EditText
+            android:layout_marginTop="10dp"
+            android:padding="8dp"
+            android:id="@+id/addVenueLocation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textMultiLine"
+            android:hint="Location"
+            android:background="@drawable/text_input_box"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:textColor="#dee3e3"
+            android:textColorHint="#ecbbf2"/>
+
+        <TextView
+            android:layout_marginTop="20dp"
+            android:id="@+id/textView3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/venue_description"
+            android:textColor="@color/white"
+            android:textSize="17dp"/>
+
+        <EditText
+            android:layout_marginTop="10dp"
+            android:padding="8dp"
+            android:id="@+id/addVenueDescription"
+            android:layout_width="match_parent"
+            android:layout_height="328dp"
+            android:ems="10"
+            android:gravity="start|top"
+            android:background="@drawable/text_input_box"
+            android:inputType="textMultiLine"
+            android:hint="Description"
+            android:textColor="#dee3e3"
+            android:textColorHint="#ecbbf2"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="30dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/addVenueBackButton"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_marginRight="10dp"
+                android:text="Back" />
+
+            <Button
+                android:id="@+id/addVenueAddButton"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_marginLeft="10dp"
+                android:text="Add Venue" />
+        </LinearLayout>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

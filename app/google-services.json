@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "431111121693",
+    "firebase_url": "https://venueeventsport-default-rtdb.firebaseio.com",
+    "project_id": "venueeventsport",
+    "storage_bucket": "venueeventsport.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:431111121693:android:e7686ceb310504ddc44ff4",
+        "android_client_info": {
+          "package_name": "b07.sportsevents"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "431111121693-g895iqs1m586lns188lq092dsmj4qubh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD6-E8iNTJpCk811mNJpVroE2n6CK-idXA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "431111121693-g895iqs1m586lns188lq092dsmj4qubh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
