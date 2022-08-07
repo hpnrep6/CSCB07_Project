@@ -42,6 +42,9 @@
         <activity
             android:name=".Home"
             android:exported="false" />
+        <activity
+            android:name=".EventPopupScreen"
+            android:exported="true" />
     </application>
 
 </manifest>
