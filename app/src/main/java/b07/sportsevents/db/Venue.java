@@ -1,5 +1,16 @@
 package b07.sportsevents.db;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.ktx.Firebase;
+
 import java.util.List;
 
 public class Venue extends DBTable<Venue> {
@@ -29,4 +40,6 @@ public class Venue extends DBTable<Venue> {
     public String toString() {
         return name + " " + location + " " + description + " " + sportsOfferedList;
     }
+
+
 }
