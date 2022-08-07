@@ -59,6 +59,7 @@ public class ViewEventsEventFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_view_events_event, container, false);
+        //return inflater.inflate(R.layout.fragment_view_events_event, container, false);
+        return inflater.inflate(R.layout.event_layout, container, false);
     }
 }
