@@ -54,4 +54,9 @@ public abstract class DBTable <T extends DBTable> {
             writeOne(values.get(i), tablename, activity);
         }
     }
+
+    public void removeOne(String id, String tablename, AppCompatActivity activity) {
+        FirebaseDatabase.getInstance().getReference().child(tablename).
+                child(String.valueOf(id)).removeValue();
+    }
 }
