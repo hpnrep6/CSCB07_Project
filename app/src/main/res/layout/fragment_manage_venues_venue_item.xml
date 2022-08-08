@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ManageVenuesVenueItem"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/manageVenuesVenueName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="venue name" />
+
+    <TextView
+        android:id="@+id/manageVenuesVenueLocation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="venue location" />
+
+    <TextView
+        android:id="@+id/manageVenuesVenueSports"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="venue sports" />
+
+    <TextView
+        android:id="@+id/manageVenuesVenueID"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:textSize="0dp"
+        android:text="TextView" />
+
+    <Button
+        android:id="@+id/manageVenuesVenueDelete"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Delete Venue" />
+</LinearLayout>

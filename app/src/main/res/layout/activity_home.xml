@@ -20,6 +20,12 @@
             android:text="View Venues" />
 
         <Button
+            android:id="@+id/homeManageVenues"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Manage Venues" />
+
+        <Button
             android:id="@+id/homeAddVenue"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
