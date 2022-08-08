@@ -10,17 +10,14 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
@@ -41,41 +38,13 @@ public class ViewEvents extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_events);
 
-        //Bundle bundle = getIntent().getExtras();
 
+        //spinner selection lists
+        //spinner 1
         String[] filter_by = {"View All", "Filter by Sport", "Filter by Venue"};
-        ArrayList<Venue> all_venues = new ArrayList<Venue>();
-        List<String> all_sports = new ArrayList<String>();
-        List<String> venue_names = new ArrayList<String>();
-        Venue.getInstance().queryAll(Venue.getTableName(), this, new DBCallback<Task<DataSnapshot>>() {
-            @Override
-            public void queriedData(Task<DataSnapshot> task, AppCompatActivity activity) {
-
-                Iterable<DataSnapshot> venues = Objects.requireNonNull(task.getResult()).getChildren();
-
-                for (DataSnapshot venue : venues) {
-                    //String key = venue.getKey();
-                    Venue readVenue = venue.getValue(Venue.class);
-                    all_venues.add(readVenue);
-                    venue_names.add(readVenue.name);
-                    //assert readVenue != null;
-                }
-            }
-        });
-        Sport.getInstance().queryAll(Sport.getTableName(), this, new DBCallback<Task<DataSnapshot>>() {
-            @Override
-            public void queriedData(Task<DataSnapshot> task, AppCompatActivity activity) {
-
-                Iterable<DataSnapshot> sports = Objects.requireNonNull(task.getResult()).getChildren();
-
-                for (DataSnapshot sport : sports) {
-                    String sport_name = sport.getKey();
-                    //Sport readSport = sport.getValue(Sport.class);
-                    all_sports.add(sport_name);
-                    //assert readSport!= null;
-                }
-            }
-        });
+        //spinner 2
+        List<String> all_sports = Sport.getInstance().getAllSportNames(this);
+        List<String> venue_names = Venue.getInstance().getAllVenueNames(this);
 
         Spinner spinner = (Spinner) findViewById(R.id.spinner);
         // Create an ArrayAdapter using the string array and a default spinner layout
@@ -180,10 +149,10 @@ public class ViewEvents extends AppCompatActivity{
 //        });
     }
 
-    private void loadScreen(String type, String specified){
-        LinearLayout ll =findViewById(R.id.viewEventsContainer);
+    void loadScreen(String type, String specified){
+        LinearLayout ll =findViewById(R.id.viewMyEvents);
         ll.removeAllViews();
-        Venue.getInstance().queryAll(Event.getTableName(), this, new DBCallback<Task<DataSnapshot>>() {
+        Event.getInstance().queryAll(Event.getTableName(), this, new DBCallback<Task<DataSnapshot>>() {
             @Override
             public void queriedData(Task<DataSnapshot> task, AppCompatActivity activity) {
 
@@ -202,6 +171,11 @@ public class ViewEvents extends AppCompatActivity{
                     //filter = Filter.VENUE;
                     //String venue = specified;
                 }
+                else if (Objects.equals(type, "User")){
+                    //filter = Filter.VENUE;
+                    //String venue = specified;
+                }
+
 
                 while (eventIterator.hasNext()) {
                     DataSnapshot event = (DataSnapshot) eventIterator.next();
@@ -230,7 +204,7 @@ public class ViewEvents extends AppCompatActivity{
         });
     }
 
-    private String getOccupancy(Event event) {
+    String getOccupancy(Event event) {
         int numberEnrolled = event.registeredUsers == null ? 0 : event.registeredUsers.size();
         return numberEnrolled + "/" + event.maxPlayers;
     }
@@ -255,16 +229,16 @@ public class ViewEvents extends AppCompatActivity{
     private void addEventToScreen(String id, Event event) {
         String name = event.name;
         String sport = event.sport;
-        String venue = String.valueOf(event.venueID);
-        //String venue = Venue.getInstance().getVenueName(event.venueID);
         String start = String.valueOf(event.startTime);
         String end = String.valueOf(event.endTime);
         String occupancy = getOccupancy(event);
+        //String venue = Venue.getInstance().getVenueNameByID(this, event.venueID);
+        String venue = String.valueOf(event.venueID);
 
-        //View createdView = getLayoutInflater().inflate(R.layout.fragment_view_events_event, null);
+
         View createdView = getLayoutInflater().inflate(R.layout.event_layout, null);
 
-        ((LinearLayout) findViewById(R.id.viewEventsContainer)).addView(createdView);
+        ((LinearLayout) findViewById(R.id.viewMyEvents)).addView(createdView);
 
         //((TextView) createdView.findViewById(R.id.viewEventsEventName)).setText(name);
         //((TextView) createdView.findViewById(R.id.viewEventsEventSport)).setText(sport);

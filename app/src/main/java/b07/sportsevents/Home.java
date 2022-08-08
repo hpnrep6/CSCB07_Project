@@ -37,8 +37,9 @@ public class Home extends AppCompatActivity {
         ((Button) findViewById(R.id.homeMyEvents)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(Home.this, ViewEvents.class);
-                intent.putExtra("filter", ViewEvents.Filter.USER);
+//                Intent intent = new Intent(Home.this, ViewEvents.class);
+//                intent.putExtra("filter", ViewEvents.Filter.USER);
+                Intent intent = new Intent(Home.this, MyEvents.class);
                 startActivity(intent);
             }
         });

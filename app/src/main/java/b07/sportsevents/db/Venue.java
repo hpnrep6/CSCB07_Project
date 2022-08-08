@@ -1,17 +1,13 @@
 package b07.sportsevents.db;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.ktx.Firebase;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Venue extends DBTable<Venue> {
     public String name;
@@ -41,5 +37,75 @@ public class Venue extends DBTable<Venue> {
         return name + " " + location + " " + description + " " + sportsOfferedList;
     }
 
+    public List<Venue> getAllVenues(AppCompatActivity a){
+        ArrayList<Venue> all_venues = new ArrayList<Venue>();
+        Venue.getInstance().queryAll(Venue.getTableName(), a, new DBCallback<Task<DataSnapshot>>() {
+            @Override
+            public void queriedData(Task<DataSnapshot> task, AppCompatActivity activity) {
 
+                Iterable<DataSnapshot> venues = Objects.requireNonNull(task.getResult()).getChildren();
+
+                for (DataSnapshot venue : venues) {
+                    //String key = venue.getKey();
+                    Venue readVenue = venue.getValue(Venue.class);
+                    all_venues.add(readVenue);
+                    //venue_names.add(readVenue.name);
+                    //assert readVenue != null;
+                }
+            }
+        });
+        return all_venues;
+    }
+
+    public List<String> getAllVenueNames(AppCompatActivity a){
+        ArrayList<String> all_venue_names = new ArrayList<String>();
+        Venue.getInstance().queryAll(Venue.getTableName(), a, new DBCallback<Task<DataSnapshot>>() {
+            @Override
+            public void queriedData(Task<DataSnapshot> task, AppCompatActivity activity) {
+
+                Iterable<DataSnapshot> venues = Objects.requireNonNull(task.getResult()).getChildren();
+
+                for (DataSnapshot venue : venues) {
+                    //String key = venue.getKey();
+                    Venue readVenue = venue.getValue(Venue.class);
+                    //all_venue.add(readVenue);
+                    all_venue_names.add(readVenue.name);
+                    //assert readVenue != null;
+                }
+            }
+        });
+        return all_venue_names;
+    }
+
+//    public String getVenueNameById(long id, AppCompatActivity a){
+//        ArrayList<Venue> all_venues = new ArrayList<Venue>();
+//        Venue.getInstance().queryAll(Venue.getTableName(), a, new DBCallback<Task<DataSnapshot>>() {
+//            @Override
+//            public void queriedData(Task<DataSnapshot> task, AppCompatActivity activity) {
+//                //System.out.println(task.getResult().getValue().(1659214392749));
+//            }
+//        });
+//        return "all_venues";
+//    }
+
+// returns an empty string?
+//    public String getVenueNameByID(AppCompatActivity a, long venueID){
+//        final String[] venue_name = new String[1];
+//        Venue.getInstance().queryAll(Venue.getTableName(), a, new DBCallback<Task<DataSnapshot>>() {
+//            @Override
+//            public void queriedData(Task<DataSnapshot> task, AppCompatActivity activity) {
+//
+//                Iterable<DataSnapshot> venues = Objects.requireNonNull(task.getResult()).getChildren();
+//
+//                for (DataSnapshot venue : venues) {
+//                    if (Long.parseLong(Objects.requireNonNull(venue.getKey())) == venueID) {
+//                        //System.out.println(venue.getKey() + " " + event.venueID);
+//                        venue_name[0] = Objects.requireNonNull(venue.getValue(Venue.class)).name.toString();
+//                        //System.out.println((venue.getValue(Venue.class)).name);
+//                    }
+//                }
+//            }
+//        });
+//        return venue_name[0];
+//    }
 }

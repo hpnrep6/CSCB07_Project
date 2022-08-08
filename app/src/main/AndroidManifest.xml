@@ -45,6 +45,9 @@
         <activity
             android:name=".EventPopupScreen"
             android:exported="true" />
+        <activity
+            android:name=".MyEvents"
+            android:exported="true" />
     </application>
 
 </manifest>
