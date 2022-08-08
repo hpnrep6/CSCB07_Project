@@ -16,6 +16,7 @@ import java.util.Objects;
 
 import b07.sportsevents.db.DBCallback;
 import b07.sportsevents.db.Event;
+import b07.sportsevents.db.Venue;
 
 public class MyEvents extends AppCompatActivity {
     public static enum Filter {
@@ -78,7 +79,7 @@ public class MyEvents extends AppCompatActivity {
 
         ((TextView) createdView.findViewById(R.id.eventName)).setText(name);
         ((TextView) createdView.findViewById(R.id.eventStart)).setText(start);
-        ((TextView) createdView.findViewById(R.id.eventVenue)).setText(venue);
+        Venue.getInstance().setVenueNameById(event.venueID, this, "eventVenue", createdView);
         ((TextView) createdView.findViewById(R.id.eventEnd)).setText(end);
         ((TextView) createdView.findViewById(R.id.eventID)).setText(id);
     }

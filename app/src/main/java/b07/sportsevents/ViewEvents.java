@@ -1,5 +1,6 @@
 package b07.sportsevents;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import b07.sportsevents.db.Event;
@@ -17,7 +18,12 @@ import android.widget.TextView;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
@@ -30,7 +36,8 @@ public class ViewEvents extends AppCompatActivity{
     public static enum Filter {
         ALL,
         USER,
-        SPORT
+        SPORT,
+        VENUE
     }
 
     @Override
@@ -161,6 +168,7 @@ public class ViewEvents extends AppCompatActivity{
 
                 //Filter filter = ((Filter) bundle.get("filter"));
                 String sport ="";
+                String venue ="";
                 //String selection = spinner.getSelectedItem().toString();
                 Filter filter = Filter.ALL;
                 if (Objects.equals(type, "Filter by Sport")){
@@ -168,12 +176,8 @@ public class ViewEvents extends AppCompatActivity{
                     sport = specified;
                 }
                 else if (Objects.equals(type, "Filter by Venue")){
-                    //filter = Filter.VENUE;
-                    //String venue = specified;
-                }
-                else if (Objects.equals(type, "User")){
-                    //filter = Filter.VENUE;
-                    //String venue = specified;
+                    filter = Filter.VENUE;
+                    venue = specified;
                 }
 
 
@@ -198,6 +202,9 @@ public class ViewEvents extends AppCompatActivity{
                             addEventToScreenFilterBySport(key, readEvent, sport);
                             break;
                         }
+                        case VENUE:{
+                            addEventToScreenFilterByVenue(key, readEvent, venue);
+                        }
                     }
                 }
             }
@@ -207,6 +214,23 @@ public class ViewEvents extends AppCompatActivity{
     String getOccupancy(Event event) {
         int numberEnrolled = event.registeredUsers == null ? 0 : event.registeredUsers.size();
         return numberEnrolled + "/" + event.maxPlayers;
+    }
+
+    private void addEventToScreenFilterByVenue(String id, Event event, String venue_name){
+        //compares venue names not IDs
+        DatabaseReference d = FirebaseDatabase.getInstance().getReference().child("Venues").child(String.valueOf(event.venueID)).child("name");
+        d.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                if (snapshot.getValue().toString().equals(venue_name)){
+                    addEventToScreen(id, event);
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                System.out.println("The read failed: ");
+            }
+        });
     }
 
     private void addEventToScreenFilterBySport(String id, Event event, String sport) {
@@ -232,8 +256,8 @@ public class ViewEvents extends AppCompatActivity{
         String start = String.valueOf(event.startTime);
         String end = String.valueOf(event.endTime);
         String occupancy = getOccupancy(event);
-        //String venue = Venue.getInstance().getVenueNameByID(this, event.venueID);
-        String venue = String.valueOf(event.venueID);
+
+        //String venue = String.valueOf(event.venueID);
 
 
         View createdView = getLayoutInflater().inflate(R.layout.event_layout, null);
@@ -248,7 +272,8 @@ public class ViewEvents extends AppCompatActivity{
 
         ((TextView) createdView.findViewById(R.id.eventName)).setText(name);
         ((TextView) createdView.findViewById(R.id.eventStart)).setText(start);
-        ((TextView) createdView.findViewById(R.id.eventVenue)).setText(venue);
+        Venue.getInstance().setVenueNameById(event.venueID, this, "eventVenue", createdView);
+        //((TextView) createdView.findViewById(R.id.eventVenue)).setText(venue);
         ((TextView) createdView.findViewById(R.id.eventEnd)).setText(end);
         ((TextView) createdView.findViewById(R.id.eventID)).setText(id);
 /*
