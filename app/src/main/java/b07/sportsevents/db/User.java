@@ -1,6 +1,7 @@
 package b07.sportsevents.db;
 
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -60,6 +61,7 @@ public class User extends DBTable<User> {
                 if (task.isSuccessful()) {
                     callback.userStatus(UserStatus.LOGIN_SUCCESS, activity);
                 } else {
+                    Toast.makeText(activity.getApplicationContext(), "Incorrect Username/Password", Toast.LENGTH_LONG).show();
                     callback.userStatus(UserStatus.LOGIN_FAILED, activity);
                 }
             }
