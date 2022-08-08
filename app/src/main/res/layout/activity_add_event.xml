@@ -7,125 +7,158 @@
     tools:context=".AddEvent"
     android:background="@drawable/gradient_bkg">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_margin="16dp">
+        android:layout_height="match_parent">
 
-
-        <TextView
-            android:id="@+id/textView4"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Event Name" />
+            android:layout_margin="16dp"
+            android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/addEventName"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginTop="16dp"
-            android:background="@drawable/text_input_box"
-            android:ems="10"
-            android:gravity="start|top"
-            android:inputType="textMultiLine"
-            android:textColor="@color/white"
-            android:textColorHint="@color/white"
-            app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/ddVenueTextVenue"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Event Venue" />
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Event Name" />
 
-        <TextView
-            android:id="@+id/addEventVenueName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Name" />
+            <EditText
+                android:id="@+id/addEventName"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/text_input_box"
+                android:ems="10"
+                android:gravity="start|top"
+                android:inputType="textMultiLine"
+                android:padding="10dp"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/textView6"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Event Sport" />
+            <TextView
+                android:id="@+id/ddVenueTextVenue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Event Venue" />
 
-        <EditText
-            android:id="@+id/addEventSport"
-            android:layout_width="match_parent"
-            android:layout_height="41dp"
-            android:background="@drawable/text_input_box"
-            android:ems="10"
-            android:gravity="start|top"
-            android:inputType="textMultiLine"
-            android:textColor="@color/white"
-            android:textColorHint="@color/white" />
+            <TextView
+                android:id="@+id/addEventVenueName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/text_input_box"
+                android:padding="10dp" />
 
-        <TextView
-            android:id="@+id/textView8"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Number of Participants" />
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Event Sport" />
 
-        <EditText
-            android:id="@+id/addEventPlayers"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="number" />
+            <EditText
+                android:id="@+id/addEventSport"
+                android:layout_width="match_parent"
+                android:layout_height="41dp"
+                android:background="@drawable/text_input_box"
+                android:ems="10"
+                android:gravity="start|top"
+                android:inputType="textMultiLine"
+                android:padding="10dp"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white" />
 
-        <TextView
-            android:id="@+id/textView5"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Event Description" />
+            <TextView
+                android:id="@+id/textView8"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Number of Participants" />
 
-        <EditText
-            android:id="@+id/addEventDescription"
-            android:layout_width="match_parent"
-            android:layout_height="99dp"
-            android:background="@drawable/text_input_box"
-            android:ems="10"
-            android:gravity="start|top"
-            android:inputType="textMultiLine"
-            android:textColor="@color/white"
-            android:textColorHint="@color/white" />
+            <EditText
+                android:id="@+id/addEventPlayers"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="number"
+                android:padding="10dp" />
 
-        <TextView
-            android:id="@+id/textView9"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Start Time"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Event Description" />
 
-        <Spinner
-            android:id="@+id/addEventStartTimeSelector"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            <EditText
+                android:id="@+id/addEventDescription"
+                android:layout_width="match_parent"
+                android:layout_height="99dp"
+                android:background="@drawable/text_input_box"
+                android:ems="10"
+                android:gravity="start|top"
+                android:inputType="textMultiLine"
+                android:padding="10dp"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white" />
 
-        <TextView
-            android:id="@+id/textView10"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="End Time" />
+            <TextView
+                android:id="@+id/textView9"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Start Time"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
 
-        <Spinner
-            android:id="@+id/addEventEndTimeSelector"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-        <Button
-            android:id="@+id/addEventConfirmButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Create Event" />
+                <TextView
+                    android:id="@+id/addEventStartTimeDate"
+                    android:layout_width="148dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Start Date" />
 
-    </LinearLayout>
+                <Spinner
+                    android:id="@+id/addEventStartTimeSelector"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/textView10"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="End Time" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/addEventEndTimeDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="End Date" />
+
+                <Spinner
+                    android:id="@+id/addEventEndTimeSelector"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/addEventConfirmButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Create Event" />
+
+        </LinearLayout>
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

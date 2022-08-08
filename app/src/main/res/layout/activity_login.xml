@@ -26,6 +26,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
+            android:hint="Email"
             android:inputType="textPersonName" />
 
         <TextView
@@ -41,6 +42,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
+            android:hint="Password"
             android:inputType="textPassword" />
 
         <Button
@@ -53,7 +55,7 @@
             android:id="@+id/loginRegister"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="No account? Register uwu" />
+            android:text="No account? Click to Register" />
 
     </LinearLayout>
 

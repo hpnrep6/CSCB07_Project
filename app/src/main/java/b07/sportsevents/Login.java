@@ -46,7 +46,12 @@ public class Login extends AppCompatActivity {
 
                                 if (status == User.UserStatus.LOGIN_SUCCESS) {
                                     Intent intent = new Intent(Login.this, Home.class);
+                                    Toast.makeText(activity, "Login success. Bringing you to the home page.", Toast.LENGTH_SHORT).show();
                                     startActivity(intent);
+                                }
+
+                                if (status == User.UserStatus.LOGIN_FAILED) {
+                                    Toast.makeText(activity, "Login failed. Please try again.", Toast.LENGTH_SHORT).show();
                                 }
                             }
                         }
