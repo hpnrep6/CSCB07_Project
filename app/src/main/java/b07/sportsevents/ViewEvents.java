@@ -1,10 +1,16 @@
 package b07.sportsevents;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import b07.sportsevents.db.Event;
 
+
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -17,11 +23,15 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.Toolbar;
 
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -36,54 +46,29 @@ public class ViewEvents extends AppCompatActivity{
     public static enum Filter {
         ALL,
         USER,
-        SPORT
+        SPORT,
+        VENUE
     }
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_events);
 
-        //Bundle bundle = getIntent().getExtras();
 
+        //spinner selection lists
+        //spinner 1
         String[] filter_by = {"View All", "Filter by Sport", "Filter by Venue"};
-        ArrayList<Venue> all_venues = new ArrayList<Venue>();
-        List<String> all_sports = new ArrayList<String>();
-        List<String> venue_names = new ArrayList<String>();
-        Venue.getInstance().queryAll(Venue.getTableName(), this, new DBCallback<Task<DataSnapshot>>() {
-            @Override
-            public void queriedData(Task<DataSnapshot> task, AppCompatActivity activity) {
-
-                Iterable<DataSnapshot> venues = Objects.requireNonNull(task.getResult()).getChildren();
-
-                for (DataSnapshot venue : venues) {
-                    //String key = venue.getKey();
-                    Venue readVenue = venue.getValue(Venue.class);
-                    all_venues.add(readVenue);
-                    venue_names.add(readVenue.name);
-                    //assert readVenue != null;
-                }
-            }
-        });
-        Sport.getInstance().queryAll(Sport.getTableName(), this, new DBCallback<Task<DataSnapshot>>() {
-            @Override
-            public void queriedData(Task<DataSnapshot> task, AppCompatActivity activity) {
-
-                Iterable<DataSnapshot> sports = Objects.requireNonNull(task.getResult()).getChildren();
-
-                for (DataSnapshot sport : sports) {
-                    String sport_name = sport.getKey();
-                    //Sport readSport = sport.getValue(Sport.class);
-                    all_sports.add(sport_name);
-                    //assert readSport!= null;
-                }
-            }
-        });
+        //spinner 2
+        List<String> all_sports = Sport.getInstance().getAllSportNames(this);
+        List<String> venue_names = Venue.getInstance().getAllVenueNames(this);
 
         Spinner spinner = (Spinner) findViewById(R.id.spinner);
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> adapter = new ArrayAdapter<CharSequence>(this,
-                android.R.layout.simple_spinner_item, filter_by);
+                android.R.layout.simple_spinner_dropdown_item, filter_by);
         // Specify the layout to use when the list of choices appears
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Apply the adapter to the spinner
@@ -92,6 +77,7 @@ public class ViewEvents extends AppCompatActivity{
         spinner2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long l) {
+                ((TextView) parent.getChildAt(0)).setTextColor(Color.WHITE);
                 String specified_selected = parent.getItemAtPosition(pos).toString();
                 String filter_selected = spinner.getSelectedItem().toString();
                 loadScreen(filter_selected, specified_selected);
@@ -106,6 +92,7 @@ public class ViewEvents extends AppCompatActivity{
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long l) {
+                ((TextView) parent.getChildAt(0)).setTextColor(Color.WHITE);
                 String specified_selected = "";
                 String filter_selected = parent.getItemAtPosition(pos).toString();
                 if (filter_selected.equals("Filter by Sport")){
@@ -183,10 +170,24 @@ public class ViewEvents extends AppCompatActivity{
 //        });
     }
 
-    private void loadScreen(String type, String specified){
-        LinearLayout ll =findViewById(R.id.viewEventsContainer);
+    public static void setVenueNameById(long id, String view_id, View v) {
+        DatabaseReference d = FirebaseDatabase.getInstance().getReference().child("Venues").child(String.valueOf(id)).child("name");
+        d.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                ((TextView) v.findViewById(R.id.eventVenue)).setText((String) snapshot.getValue());
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                System.out.println("The read failed: ");
+            }
+        });
+    }
+
+    void loadScreen(String type, String specified){
+        LinearLayout ll =findViewById(R.id.viewMyEvents);
         ll.removeAllViews();
-        Venue.getInstance().queryAll(Event.getTableName(), this, new DBCallback<Task<DataSnapshot>>() {
+        Event.getInstance().queryAll(Event.getTableName(), this, new DBCallback<Task<DataSnapshot>>() {
             @Override
             public void queriedData(Task<DataSnapshot> task, AppCompatActivity activity) {
 
@@ -195,6 +196,7 @@ public class ViewEvents extends AppCompatActivity{
 
                 //Filter filter = ((Filter) bundle.get("filter"));
                 String sport ="";
+                String venue ="";
                 //String selection = spinner.getSelectedItem().toString();
                 Filter filter = Filter.ALL;
                 if (Objects.equals(type, "Filter by Sport")){
@@ -202,9 +204,10 @@ public class ViewEvents extends AppCompatActivity{
                     sport = specified;
                 }
                 else if (Objects.equals(type, "Filter by Venue")){
-                    //filter = Filter.VENUE;
-                    //String venue = specified;
+                    filter = Filter.VENUE;
+                    venue = specified;
                 }
+
 
                 while (eventIterator.hasNext()) {
                     DataSnapshot event = (DataSnapshot) eventIterator.next();
@@ -227,15 +230,41 @@ public class ViewEvents extends AppCompatActivity{
                             addEventToScreenFilterBySport(key, readEvent, sport);
                             break;
                         }
+                        case VENUE:{
+                            addEventToScreenFilterByVenue(key, readEvent, venue);
+                        }
                     }
                 }
             }
         });
     }
 
-    private String getOccupancy(Event event) {
+    public static String getOccupancy(Event event) {
+
         int numberEnrolled = event.registeredUsers == null ? 0 : event.registeredUsers.size();
         return numberEnrolled + "/" + event.maxPlayers;
+    }
+    public static boolean checkfull(Event event) {
+        int numberEnrolled = event.registeredUsers == null ? 0 : event.registeredUsers.size();
+        return numberEnrolled <event.maxPlayers;
+    }
+
+
+    private void addEventToScreenFilterByVenue(String id, Event event, String venue_name){
+        //compares venue names not IDs
+        DatabaseReference d = FirebaseDatabase.getInstance().getReference().child("Venues").child(String.valueOf(event.venueID)).child("name");
+        d.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                if (snapshot.getValue().toString().equals(venue_name)){
+                    addEventToScreen(id, event);
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                System.out.println("The read failed: ");
+            }
+        });
     }
 
     private void addEventToScreenFilterBySport(String id, Event event, String sport) {
@@ -258,44 +287,64 @@ public class ViewEvents extends AppCompatActivity{
     private void addEventToScreen(String id, Event event) {
         String name = event.name;
         String sport = event.sport;
-        String venue = String.valueOf(event.venueID);
-        //String venue = Venue.getInstance().getVenueName(event.venueID);
         String start = String.valueOf(event.startTime);
         String end = String.valueOf(event.endTime);
         String occupancy = getOccupancy(event);
 
-        //View createdView = getLayoutInflater().inflate(R.layout.fragment_view_events_event, null);
         View createdView = getLayoutInflater().inflate(R.layout.event_layout, null);
 
-        ((LinearLayout) findViewById(R.id.viewEventsContainer)).addView(createdView);
-
-        //((TextView) createdView.findViewById(R.id.viewEventsEventName)).setText(name);
-        //((TextView) createdView.findViewById(R.id.viewEventsEventSport)).setText(sport);
-        //((TextView) createdView.findViewById(R.id.viewEventsEventVenue)).setText(venue);
-        //((TextView) createdView.findViewById(R.id.viewEventsEventOccupancy)).setText(occupancy);
-//        ((TextView) createdView.findViewById(R.id.viewEventsEventID)).setText(id);
+        ((LinearLayout) findViewById(R.id.viewMyEvents)).addView(createdView);
 
         ((TextView) createdView.findViewById(R.id.eventName)).setText(name);
         ((TextView) createdView.findViewById(R.id.eventStart)).setText(start);
-        ((TextView) createdView.findViewById(R.id.eventVenue)).setText(venue);
+        setVenueNameById(event.venueID, "eventVenue", createdView);
         ((TextView) createdView.findViewById(R.id.eventEnd)).setText(end);
         ((TextView) createdView.findViewById(R.id.eventID)).setText(id);
-/*
+
         if (event.registeredUsers != null) {
             if (event.registeredUsers.size() >= event.maxPlayers) {
-                ((Button) createdView.findViewById(R.id.viewEventsEventEnrol)).setText("Event Full");
+                ((Button) createdView.findViewById(R.id.viewEventsEventEnrol2)).setText("Event Full");
             }
 
             if (event.registeredUsers.containsKey(FirebaseAuth.getInstance().getUid())) {
-                ((Button) createdView.findViewById(R.id.viewEventsEventEnrol)).setText("Drop Event");
+                ((Button) createdView.findViewById(R.id.viewEventsEventEnrol2)).setText("Drop Event");
             }
         }
+        ((Button) createdView.findViewById(R.id.viewEventsEventEnrol2)).setOnClickListener(onEnrolClick);
 
-        ((Button) createdView.findViewById(R.id.viewEventsEventEnrol)).setOnClickListener(onEnrolClick);
-*/
+
     }
-/*
-    private View.OnClickListener onEnrolClick = new View.OnClickListener() {
+
+    private final View.OnClickListener description =new View.OnClickListener()
+    {
+
+        @Override
+        public void onClick(View view) {
+            View parent = ((View) view.getParent());
+            String id = ((TextView) parent.findViewById(R.id.viewEventsEventID)).getText().toString();
+            Event.getDescription(Long.parseLong(id),ViewEvents.this,view);
+            //alert(text);
+
+        }
+    };
+    public static void alert(String message, AppCompatActivity A) {
+        AlertDialog dlg = new AlertDialog.Builder(A).setTitle("Description for the event")
+                .setMessage(message)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+
+                .create();
+        dlg.show();
+
+
+    }
+    View.OnClickListener onEnrolClick = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             if (((Button) view).getText().toString().equals("Event Full")) {
@@ -303,7 +352,7 @@ public class ViewEvents extends AppCompatActivity{
             }
 
             View parent = ((View) view.getParent());
-            String id = ((TextView) parent.findViewById(R.id.viewEventsEventID)).getText().toString();
+            String id = ((TextView) parent.findViewById(R.id.eventID)).getText().toString();
             Log.d("event", "" + ((Button) view).getText().toString().equals("Join this Event"));
 
             if (((Button) view).getText().toString().equals("Join this Event")) {
@@ -318,9 +367,11 @@ public class ViewEvents extends AppCompatActivity{
                             public void queriedData(Task<DataSnapshot> value, AppCompatActivity activity) {
                                 Event updatedEvent = value.getResult().getValue(Event.class);
                                 Log.d("event", "asd");
-                                ((TextView) ((View) view.getParent()).findViewById(R.id.viewEventsEventOccupancy)).setText(
+                                ((TextView) ((View) view.getParent()).findViewById(R.id.eventOccupancy)).setText(
                                         getOccupancy(updatedEvent)
+
                                 );
+
                             }
                         });
 
@@ -328,7 +379,7 @@ public class ViewEvents extends AppCompatActivity{
                     }
                 });
             } else {
-                Event.dropUser(FirebaseAuth.getInstance().getUid(), Long.parseLong(id), ViewEvents.this, new DBCallback<Task<DataSnapshot>>() {
+                Event.dropUser(FirebaseAuth.getInstance().getUid(), Long.parseLong(id),ViewEvents.this, new DBCallback<Task<DataSnapshot>>() {
                     @Override
                     public void queriedData(Task<DataSnapshot> value, AppCompatActivity activity) {
                         ((Button) view).setText("Join this Event");
@@ -338,18 +389,26 @@ public class ViewEvents extends AppCompatActivity{
                             public void queriedData(Task<DataSnapshot> value, AppCompatActivity activity) {
                                 Event updatedEvent = value.getResult().getValue(Event.class);
                                 Log.d("event", "asd");
-                                ((TextView) ((View) view.getParent()).findViewById(R.id.viewEventsEventOccupancy)).setText(
+                                ((TextView) ((View) view.getParent()).findViewById(R.id.eventOccupancy)).setText(
                                         getOccupancy(updatedEvent)
                                 );
                             }
                         });
                         Log.d("view events", "joined");
                     }
+
+
                 });
+
             }
             return;
+
+
         }
-    };*/
+    };
+
+
+    //just for testing onClick
     public void launchPopup(View v){
         Intent intent = new Intent(this, EventPopupScreen.class);
         View parent = ((View) v.getParent());
@@ -371,22 +430,25 @@ public class ViewEvents extends AppCompatActivity{
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.My_Events:
+                Intent in = new Intent(this, MyEvents.class);
+                startActivity(in);
+                return true;
             case R.id.Upcoming_events:
-                Intent ve = new Intent(this, ViewEvents.class);
-                startActivity(ve);
+                Intent intent = new Intent(this, ViewEvents.class);
+                intent.putExtra("filter", ViewEvents.Filter.ALL);
+                startActivity(intent);
                 return true;
             case R.id.My_Profile:
                 Intent mp = new Intent(this, MyProfile.class);
                 startActivity(mp);
                 return true;
             case R.id.Schedule_Events:
-                Intent se = new Intent(this, ViewVenues.class);
-                startActivity(se);
+                Intent i = new Intent(this, ViewVenues.class);
+                i.putExtra("filter", ViewVenues.Filter.ALL);
+                startActivity(i);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
-
-
     }
 }

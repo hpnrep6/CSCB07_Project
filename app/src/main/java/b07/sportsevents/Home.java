@@ -50,8 +50,9 @@ public class Home extends AppCompatActivity {
         ((Button) findViewById(R.id.homeMyEvents)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(Home.this, ViewEvents.class);
-                intent.putExtra("filter", ViewEvents.Filter.USER);
+//                Intent intent = new Intent(Home.this, ViewEvents.class);
+//                intent.putExtra("filter", ViewEvents.Filter.USER);
+                Intent intent = new Intent(Home.this, MyEvents.class);
                 startActivity(intent);
             }
         });
@@ -103,17 +104,22 @@ public class Home extends AppCompatActivity {
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.My_Events:
+                Intent in = new Intent(this, MyEvents.class);
+                startActivity(in);
+                return true;
             case R.id.Upcoming_events:
-                Intent ve = new Intent(this, ViewEvents.class);
-                startActivity(ve);
+                Intent intent = new Intent(this, ViewEvents.class);
+                intent.putExtra("filter", ViewEvents.Filter.ALL);
+                startActivity(intent);
                 return true;
             case R.id.My_Profile:
                 Intent mp = new Intent(this, MyProfile.class);
                 startActivity(mp);
                 return true;
             case R.id.Schedule_Events:
-                Intent se = new Intent(this, ViewVenues.class);
-                startActivity(se);
+                Intent i = new Intent(this, ViewVenues.class);
+                i.putExtra("filter", ViewVenues.Filter.ALL);
+                startActivity(i);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

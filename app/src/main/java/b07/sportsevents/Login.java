@@ -2,6 +2,8 @@ package b07.sportsevents;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -53,6 +55,7 @@ public class Login extends AppCompatActivity {
                                 if (status == User.UserStatus.LOGIN_FAILED) {
                                     Toast.makeText(activity, "Login failed. Please try again.", Toast.LENGTH_SHORT).show();
                                 }
+
                             }
                         }
                 );
@@ -60,4 +63,5 @@ public class Login extends AppCompatActivity {
             }
         });
     }
+
 }

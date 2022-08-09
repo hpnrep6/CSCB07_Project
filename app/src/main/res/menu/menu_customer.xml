@@ -17,5 +17,4 @@
         android:title="Schedule Events"
         android:icon="@drawable/ic_baseline_post_add_24"
         app:showAsAction="always"/>
-
 </menu>

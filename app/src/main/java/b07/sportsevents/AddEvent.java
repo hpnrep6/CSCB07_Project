@@ -29,6 +29,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 
 import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.util.Calendar;
 
 public class  AddEvent extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
@@ -109,7 +110,7 @@ public class  AddEvent extends AppCompatActivity implements DatePickerDialog.OnD
                 calendar.set(Calendar.MINUTE, minute);
 
                 long time = (calendar.getTimeInMillis() / 1000L);
-
+                long unixTime = Instant.now().getEpochSecond();
                 switch (timeSelection) {
                     case DAY_START:
                         if (endTime != 0 && time > endTime) {
@@ -124,6 +125,7 @@ public class  AddEvent extends AppCompatActivity implements DatePickerDialog.OnD
                             return;
                         }
                         endTime = time;
+
                         break;
                 }
 
@@ -184,17 +186,22 @@ public class  AddEvent extends AppCompatActivity implements DatePickerDialog.OnD
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.My_Events:
+                Intent in = new Intent(this, MyEvents.class);
+                startActivity(in);
+                return true;
             case R.id.Upcoming_events:
-                Intent ve = new Intent(this, ViewEvents.class);
-                startActivity(ve);
+                Intent intent = new Intent(this, ViewEvents.class);
+                intent.putExtra("filter", ViewEvents.Filter.ALL);
+                startActivity(intent);
                 return true;
             case R.id.My_Profile:
                 Intent mp = new Intent(this, MyProfile.class);
                 startActivity(mp);
                 return true;
             case R.id.Schedule_Events:
-                Intent se = new Intent(this, ViewVenues.class);
-                startActivity(se);
+                Intent i = new Intent(this, ViewVenues.class);
+                i.putExtra("filter", ViewVenues.Filter.ALL);
+                startActivity(i);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

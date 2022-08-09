@@ -13,6 +13,8 @@ import com.google.firebase.database.Exclude;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 public class Sport extends DBTable<Sport> {
     public String name;
@@ -57,5 +59,22 @@ public class Sport extends DBTable<Sport> {
                 }
             }
         });
+    }
+
+    public List<String> getAllSportNames(AppCompatActivity a){
+        List<String> all_sports = new ArrayList<String>();
+        Sport.getInstance().queryAll(Sport.getTableName(), a, new DBCallback<Task<DataSnapshot>>() {
+            @Override
+            public void queriedData(Task<DataSnapshot> task, AppCompatActivity activity) {
+
+                Iterable<DataSnapshot> sports = Objects.requireNonNull(task.getResult()).getChildren();
+
+                for (DataSnapshot sport : sports) {
+                    String sport_name = sport.getKey();
+                    all_sports.add(sport_name);
+                }
+            }
+        });
+        return all_sports;
     }
 }
