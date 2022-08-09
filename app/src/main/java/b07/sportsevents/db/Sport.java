@@ -50,7 +50,12 @@ public class Sport extends DBTable<Sport> {
 
                 if (!sportsOffered.contains(sportName)) {
                     sportsOffered.add(sportName);
-                    venueOfferedList.setValue(sportsOffered);
+                    venueOfferedList.setValue(sportsOffered).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            callback.queriedData(null, activity);
+                        }
+                    });
                 }
             }
         });
