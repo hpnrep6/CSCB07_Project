@@ -54,6 +54,7 @@ public class ViewVenues extends AppCompatActivity {
                             addVenueToStringFilterBySport(key, readVenue, (String) bundle.get("sport"));
                             break;
                         }
+
                     }
                 }
             }

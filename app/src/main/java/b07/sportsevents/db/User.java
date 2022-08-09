@@ -44,7 +44,7 @@ public class User extends DBTable<User> {
     }
 
     @Exclude
-    public User getInstance() {
+    public static User getInstance() {
         return new User();
     }
 

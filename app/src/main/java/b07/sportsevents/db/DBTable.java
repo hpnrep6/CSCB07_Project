@@ -43,6 +43,15 @@ public abstract class DBTable <T extends DBTable> {
             }
         });
     }
+    public void queryByID(String ID, String tableName, AppCompatActivity activity, DBCallback<Task<DataSnapshot>> cb) {
+        FirebaseDatabase.getInstance().getReference().child(tableName).
+                child(ID).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DataSnapshot> task) {
+                        cb.queriedData(task, activity);
+                    }
+                });
+    }
 
     public void writeOne(T value, String tablename, AppCompatActivity activity) {
         FirebaseDatabase.getInstance().getReference().child(tablename).
