@@ -12,12 +12,14 @@
         android:usesCleartextTraffic="true">
         <activity
             android:name=".ManageVenues"
+            android:label="Manage Venues"
             android:exported="false" />
         <activity
             android:name=".ViewBySport"
             android:exported="false" />
         <activity
             android:name=".MyProfile"
+            android:label="Profile"
             android:exported="false" />
         <activity
             android:name=".Register"
@@ -33,15 +35,19 @@
             android:exported="false" />
         <activity
             android:name=".AddEvent"
+            android:label="Schedule Event"
             android:exported="true" />
         <activity
             android:name=".AddVenue"
+            android:label="Manage Venues"
             android:exported="true" />
         <activity
             android:name=".ViewEvents"
+            android:label="Upcoming Events"
             android:exported="true" />
         <activity
             android:name=".ViewVenues"
+            android:label="Select Venue"
             android:exported="true" />
         <activity
             android:name=".Home"
@@ -51,6 +57,7 @@
             android:exported="true" />
         <activity
             android:name=".MyEvents"
+            android:label="My Events"
             android:exported="true" />
     </application>
 

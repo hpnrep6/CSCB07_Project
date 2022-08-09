@@ -176,9 +176,9 @@ public class  AddEvent extends AppCompatActivity implements DatePickerDialog.OnD
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.My_Events:
-                Intent in = new Intent(this, ViewEvents.class);
-                in.putExtra("filter", ViewEvents.Filter.USER);
+                Intent in = new Intent(this, MyEvents.class);
                 startActivity(in);
+                return true;
             case R.id.Upcoming_events:
                 Intent intent = new Intent(this, ViewEvents.class);
                 intent.putExtra("filter", ViewEvents.Filter.ALL);

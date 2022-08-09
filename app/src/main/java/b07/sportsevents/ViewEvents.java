@@ -19,6 +19,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toolbar;
 
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -380,9 +381,9 @@ public class ViewEvents extends AppCompatActivity{
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.My_Events:
-                Intent in = new Intent(this, ViewEvents.class);
-                in.putExtra("filter", ViewEvents.Filter.USER);
+                Intent in = new Intent(this, MyEvents.class);
                 startActivity(in);
+                return true;
             case R.id.Upcoming_events:
                 Intent intent = new Intent(this, ViewEvents.class);
                 intent.putExtra("filter", ViewEvents.Filter.ALL);
