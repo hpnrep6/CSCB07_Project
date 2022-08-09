@@ -92,6 +92,7 @@ public class User extends DBTable<User> {
                         callback.userStatus(UserStatus.REGISTER_SUCCESS, activity);
                     } else {
                         Log.d("user", "login failed");
+                        Log.d("user",task.getException().getMessage());
                         callback.userStatus(UserStatus.REGISTER_FAILED, activity);
                     }
                 }

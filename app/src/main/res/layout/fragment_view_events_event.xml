@@ -1,45 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
+    android:layout_height="match_parent"
     tools:context=".ViewEventsEventFragment" >
 
-    <TextView
-        android:id="@+id/viewEventsEventName"
+    <LinearLayout
+        android:id="@+id/linearlayot"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Name" />
+        android:orientation="vertical"
+        tools:context=".ViewEventsEventFragment">
 
-    <TextView
-        android:id="@+id/viewEventsEventSport"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Sport" />
+        <TextView
+            android:id="@+id/viewEventsEventName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Name" />
 
-    <TextView
-        android:id="@+id/viewEventsEventVenue"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Venue" />
+        <TextView
+            android:id="@+id/viewEventsEventSport"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Sport" />
 
-    <TextView
-        android:id="@+id/viewEventsEventOccupancy"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="0/12" />
+        <TextView
+            android:id="@+id/viewEventsEventVenue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Venue" />
 
-    <Button
-        android:id="@+id/viewEventsEventEnrol"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Join this Event" />
+        <TextView
+            android:id="@+id/viewEventsEventOccupancy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="0/12" />
 
-    <TextView
-        android:id="@+id/viewEventsEventID"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        android:textSize="0sp"/>
-</LinearLayout>
+        <Button
+            android:id="@+id/button_popup"
+            android:layout_width="117dp"
+            android:layout_height="35dp"
+            android:text="description"
+            android:textSize="8dp" />
+
+        <Button
+            android:id="@+id/viewEventsEventEnrol"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Join this Event" />
+
+        <TextView
+            android:id="@+id/viewEventsEventID"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="TextView"
+            android:textSize="0sp" />
+
+    </LinearLayout>
+
+</RelativeLayout>

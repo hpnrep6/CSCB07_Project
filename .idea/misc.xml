@@ -14,11 +14,12 @@
         <entry key="app/src/main/res/layout/activity_my_events.xml" value="0.26132246376811596" />
         <entry key="app/src/main/res/layout/activity_register.xml" value="0.38177083333333334" />
         <entry key="app/src/main/res/layout/activity_view_by_sport.xml" value="0.15070921985815602" />
-        <entry key="app/src/main/res/layout/activity_view_events.xml" value="0.22418478260869565" />
+        <entry key="app/src/main/res/layout/activity_view_events.xml" value="0.5731883836829144" />
         <entry key="app/src/main/res/layout/activity_view_venues.xml" value="0.38177083333333334" />
-        <entry key="app/src/main/res/layout/fragment_view_events_event.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/fragment_view_events_event.xml" value="0.49220103986135183" />
         <entry key="app/src/main/res/layout/fragment_view_sports_sport.xml" value="0.32765318958471856" />
         <entry key="app/src/main/res/layout/fragment_view_venues_venue.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/popup_events.xml" value="0.5588768115942029" />
       </map>
     </option>
   </component>
