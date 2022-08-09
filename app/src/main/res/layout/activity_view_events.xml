@@ -4,14 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
     tools:context=".ViewEvents">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
-        android:layout_height="125dp"
-        android:background="@color/purple_700"
+        android:layout_height="110dp"
+        android:background="@color/sky_blue"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -21,47 +20,40 @@
             android:id="@+id/textView16"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="120dp"
-            android:layout_marginEnd="120dp"
-            android:text="Upcoming Events"
-            android:textAppearance="@style/Theme.SportsEvents"
+            android:layout_marginStart="80dp"
+            android:text="Filter By:"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:textColor="@color/white"
-            android:textSize="30sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintVertical_bias="0.288" />
 
         <Spinner
             android:id="@+id/spinner"
-            android:layout_width="175dp"
-            android:layout_height="33dp"
-            android:layout_marginStart="150dp"
-            android:layout_marginEnd="150dp"
+            android:layout_width="150dp"
+            android:layout_height="48dp"
+            android:layout_marginEnd="50dp"
             android:spinnerMode="dropdown"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.39"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.478" />
+            app:layout_constraintVertical_bias="0.222"
+            tools:ignore="SpeakableTextPresentCheck" />
 
         <Spinner
             android:id="@+id/spinner2"
-            android:layout_width="175dp"
-            android:layout_height="33dp"
-            android:layout_marginStart="150dp"
-            android:layout_marginEnd="150dp"
+            android:layout_width="150dp"
+            android:layout_height="48dp"
+            android:layout_marginEnd="50dp"
             android:layout_marginBottom="10dp"
             android:spinnerMode="dropdown"
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.39"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/spinner"
-            app:layout_constraintVertical_bias="0.324" />
+            app:layout_constraintVertical_bias="0.0"
+            tools:ignore="SpeakableTextPresentCheck" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ScrollView
@@ -70,15 +62,17 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintVertical_bias="0.001"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
-        app:layout_constraintVertical_bias="0.001">
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
 
         <LinearLayout
             android:id="@+id/viewMyEvents"
+            android:layout_gravity="fill_vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"></LinearLayout>
+            android:orientation="vertical" >
+        </LinearLayout>
     </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

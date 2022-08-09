@@ -59,6 +59,7 @@ public class ViewVenuesVenueFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_view_venues_venue, container, false);
+        //return inflater.inflate(R.layout.fragment_view_venues_venue, container, false);
+        return inflater.inflate(R.layout.venue_layout, container, false);
     }
 }
