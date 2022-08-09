@@ -105,16 +105,24 @@ public class  AddEvent extends AppCompatActivity implements DatePickerDialog.OnD
         TimePickerDialog timeSelector = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker timePicker, int hour, int minute) {
-                calendar.set(Calendar.HOUR, hour);
+                calendar.set(Calendar.HOUR_OF_DAY, hour);
                 calendar.set(Calendar.MINUTE, minute);
 
                 long time = (calendar.getTimeInMillis() / 1000L);
 
                 switch (timeSelection) {
                     case DAY_START:
+                        if (endTime != 0 && time > endTime) {
+                            Toast.makeText(AddEvent.this, "Invalid start time.", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
                         startTime = time;
                         break;
                     case DAY_END:
+                        if (startTime != 0 && startTime > time) {
+                            Toast.makeText(AddEvent.this, "Invalid end time.", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
                         endTime = time;
                         break;
                 }
@@ -123,7 +131,7 @@ public class  AddEvent extends AppCompatActivity implements DatePickerDialog.OnD
                 ((TextView) findViewById(R.id.addEventStartTimeDate)).setText(startTime == 0 ? "No date selected" : format.format(startTime * 1000L));
                 ((TextView) findViewById(R.id.addEventEndTimeDate)).setText(endTime == 0 ? "No date selected" : format.format(endTime * 1000L));
 
-                Log.d("add event", "" + hour + " " + minute);
+                Log.d("add event", "" + format.format(calendar.getTime()) + " " + hour + " " + minute);
             }
         }, 0, 0, false);
 

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ManageEventsEventFragment"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/manageEventsEventName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Name" />
+
+    <TextView
+        android:id="@+id/manageEventsEventSport"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Sport" />
+
+    <TextView
+        android:id="@+id/manageEventsEventVenue"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Venue" />
+
+    <TextView
+        android:id="@+id/manageEventsEventOccupancy"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="0/12" />
+
+    <Button
+        android:id="@+id/manageEventsEventEnrol"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Join this Event" />
+
+    <TextView
+        android:id="@+id/viewEventsEventID"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:textSize="0sp"/>
+</LinearLayout>
