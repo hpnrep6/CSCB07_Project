@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import b07.sportsevents.db.Event;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -57,7 +58,7 @@ public class ViewEvents extends AppCompatActivity{
         Spinner spinner = (Spinner) findViewById(R.id.spinner);
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> adapter = new ArrayAdapter<CharSequence>(this,
-                android.R.layout.simple_spinner_item, filter_by);
+                android.R.layout.simple_spinner_dropdown_item, filter_by);
         // Specify the layout to use when the list of choices appears
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Apply the adapter to the spinner
@@ -66,6 +67,7 @@ public class ViewEvents extends AppCompatActivity{
         spinner2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long l) {
+                ((TextView) parent.getChildAt(0)).setTextColor(Color.WHITE);
                 String specified_selected = parent.getItemAtPosition(pos).toString();
                 String filter_selected = spinner.getSelectedItem().toString();
                 loadScreen(filter_selected, specified_selected);
@@ -80,6 +82,7 @@ public class ViewEvents extends AppCompatActivity{
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long l) {
+                ((TextView) parent.getChildAt(0)).setTextColor(Color.WHITE);
                 String specified_selected = "";
                 String filter_selected = parent.getItemAtPosition(pos).toString();
                 if (filter_selected.equals("Filter by Sport")){

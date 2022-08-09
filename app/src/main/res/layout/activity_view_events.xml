@@ -10,8 +10,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
-        android:layout_height="140dp"
-        android:background="#D5CFCF"
+        android:layout_height="125dp"
+        android:background="@color/purple_700"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -25,31 +25,32 @@
             android:layout_marginEnd="120dp"
             android:text="Upcoming Events"
             android:textAppearance="@style/Theme.SportsEvents"
+            android:textColor="@color/white"
             android:textSize="30sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.19" />
+            app:layout_constraintVertical_bias="0.0" />
 
         <Spinner
             android:id="@+id/spinner"
             android:layout_width="175dp"
-            android:layout_height="25dp"
+            android:layout_height="33dp"
             android:layout_marginStart="150dp"
             android:layout_marginEnd="150dp"
             android:spinnerMode="dropdown"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.4"
+            app:layout_constraintHorizontal_bias="0.39"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.58000004" />
+            app:layout_constraintVertical_bias="0.478" />
 
         <Spinner
             android:id="@+id/spinner2"
             android:layout_width="175dp"
-            android:layout_height="25dp"
+            android:layout_height="33dp"
             android:layout_marginStart="150dp"
             android:layout_marginEnd="150dp"
             android:layout_marginBottom="10dp"
@@ -57,10 +58,10 @@
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.4"
+            app:layout_constraintHorizontal_bias="0.39"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/spinner"
-            app:layout_constraintVertical_bias="0.68" />
+            app:layout_constraintVertical_bias="0.324" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ScrollView
