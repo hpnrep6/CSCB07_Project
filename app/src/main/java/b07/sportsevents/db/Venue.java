@@ -90,19 +90,19 @@ public class Venue extends DBTable<Venue> {
         return all_venue_names;
     }
 
-    public void setVenueNameById(long id, AppCompatActivity a, String view_id, View v) {
-        DatabaseReference d = FirebaseDatabase.getInstance().getReference().child("Venues").child(String.valueOf(id)).child("name");
-        d.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot snapshot) {
-                ((TextView) v.findViewById(R.id.eventVenue)).setText((String) snapshot.getValue());
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                System.out.println("The read failed: ");
-            }
-        });
-    }
+//    public void setVenueNameById(long id, AppCompatActivity a, String view_id, View v) {
+//        DatabaseReference d = FirebaseDatabase.getInstance().getReference().child("Venues").child(String.valueOf(id)).child("name");
+//        d.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot snapshot) {
+//                ((TextView) v.findViewById(R.id.eventVenue)).setText((String) snapshot.getValue());
+//            }
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//                System.out.println("The read failed: ");
+//            }
+//        });
+//    }
 
     public long getVenueIdByName(String name){
 

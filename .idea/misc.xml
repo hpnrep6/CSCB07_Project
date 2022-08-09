@@ -14,11 +14,12 @@
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.26132246376811596" />
         <entry key="app/src/main/res/layout/activity_my_events.xml" value="0.27113702623906705" />
+        <entry key="app/src/main/res/layout/activity_my_profile.xml" value="0.26083068847656254" />
         <entry key="app/src/main/res/layout/activity_register.xml" value="0.38177083333333334" />
         <entry key="app/src/main/res/layout/activity_view_by_sport.xml" value="0.15070921985815602" />
-        <entry key="app/src/main/res/layout/activity_view_events.xml" value="0.22841451893682066" />
+        <entry key="app/src/main/res/layout/activity_view_events.xml" value="0.19914703369140627" />
         <entry key="app/src/main/res/layout/activity_view_venues.xml" value="0.38177083333333334" />
-        <entry key="app/src/main/res/layout/event_layout.xml" value="0.4905792236328126" />
+        <entry key="app/src/main/res/layout/event_layout.xml" value="0.36237623762376237" />
         <entry key="app/src/main/res/layout/fragment_view_events_event.xml" value="0.29213483146067415" />
         <entry key="app/src/main/res/layout/fragment_view_sports_sport.xml" value="0.32765318958471856" />
         <entry key="app/src/main/res/layout/fragment_view_venues_venue.xml" value="0.33" />

@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -156,6 +157,20 @@ public class ViewEvents extends AppCompatActivity{
 //        });
     }
 
+    public static void setVenueNameById(long id, String view_id, View v) {
+        DatabaseReference d = FirebaseDatabase.getInstance().getReference().child("Venues").child(String.valueOf(id)).child("name");
+        d.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                ((TextView) v.findViewById(R.id.eventVenue)).setText((String) snapshot.getValue());
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                System.out.println("The read failed: ");
+            }
+        });
+    }
+
     void loadScreen(String type, String specified){
         LinearLayout ll =findViewById(R.id.viewMyEvents);
         ll.removeAllViews();
@@ -257,40 +272,30 @@ public class ViewEvents extends AppCompatActivity{
         String end = String.valueOf(event.endTime);
         String occupancy = getOccupancy(event);
 
-        //String venue = String.valueOf(event.venueID);
-
-
         View createdView = getLayoutInflater().inflate(R.layout.event_layout, null);
 
         ((LinearLayout) findViewById(R.id.viewMyEvents)).addView(createdView);
 
-        //((TextView) createdView.findViewById(R.id.viewEventsEventName)).setText(name);
-        //((TextView) createdView.findViewById(R.id.viewEventsEventSport)).setText(sport);
-        //((TextView) createdView.findViewById(R.id.viewEventsEventVenue)).setText(venue);
-        //((TextView) createdView.findViewById(R.id.viewEventsEventOccupancy)).setText(occupancy);
-//        ((TextView) createdView.findViewById(R.id.viewEventsEventID)).setText(id);
-
         ((TextView) createdView.findViewById(R.id.eventName)).setText(name);
         ((TextView) createdView.findViewById(R.id.eventStart)).setText(start);
-        Venue.getInstance().setVenueNameById(event.venueID, this, "eventVenue", createdView);
-        //((TextView) createdView.findViewById(R.id.eventVenue)).setText(venue);
+        setVenueNameById(event.venueID, "eventVenue", createdView);
         ((TextView) createdView.findViewById(R.id.eventEnd)).setText(end);
         ((TextView) createdView.findViewById(R.id.eventID)).setText(id);
-/*
+
         if (event.registeredUsers != null) {
             if (event.registeredUsers.size() >= event.maxPlayers) {
-                ((Button) createdView.findViewById(R.id.viewEventsEventEnrol)).setText("Event Full");
+                ((Button) createdView.findViewById(R.id.viewEventsEventEnrol2)).setText("Event Full");
             }
 
             if (event.registeredUsers.containsKey(FirebaseAuth.getInstance().getUid())) {
-                ((Button) createdView.findViewById(R.id.viewEventsEventEnrol)).setText("Drop Event");
+                ((Button) createdView.findViewById(R.id.viewEventsEventEnrol2)).setText("Drop Event");
             }
         }
 
-        ((Button) createdView.findViewById(R.id.viewEventsEventEnrol)).setOnClickListener(onEnrolClick);
-*/
+        ((Button) createdView.findViewById(R.id.viewEventsEventEnrol2)).setOnClickListener(onEnrolClick);
+
     }
-/*
+
     private View.OnClickListener onEnrolClick = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
@@ -299,7 +304,7 @@ public class ViewEvents extends AppCompatActivity{
             }
 
             View parent = ((View) view.getParent());
-            String id = ((TextView) parent.findViewById(R.id.viewEventsEventID)).getText().toString();
+            String id = ((TextView) parent.findViewById(R.id.eventID)).getText().toString();
             Log.d("event", "" + ((Button) view).getText().toString().equals("Join this Event"));
 
             if (((Button) view).getText().toString().equals("Join this Event")) {
@@ -314,7 +319,7 @@ public class ViewEvents extends AppCompatActivity{
                             public void queriedData(Task<DataSnapshot> value, AppCompatActivity activity) {
                                 Event updatedEvent = value.getResult().getValue(Event.class);
                                 Log.d("event", "asd");
-                                ((TextView) ((View) view.getParent()).findViewById(R.id.viewEventsEventOccupancy)).setText(
+                                ((TextView) ((View) view.getParent()).findViewById(R.id.eventOccupancy)).setText(
                                         getOccupancy(updatedEvent)
                                 );
                             }
@@ -334,7 +339,7 @@ public class ViewEvents extends AppCompatActivity{
                             public void queriedData(Task<DataSnapshot> value, AppCompatActivity activity) {
                                 Event updatedEvent = value.getResult().getValue(Event.class);
                                 Log.d("event", "asd");
-                                ((TextView) ((View) view.getParent()).findViewById(R.id.viewEventsEventOccupancy)).setText(
+                                ((TextView) ((View) view.getParent()).findViewById(R.id.eventOccupancy)).setText(
                                         getOccupancy(updatedEvent)
                                 );
                             }
@@ -345,7 +350,9 @@ public class ViewEvents extends AppCompatActivity{
             }
             return;
         }
-    };*/
+    };
+
+    //just for testing onClick
     public void launchPopup(View v){
         Intent intent = new Intent(this, EventPopupScreen.class);
         View parent = ((View) v.getParent());

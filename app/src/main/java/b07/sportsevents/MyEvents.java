@@ -1,7 +1,9 @@
 package b07.sportsevents;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -19,11 +21,6 @@ import b07.sportsevents.db.Event;
 import b07.sportsevents.db.Venue;
 
 public class MyEvents extends AppCompatActivity {
-    public static enum Filter {
-            ALL,
-            USER,
-            SPORT
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +54,7 @@ public class MyEvents extends AppCompatActivity {
             addEventToScreen(id, event);
         }
     }
-    
+
     String getOccupancy(Event event) {
         int numberEnrolled = event.registeredUsers == null ? 0 : event.registeredUsers.size();
         return numberEnrolled + "/" + event.maxPlayers;
@@ -79,8 +76,79 @@ public class MyEvents extends AppCompatActivity {
 
         ((TextView) createdView.findViewById(R.id.eventName)).setText(name);
         ((TextView) createdView.findViewById(R.id.eventStart)).setText(start);
-        Venue.getInstance().setVenueNameById(event.venueID, this, "eventVenue", createdView);
+        ViewEvents.setVenueNameById(event.venueID, "eventVenue", createdView);
         ((TextView) createdView.findViewById(R.id.eventEnd)).setText(end);
         ((TextView) createdView.findViewById(R.id.eventID)).setText(id);
+
+
+
+        if (event.registeredUsers != null) {
+            if (event.registeredUsers.size() >= event.maxPlayers) {
+                ((Button) createdView.findViewById(R.id.viewEventsEventEnrol2)).setText("Event Full");
+            }
+
+            if (event.registeredUsers.containsKey(FirebaseAuth.getInstance().getUid())) {
+                ((Button) createdView.findViewById(R.id.viewEventsEventEnrol2)).setText("Drop Event");
+            }
+        }
+
+        ((Button) createdView.findViewById(R.id.viewEventsEventEnrol2)).setOnClickListener(onEnrolClick);
     }
+
+
+    private View.OnClickListener onEnrolClick = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            if (((Button) view).getText().toString().equals("Event Full")) {
+                return;
+            }
+
+            View parent = ((View) view.getParent());
+            String id = ((TextView) parent.findViewById(R.id.eventID)).getText().toString();
+            Log.d("event", "" + ((Button) view).getText().toString().equals("Join this Event"));
+
+            if (((Button) view).getText().toString().equals("Join this Event")) {
+                Event.enrolUser(FirebaseAuth.getInstance().getUid(), Long.parseLong(id), MyEvents.this, new DBCallback<Task<DataSnapshot>>() {
+                    @Override
+                    public void queriedData(Task<DataSnapshot> value, AppCompatActivity activity) {
+
+                        ((Button) view).setText("Drop Event");
+
+                        Event.getInstance().queryByID(Long.parseLong(id), Event.getTableName(), MyEvents.this, new DBCallback<Task<DataSnapshot>>() {
+                            @Override
+                            public void queriedData(Task<DataSnapshot> value, AppCompatActivity activity) {
+                                Event updatedEvent = value.getResult().getValue(Event.class);
+                                Log.d("event", "asd");
+                                ((TextView) ((View) view.getParent()).findViewById(R.id.eventOccupancy)).setText(
+                                        getOccupancy(updatedEvent)
+                                );
+                            }
+                        });
+
+                        Log.d("view events", "joined");
+                    }
+                });
+            } else {
+                Event.dropUser(FirebaseAuth.getInstance().getUid(), Long.parseLong(id), MyEvents.this, new DBCallback<Task<DataSnapshot>>() {
+                    @Override
+                    public void queriedData(Task<DataSnapshot> value, AppCompatActivity activity) {
+                        ((Button) view).setText("Join this Event");
+
+                        Event.getInstance().queryByID(Long.parseLong(id), Event.getTableName(), MyEvents.this, new DBCallback<Task<DataSnapshot>>() {
+                            @Override
+                            public void queriedData(Task<DataSnapshot> value, AppCompatActivity activity) {
+                                Event updatedEvent = value.getResult().getValue(Event.class);
+                                Log.d("event", "asd");
+                                ((TextView) ((View) view.getParent()).findViewById(R.id.eventOccupancy)).setText(
+                                        getOccupancy(updatedEvent)
+                                );
+                            }
+                        });
+                        Log.d("view events", "joined");
+                    }
+                });
+            }
+            return;
+        }
+    };
 }
