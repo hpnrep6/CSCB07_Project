@@ -25,12 +25,22 @@ public class Home extends AppCompatActivity {
             }
         });
 
+        ((Button) findViewById(R.id.homeManageVenues)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Home.this, ManageVenues.class);
+                startActivity(intent);
+            }
+        });
+
         ((Button) findViewById(R.id.homeLogOut)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 User.logout();
                 Intent intent = new Intent(Home.this, Login.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
+                finish();
             }
         });
 

@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import b07.sportsevents.db.User;
 import b07.sportsevents.db.UserCallback;
@@ -46,7 +47,12 @@ public class Register extends AppCompatActivity {
                             public void userStatus(User.UserStatus status, AppCompatActivity activity) {
                                 if (status == User.UserStatus.REGISTER_SUCCESS) {
                                     Intent intent = new Intent(Register.this, Home.class);
+                                    Toast.makeText(activity, "Registration success. Bringing you to the home page.", Toast.LENGTH_SHORT).show();
                                     startActivity(intent);
+                                }
+
+                                if (status == User.UserStatus.REGISTER_FAILED) {
+                                    Toast.makeText(activity, "Registration failed. Please try again.", Toast.LENGTH_SHORT).show();
                                 }
                             }
                         }

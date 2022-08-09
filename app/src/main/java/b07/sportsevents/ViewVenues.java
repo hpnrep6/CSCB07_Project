@@ -83,7 +83,7 @@ public class ViewVenues extends AppCompatActivity {
         ((TextView) createdView.findViewById(R.id.viewVenueLocation)).setText(location);
         ((TextView) createdView.findViewById(R.id.viewVenueDescription)).setText(description);
         ((TextView) createdView.findViewById(R.id.viewVenueID)).setText(id);
-        ((Button) createdView.findViewById(R.id.viewVenueCreateEvent)).setOnClickListener(onCreateEventClick);
+      ((Button) createdView.findViewById(R.id.viewVenueCreateEvent)).setOnClickListener(onCreateEventClick);
     }
 
     private View.OnClickListener onCreateEventClick = new View.OnClickListener() {
