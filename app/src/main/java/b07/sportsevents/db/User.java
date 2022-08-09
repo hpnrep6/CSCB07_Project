@@ -117,6 +117,5 @@ public class User extends DBTable<User> {
     }
 
     public static void isAdmin(UserCallback callback) {
-
     }
 }

@@ -7,6 +7,9 @@ import b07.sportsevents.db.Event;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -354,5 +357,36 @@ public class ViewEvents extends AppCompatActivity{
         //pass the event's id to the popup screen
         intent.putExtra("event_id", id);
         startActivity(intent);
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        //if (isadmin()){ inflater.inflate(R.menu.menu_admin, menu)} else{;
+        inflater.inflate(R.menu.menu_customer, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.My_Events:
+            case R.id.Upcoming_events:
+                Intent ve = new Intent(this, ViewEvents.class);
+                startActivity(ve);
+                return true;
+            case R.id.My_Profile:
+                Intent mp = new Intent(this, MyProfile.class);
+                startActivity(mp);
+                return true;
+            case R.id.Schedule_Events:
+                Intent se = new Intent(this, ViewVenues.class);
+                startActivity(se);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+
+
     }
 }
