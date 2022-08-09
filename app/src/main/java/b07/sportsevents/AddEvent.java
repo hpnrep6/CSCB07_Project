@@ -29,6 +29,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 
 import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.util.Calendar;
 
 public class  AddEvent extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
@@ -109,13 +110,20 @@ public class  AddEvent extends AppCompatActivity implements DatePickerDialog.OnD
                 calendar.set(Calendar.MINUTE, minute);
 
                 long time = (calendar.getTimeInMillis() / 1000L);
-
+                long unixTime = Instant.now().getEpochSecond();
                 switch (timeSelection) {
+
                     case DAY_START:
-                        startTime = time;
+                        if(unixTime<time&&startTime<time) {
+                            startTime = time;
+
+                        }
+
                         break;
                     case DAY_END:
-                        endTime = time;
+                        if(startTime<time&&unixTime<time) {
+                            endTime = time;
+                        }
                         break;
                 }
 

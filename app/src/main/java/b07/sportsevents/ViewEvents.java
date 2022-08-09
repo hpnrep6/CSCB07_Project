@@ -310,8 +310,8 @@ public class ViewEvents extends AppCompatActivity{
                 ((Button) createdView.findViewById(R.id.viewEventsEventEnrol2)).setText("Drop Event");
             }
         }
-        ((Button) createdView.findViewById(R.id.viewEventsEventEnrol)).setOnClickListener(onEnrolClick);
-        ((Button) createdView.findViewById(R.id.button_popup)).setOnClickListener(description);
+        ((Button) createdView.findViewById(R.id.viewEventsEventEnrol2)).setOnClickListener(onEnrolClick);
+
 
     }
 
