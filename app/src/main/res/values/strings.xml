@@ -1,9 +1,8 @@
 <resources>
-    <string name="app_name">SportsEvents</string>
+    <string name="app_name">Sports Space</string>
     <string name="venue_name">Venue Name</string>
     <string name="venue_location">Venue Location</string>
     <string name="venue_description">Venue Description</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-
 </resources>

@@ -7,11 +7,13 @@
     tools:context=".Login">
 
     <LinearLayout
-        android:layout_width="409dp"
-        android:layout_height="729dp"
+        android:layout_width="310dp"
+        android:layout_height="347dp"
         android:orientation="vertical"
-        tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="1dp">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView10">
 
         <TextView
             android:id="@+id/textView13"
@@ -24,8 +26,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Name" />
+            android:hint="Email"
+            android:inputType="textPersonName" />
 
         <TextView
             android:id="@+id/textView14"
@@ -40,6 +42,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
+            android:hint="Password"
             android:inputType="textPassword" />
 
         <Button
@@ -52,7 +55,18 @@
             android:id="@+id/loginRegister"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="No account? Register uwu" />
+            android:text="No account? Click to Register" />
 
     </LinearLayout>
+
+    <ImageView
+        android:id="@+id/imageView10"
+        android:layout_width="273dp"
+        android:layout_height="208dp"
+        android:layout_marginTop="100dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_sports_space_1_" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

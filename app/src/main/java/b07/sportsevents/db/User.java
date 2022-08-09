@@ -1,6 +1,7 @@
 package b07.sportsevents.db;
 
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -43,7 +44,7 @@ public class User extends DBTable<User> {
     }
 
     @Exclude
-    public User getInstance() {
+    public static User getInstance() {
         return new User();
     }
 
@@ -54,16 +55,20 @@ public class User extends DBTable<User> {
             callback.userStatus(UserStatus.ALREADY_LOGGED_IN, activity);
         }
 
-        auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()) {
-                    callback.userStatus(UserStatus.LOGIN_SUCCESS, activity);
-                } else {
-                    callback.userStatus(UserStatus.LOGIN_FAILED, activity);
+        try{
+            auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if (task.isSuccessful()) {
+                        callback.userStatus(UserStatus.LOGIN_SUCCESS, activity);
+                    } else {
+                        callback.userStatus(UserStatus.LOGIN_FAILED, activity);
+                    }
                 }
-            }
-        });
+            });
+        } catch (IllegalArgumentException e) {
+            Toast.makeText(activity, "Invalid email, name, or password. Please try again.", Toast.LENGTH_SHORT).show();
+        }
     }
 
     public static void register(String email, String password, String name, AppCompatActivity activity, UserCallback callback) {
@@ -77,27 +82,30 @@ public class User extends DBTable<User> {
             callback.userStatus(UserStatus.REGISTER_FAILED, activity);
         }
 
-        auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(
-            new OnCompleteListener<AuthResult>() {
-                @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
-                    Log.d("user", "login attempted");
-                    if (task.isSuccessful()) {
-                        FirebaseUser user = auth.getCurrentUser();
-                        User userSend = new User(name);
-                        userSend.privileges = "Customer";
+        try {
+            auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(
+                    new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            Log.d("user", "login attempted");
+                            if (task.isSuccessful()) {
+                                FirebaseUser user = auth.getCurrentUser();
+                                User userSend = new User(name);
+                                userSend.privileges = "Customer";
 
-                        FirebaseDatabase.getInstance().getReference().child(getTableName()).
-                                child(user.getUid()).setValue(userSend);
-                        callback.userStatus(UserStatus.REGISTER_SUCCESS, activity);
-                    } else {
-                        Log.d("user", "login failed");
-                        Log.d("user",task.getException().getMessage());
-                        callback.userStatus(UserStatus.REGISTER_FAILED, activity);
+                                FirebaseDatabase.getInstance().getReference().child(getTableName()).
+                                        child(user.getUid()).setValue(userSend);
+                                callback.userStatus(UserStatus.REGISTER_SUCCESS, activity);
+                            } else {
+                                Log.d("user", "login failed");
+                                callback.userStatus(UserStatus.REGISTER_FAILED, activity);
+                            }
+                        }
                     }
-                }
-            }
-        );
+            );
+        } catch (IllegalArgumentException e) {
+            Toast.makeText(activity, "Invalid email, name, or password. Please try again.", Toast.LENGTH_SHORT).show();
+        }
     }
 
     public static void logout() {
@@ -109,6 +117,5 @@ public class User extends DBTable<User> {
     }
 
     public static void isAdmin(UserCallback callback) {
-
     }
 }
