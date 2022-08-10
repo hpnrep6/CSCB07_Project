@@ -55,7 +55,9 @@ public class MyProfile extends AppCompatActivity {
             public void onClick(View view) {
                 User.logout();
                 Intent intent = new Intent(MyProfile.this, Login.class);
+                finishAffinity();
                 startActivity(intent);
+
             }
         });
     }
@@ -103,11 +105,7 @@ public class MyProfile extends AppCompatActivity {
                 startActivity(i);
                 return true;
             }
-            case R.id.Manage_events: {
-                Intent intent = new Intent(this, ManageEvents.class);
-                startActivity(intent);
-                return true;
-            }
+
             case R.id.Manage_Venues: {
                 Intent intent = new Intent(this, ManageVenues.class);
                 startActivity(intent);

@@ -26,6 +26,12 @@ public class Home extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+        Intent intent = new Intent(this, ViewEvents.class);
+        intent.putExtra("filter", ViewEvents.Filter.ALL);
+        finishAffinity();
+        startActivity(intent);
+
+
         ((Button) findViewById(R.id.homeAddVenue)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -123,14 +129,11 @@ public class Home extends AppCompatActivity {
                 Intent in = new Intent(this, MyEvents.class);
                 startActivity(in);
                 return true;
-//            case R.id.Manage_events:
-//                Intent me = new Intent(this, Manageevents.class);
-//                startActivity(me);
-//                return true;
             case R.id.Manage_Venues:
                 Intent mv = new Intent(this, ManageVenues.class);
                 startActivity(mv);
                 return true;
+
             case R.id.Upcoming_events:
                 Intent intent = new Intent(this, ViewEvents.class);
                 intent.putExtra("filter", ViewEvents.Filter.ALL);

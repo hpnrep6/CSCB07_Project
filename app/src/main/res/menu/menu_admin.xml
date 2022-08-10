@@ -5,9 +5,9 @@
         android:title="My Profile"
         android:icon="@drawable/ic_baseline_person_24"
         app:showAsAction="always" />
-    <item android:id="@+id/Manage_events"
-        android:title="Manage Events"
-        android:icon="@drawable/ic_baseline_edit_24"
+    <item android:id="@+id/Upcoming_events"
+        android:title="Upcoming Events"
+        android:icon="@drawable/ic_baseline_event_note_24"
         app:showAsAction="always"/>
     <item android:id="@+id/Manage_Venues"
         android:title="Manage Venues"

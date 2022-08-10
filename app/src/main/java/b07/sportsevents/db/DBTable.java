@@ -80,4 +80,9 @@ public abstract class DBTable <T extends DBTable> {
         FirebaseDatabase.getInstance().getReference().child(tablename).
                 child(String.valueOf(id)).removeValue();
     }
+
+    public void overwriteOne(T value, String ID, String tablename, AppCompatActivity activity) {
+        FirebaseDatabase.getInstance().getReference().child(tablename).
+                child(ID).setValue(value);
+    }
 }

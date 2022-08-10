@@ -23,6 +23,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.Toolbar;
 
 import com.google.android.gms.tasks.Task;
@@ -53,7 +54,7 @@ public class ViewEvents extends AppCompatActivity{
         VENUE
     }
 
-
+    public static Event editedEvent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -155,68 +156,81 @@ public class ViewEvents extends AppCompatActivity{
         });
     }
 
+    private boolean isAdmin = false;
+
     void loadScreen(String type, String specified){
         LinearLayout ll=findViewById(R.id.viewMyEvents);
         ll.removeAllViews();
-        Event.getInstance().queryAll(Event.getTableName(), this, new DBCallback<Task<DataSnapshot>>() {
+
+        User.getInstance().queryByID(FirebaseAuth.getInstance().getUid(), User.getTableName(), this, new DBCallback<Task<DataSnapshot>>() {
             @Override
-            public void queriedData(Task<DataSnapshot> task, AppCompatActivity activity) {
+            public void queriedData(Task<DataSnapshot> value, AppCompatActivity activity) {
+                ViewEvents.this.isAdmin = !((String) value.getResult().child("privileges").getValue()).equals("Customer");
 
-                Iterable<DataSnapshot> events = task.getResult().getChildren();
-                Iterator eventIterator = events.iterator();
 
-                //Filter filter = ((Filter) bundle.get("filter"));
-                String sport ="";
-                String venue ="";
-                //String selection = spinner.getSelectedItem().toString();
-                Filter filter = Filter.ALL;
-                if (Objects.equals(type, "Sport")){
-                    filter = Filter.SPORT;
-                    sport = specified;
-                }
-                else if (Objects.equals(type, "Venue")){
-                    filter = Filter.VENUE;
-                    venue = specified;
-                }
+                Event.getInstance().queryAll(Event.getTableName(), ViewEvents.this, new DBCallback<Task<DataSnapshot>>() {
+                    @Override
+                    public void queriedData(Task<DataSnapshot> task, AppCompatActivity activity) {
 
-                long currentTime = System.currentTimeMillis();
-                //System.out.println(String.valueOf(unixTime));
-                while (eventIterator.hasNext()) {
+                        Iterable<DataSnapshot> events = task.getResult().getChildren();
+                        Iterator eventIterator = events.iterator();
 
-                    DataSnapshot event = (DataSnapshot) eventIterator.next();
-
-                    long endTime = event.getValue(Event.class).endTime * 1000L;
-
-                    if (currentTime <= endTime) {
-                        String key = event.getKey();
-                        Event readEvent = event.getValue(Event.class);
-
-                        switch (filter) {
-                            case ALL: {
-                                addEventToScreen(key, readEvent);
-                                break;
-                            }
-
-                            case USER: {
-                                addEventToScreenFilterByUser(key, readEvent);
-                                break;
-                            }
-
-                            case SPORT: {
-                                //addEventToScreenFilterBySport(key, readEvent, (String) bundle.get("sport"));
-                                addEventToScreenFilterBySport(key, readEvent, sport);
-                                break;
-                            }
-                            case VENUE:{
-                                addEventToScreenFilterByVenue(key, readEvent, venue);
-                            }
+                        //Filter filter = ((Filter) bundle.get("filter"));
+                        String sport ="";
+                        String venue ="";
+                        //String selection = spinner.getSelectedItem().toString();
+                        Filter filter = Filter.ALL;
+                        if (Objects.equals(type, "Sport")){
+                            filter = Filter.SPORT;
+                            sport = specified;
+                        }
+                        else if (Objects.equals(type, "Venue")){
+                            filter = Filter.VENUE;
+                            venue = specified;
                         }
 
-                    }
+                        long currentTime = System.currentTimeMillis();
+                        //System.out.println(String.valueOf(unixTime));
+                        while (eventIterator.hasNext()) {
 
-                }
+                            DataSnapshot event = (DataSnapshot) eventIterator.next();
+
+                            long endTime = event.getValue(Event.class).endTime * 1000L;
+
+                            if (currentTime <= endTime) {
+                                String key = event.getKey();
+                                Event readEvent = event.getValue(Event.class);
+
+                                switch (filter) {
+                                    case ALL: {
+                                        addEventToScreen(key, readEvent);
+                                        break;
+                                    }
+
+                                    case USER: {
+                                        addEventToScreenFilterByUser(key, readEvent);
+                                        break;
+                                    }
+
+                                    case SPORT: {
+                                        //addEventToScreenFilterBySport(key, readEvent, (String) bundle.get("sport"));
+                                        addEventToScreenFilterBySport(key, readEvent, sport);
+                                        break;
+                                    }
+                                    case VENUE:{
+                                        addEventToScreenFilterByVenue(key, readEvent, venue);
+                                    }
+                                }
+
+                            }
+
+                        }
+                    }
+                });
+
             }
         });
+
     }
 
     public static String getOccupancy(Event event) {
@@ -279,16 +293,32 @@ public class ViewEvents extends AppCompatActivity{
         ((TextView) createdView.findViewById(R.id.eventStart)).setText(event.startTime == 0 ? "No date selected" : format.format(event.startTime * 1000L));
         ((TextView) createdView.findViewById(R.id.eventEnd)).setText(event.endTime == 0 ? "No date selected" : format.format(event.endTime * 1000L));
 
-        if (event.registeredUsers != null) {
-            if (event.registeredUsers.size() >= event.maxPlayers) {
-                ((Button) createdView.findViewById(R.id.viewEventsEventEnrol2)).setText("Event Full");
-            }
+        if (isAdmin) {
+            ((Button) createdView.findViewById(R.id.viewEventsEventEnrol2)).setText("Edit event");
 
-            if (event.registeredUsers.containsKey(FirebaseAuth.getInstance().getUid())) {
-                ((Button) createdView.findViewById(R.id.viewEventsEventEnrol2)).setText("Drop Event");
+            ((Button) createdView.findViewById(R.id.viewEventsEventEnrol2)).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(ViewEvents.this, AddEvent.class);
+                    intent.putExtra("event",  0);
+                    intent.putExtra("eventid", id);
+                    editedEvent = event;
+                    startActivity(intent);
+                }
+            });
+        } else {
+            if (event.registeredUsers != null) {
+                if (event.registeredUsers.size() >= event.maxPlayers) {
+                    ((Button) createdView.findViewById(R.id.viewEventsEventEnrol2)).setText("Event Full");
+                }
+
+                if (event.registeredUsers.containsKey(FirebaseAuth.getInstance().getUid())) {
+                    ((Button) createdView.findViewById(R.id.viewEventsEventEnrol2)).setText("Drop Event");
+                }
             }
+            ((Button) createdView.findViewById(R.id.viewEventsEventEnrol2)).setOnClickListener(onEnrolClick);
         }
-        ((Button) createdView.findViewById(R.id.viewEventsEventEnrol2)).setOnClickListener(onEnrolClick);
+
         ((Button) createdView.findViewById(R.id.moreInfo)).setOnClickListener(description);
 
     }
@@ -325,61 +355,72 @@ public class ViewEvents extends AppCompatActivity{
     View.OnClickListener onEnrolClick = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            if (((Button) view).getText().toString().equals("Event Full")) {
-                return;
-            }
 
-            View parent = ((View) view.getParent());
-            String id = ((TextView) ((View) parent.getParent()).findViewById(R.id.eventID)).getText().toString();
-            Log.d("event", "" + ((Button) view).getText().toString().equals("Join this Event"));
+            User.getInstance().queryByID(FirebaseAuth.getInstance().getUid(), User.getTableName(), ViewEvents.this, new DBCallback<Task<DataSnapshot>>() {
+                @Override
+                public void queriedData(Task<DataSnapshot> value, AppCompatActivity activity) {
+                    if (((String) value.getResult().child("privileges").getValue()).equals("Customer")) {
+                        if (((Button) view).getText().toString().equals("Event Full")) {
+                            return;
+                        }
 
-            if (((Button) view).getText().toString().equals("Join this Event")) {
-                Event.enrolUser(FirebaseAuth.getInstance().getUid(), Long.parseLong(id), ViewEvents.this, new DBCallback<Task<DataSnapshot>>() {
-                    @Override
-                    public void queriedData(Task<DataSnapshot> value, AppCompatActivity activity) {
+                        View parent = ((View) view.getParent());
+                        String id = ((TextView) ((View) parent.getParent()).findViewById(R.id.eventID)).getText().toString();
+                        Log.d("event", "" + ((Button) view).getText().toString().equals("Join this Event"));
 
-                        ((Button) view).setText("Drop Event");
+                        if (((Button) view).getText().toString().equals("Join this Event")) {
+                            Event.enrolUser(FirebaseAuth.getInstance().getUid(), Long.parseLong(id), ViewEvents.this, new DBCallback<Task<DataSnapshot>>() {
+                                @Override
+                                public void queriedData(Task<DataSnapshot> value, AppCompatActivity activity) {
 
-                        Event.getInstance().queryByID(Long.parseLong(id), Event.getTableName(), ViewEvents.this, new DBCallback<Task<DataSnapshot>>() {
-                            @Override
-                            public void queriedData(Task<DataSnapshot> value, AppCompatActivity activity) {
-                                Event updatedEvent = value.getResult().getValue(Event.class);
-                                Log.d("event", "asd");
-                                ((TextView) ((View) ((View) view.getParent()).getParent()).findViewById(R.id.eventOccupancy)).setText(
-                                        getOccupancy(updatedEvent)
+                                    ((Button) view).setText("Drop Event");
 
-                                );
+                                    Event.getInstance().queryByID(Long.parseLong(id), Event.getTableName(), ViewEvents.this, new DBCallback<Task<DataSnapshot>>() {
+                                        @Override
+                                        public void queriedData(Task<DataSnapshot> value, AppCompatActivity activity) {
+                                            Event updatedEvent = value.getResult().getValue(Event.class);
+                                            Log.d("event", "asd");
+                                            ((TextView) ((View) ((View) view.getParent()).getParent()).findViewById(R.id.eventOccupancy)).setText(
+                                                    getOccupancy(updatedEvent)
 
-                            }
-                        });
+                                            );
 
-                        Log.d("view events", "joined");
+                                        }
+                                    });
+
+                                    Log.d("view events", "joined");
+                                }
+                            });
+                        } else {
+                            Event.dropUser(FirebaseAuth.getInstance().getUid(), Long.parseLong(id),ViewEvents.this, new DBCallback<Task<DataSnapshot>>() {
+                                @Override
+                                public void queriedData(Task<DataSnapshot> value, AppCompatActivity activity) {
+                                    ((Button) view).setText("Join this Event");
+
+                                    Event.getInstance().queryByID(Long.parseLong(id), Event.getTableName(), ViewEvents.this, new DBCallback<Task<DataSnapshot>>() {
+                                        @Override
+                                        public void queriedData(Task<DataSnapshot> value, AppCompatActivity activity) {
+                                            Event updatedEvent = value.getResult().getValue(Event.class);
+                                            Log.d("event", "asd");
+                                            ((TextView) ((View) ((View) view.getParent()).getParent()).findViewById(R.id.eventOccupancy)).setText(
+                                                    getOccupancy(updatedEvent)
+                                            );
+                                        }
+                                    });
+                                    Log.d("view events", "joined");
+                                }
+
+
+                            });
+
+                        }
+                        return;
+                    } else {
+                        Toast.makeText(activity, "Admins may not join events.", Toast.LENGTH_SHORT).show();
                     }
-                });
-            } else {
-                Event.dropUser(FirebaseAuth.getInstance().getUid(), Long.parseLong(id),ViewEvents.this, new DBCallback<Task<DataSnapshot>>() {
-                    @Override
-                    public void queriedData(Task<DataSnapshot> value, AppCompatActivity activity) {
-                        ((Button) view).setText("Join this Event");
+                }
+            });
 
-                        Event.getInstance().queryByID(Long.parseLong(id), Event.getTableName(), ViewEvents.this, new DBCallback<Task<DataSnapshot>>() {
-                            @Override
-                            public void queriedData(Task<DataSnapshot> value, AppCompatActivity activity) {
-                                Event updatedEvent = value.getResult().getValue(Event.class);
-                                Log.d("event", "asd");
-                                ((TextView) ((View) ((View) view.getParent()).getParent()).findViewById(R.id.eventOccupancy)).setText(
-                                        getOccupancy(updatedEvent)
-                                );
-                            }
-                        });
-                        Log.d("view events", "joined");
-                    }
-
-
-                });
-
-            }
-            return;
 
 
         }

@@ -39,13 +39,14 @@ import java.util.Calendar;
 
 public class  AddEvent extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
     private String venueID;
+    boolean editEvent = false;
 
     public enum TimeSelectorChoice {
         DAY_START,
         DAY_END
     }
 
-    ;
+    private String eventID;
 
     public TimeSelectorChoice timeSelection = TimeSelectorChoice.DAY_START;
 
@@ -67,7 +68,32 @@ public class  AddEvent extends AppCompatActivity implements DatePickerDialog.OnD
 
         Bundle bundle = getIntent().getExtras();
 
-        venueID = bundle.getString("id");
+        if (bundle.containsKey("event")) {
+            Event event = ViewEvents.editedEvent;
+
+            String name = event.name;
+            int occupancy = event.maxPlayers;
+            String description = event.description;
+            startTime = event.startTime;
+            endTime = event.endTime;
+
+            ((TextView) findViewById(R.id.addEventName)).setText(name);
+            ((TextView) findViewById(R.id.addEventPlayers)).setText(String.valueOf(occupancy));
+            ((TextView) findViewById(R.id.addEventDescription)).setText(description);
+
+            SimpleDateFormat format = new SimpleDateFormat("MMMM dd, yyyy HH:mm");
+
+            ((TextView) findViewById(R.id.addEventStartTimeDate)).setText(startTime == 0 ? "No date selected" : format.format(startTime * 1000L));
+            ((TextView) findViewById(R.id.addEventEndTimeDate)).setText(endTime == 0 ? "No date selected" : format.format(endTime * 1000L));
+            venueID = String.valueOf(event.venueID);
+
+            ((Button) findViewById(R.id.addEventConfirmButton)).setText("Edit event");
+
+            editEvent = true;
+            eventID = bundle.getString("eventid");
+        } else {
+            venueID = bundle.getString("id");
+        }
 
         ((TextView) findViewById(R.id.addEventVenueName)).setText(bundle.getString("name"));
 
@@ -115,11 +141,26 @@ public class  AddEvent extends AppCompatActivity implements DatePickerDialog.OnD
                         endTime,
                         Integer.parseInt(((TextView) findViewById(R.id.addEventPlayers)).getText().toString()));
 
-                Event.getInstance().writeOne(createdEvent, Event.getTableName(), AddEvent.this);
+                if (editEvent) {
+                    Log.d("add event", eventID);
+                    Event.getInstance().overwriteOne(createdEvent, eventID, Event.getTableName(), AddEvent.this);
+                } else {
+                    Event.getInstance().writeOne(createdEvent, Event.getTableName(), AddEvent.this);
+                }
+                Intent intent;
 
-                Intent intent = new Intent(AddEvent.this, ViewVenues.class);
-                intent.putExtra("filter", ViewVenues.Filter.ALL);
-                Toast.makeText(AddEvent.this, "Event created", Toast.LENGTH_SHORT).show();
+                if (editEvent) {
+                    intent = new Intent(AddEvent.this, ViewEvents.class);
+                    intent.putExtra("filter", ViewEvents.Filter.ALL);
+                } else {
+                    intent = new Intent(AddEvent.this, ViewVenues.class);
+                    intent.putExtra("filter", ViewVenues.Filter.ALL);
+                }
+
+                if (editEvent)
+                    Toast.makeText(AddEvent.this, "Event updated", Toast.LENGTH_SHORT).show();
+                else
+                    Toast.makeText(AddEvent.this, "Event created", Toast.LENGTH_SHORT).show();
                 startActivity(intent);
 
 
