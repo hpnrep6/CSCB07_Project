@@ -1,5 +1,7 @@
 package b07.sportsevents;
 
+import static android.icu.lang.UCharacter.toLowerCase;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
@@ -70,7 +72,7 @@ public class AddVenue extends AppCompatActivity {
                     ((LinearLayout) findViewById(R.id.addVenueSportsContainer)).addView(createdView);
                     String addedString = processedText;
                     ((TextView) createdView.findViewById(R.id.addVenueSportsItem)).setText(addedString);
-                    AddVenue.this.sportsList.add(addedString);
+                    AddVenue.this.sportsList.add(toLowerCase(addedString));
                 }
             }
 

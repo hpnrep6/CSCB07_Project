@@ -3,14 +3,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context=".ViewVenuesVenueFragment"
-    android:layout_margin="10dp">
+    android:layout_margin="10dp"
+    android:padding="5dp"
+    android:paddingHorizontal="5dp"
+    tools:context=".ViewVenuesVenueFragment">
+
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/display_item"
         android:layout_margin="5dp"
+        android:background="@drawable/display_item"
         android:padding="5dp">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -36,35 +40,42 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="4dp"
+                android:padding="5dp"
                 android:text="Location"
-                android:textSize="18dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 android:textColor="@color/white"
-                android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+                android:textSize="18dp" />
 
             <TextView
                 android:id="@+id/textView24"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="4dp"
-                android:textColor="@color/white"
-                android:text="Description:" />
+                android:background="@drawable/light_bkg"
+                android:paddingHorizontal="5dp"
+                android:paddingVertical="2dp"
+                android:text="Description:"
+                android:textColor="#011267" />
 
             <TextView
                 android:id="@+id/viewVenueDescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="6dp"
-                android:textColor="@color/white"
                 android:text="Description"
-                android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textColor="@color/white" />
 
             <TextView
                 android:id="@+id/textView23"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="4dp"
-                android:textColor="@color/white"
-                android:text="Sports Offered:" />
+                android:background="@drawable/light_bkg"
+                android:paddingHorizontal="5dp"
+                android:paddingVertical="2dp"
+                android:text="Sports Offered:"
+                android:textColor="#011267" />
 
             <TextView
                 android:id="@+id/venueSports2"
@@ -72,8 +83,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="6dp"
                 android:text="TextView"
-                android:textColor="@color/white"
-                android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textColor="@color/white" />
 
             <Button
                 android:id="@+id/venueButton"
