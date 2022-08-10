@@ -35,8 +35,10 @@
                 android:ems="10"
                 android:gravity="start|top"
                 android:inputType="textMultiLine"
-                android:textColor="@color/white"
-                android:textColorHint="@color/black"
+                android:textColor="@color/black"
+                android:textColorHint="#61c2ff"
+                android:hint="Name"
+                android:padding="10dp"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
@@ -54,8 +56,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/text_input_box"
+                android:textColor="@color/black"
+                android:textColorHint="#61c2ff"
+                android:hint="Venue"
                 android:padding="10dp"
-                android:textColor="@color/black"/>
+                android:textSize="17dp"/>
 
             <TextView
                 android:id="@+id/textView6"
@@ -70,7 +75,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="41dp"
                 android:gravity="start|top"
-                android:padding="10dp" />
+                android:padding="10dp"/>
 
             <TextView
                 android:id="@+id/textView8"
@@ -106,8 +111,11 @@
                 android:ems="10"
                 android:gravity="start|top"
                 android:inputType="textMultiLine"
+                android:textColor="@color/black"
+                android:textColorHint="#61c2ff"
+                android:hint="Description"
                 android:padding="10dp"
-                android:textColor="@color/black" />
+                android:textSize="17dp"/>
 
             <TextView
                 android:layout_marginTop="17dp"

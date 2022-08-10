@@ -27,6 +27,7 @@
                 android:text="Name"
                 android:background="@drawable/light_bkg"
                 android:padding="5dp"
+                android:layout_marginBottom="8dp"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
             <TextView
@@ -35,6 +36,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="4dp"
                 android:text="Location"
+                android:textSize="18dp"
                 android:textColor="@color/white"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
