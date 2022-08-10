@@ -60,7 +60,7 @@ public class ViewEvents extends AppCompatActivity{
 
         //spinner selection lists
         //spinner 1
-        String[] filter_by = {"View All", "Filter by Sport", "Filter by Venue"};
+        String[] filter_by = {"View All", "Sport", "Venue"};
         //spinner 2
         List<String> all_sports = Sport.getInstance().getAllSportNames(this);
         List<String> venue_names = Venue.getInstance().getAllVenueNames(this);
@@ -95,7 +95,7 @@ public class ViewEvents extends AppCompatActivity{
                 ((TextView) parent.getChildAt(0)).setTextColor(Color.WHITE);
                 String specified_selected = "";
                 String filter_selected = parent.getItemAtPosition(pos).toString();
-                if (filter_selected.equals("Filter by Sport")){
+                if (filter_selected.equals("Sport")){
                     spinner2.setVisibility(View.VISIBLE);
                     // Create an ArrayAdapter using the string array and a default spinner layout
                     ArrayAdapter adapter2 = new ArrayAdapter(ViewEvents.this,
@@ -106,7 +106,7 @@ public class ViewEvents extends AppCompatActivity{
                     spinner2.setAdapter(adapter2);
                     //specified_selected = spinner2.getSelectedItem().toString();
                 }
-                else if (filter_selected.equals("Filter by Venue")){
+                else if (filter_selected.equals("Venue")){
                     spinner2.setVisibility(View.VISIBLE);
                     // Create an ArrayAdapter using the string array and a default spinner layout
                     ArrayAdapter adapter2 = new ArrayAdapter(ViewEvents.this,
@@ -185,7 +185,7 @@ public class ViewEvents extends AppCompatActivity{
     }
 
     void loadScreen(String type, String specified){
-        LinearLayout ll =findViewById(R.id.viewMyEvents);
+        LinearLayout ll=findViewById(R.id.viewMyEvents);
         ll.removeAllViews();
         Event.getInstance().queryAll(Event.getTableName(), this, new DBCallback<Task<DataSnapshot>>() {
             @Override
@@ -199,11 +199,11 @@ public class ViewEvents extends AppCompatActivity{
                 String venue ="";
                 //String selection = spinner.getSelectedItem().toString();
                 Filter filter = Filter.ALL;
-                if (Objects.equals(type, "Filter by Sport")){
+                if (Objects.equals(type, "Sport")){
                     filter = Filter.SPORT;
                     sport = specified;
                 }
-                else if (Objects.equals(type, "Filter by Venue")){
+                else if (Objects.equals(type, "Venue")){
                     filter = Filter.VENUE;
                     venue = specified;
                 }
@@ -239,8 +239,7 @@ public class ViewEvents extends AppCompatActivity{
         });
     }
 
-    public static String getOccupancy(Event event) {
-
+    static String getOccupancy(Event event) {
         int numberEnrolled = event.registeredUsers == null ? 0 : event.registeredUsers.size();
         return numberEnrolled + "/" + event.maxPlayers;
     }
@@ -256,7 +255,7 @@ public class ViewEvents extends AppCompatActivity{
         d.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
-                if (snapshot.getValue().toString().equals(venue_name)){
+                if (snapshot.getValue() != null && snapshot.getValue().toString().equals(venue_name)){
                     addEventToScreen(id, event);
                 }
             }
@@ -274,7 +273,7 @@ public class ViewEvents extends AppCompatActivity{
         }
     }
 
-    private void addEventToScreenFilterByUser(String id, Event event) {
+    void addEventToScreenFilterByUser(String id, Event event) {
         if (event.registeredUsers == null) {
             return;
         }
