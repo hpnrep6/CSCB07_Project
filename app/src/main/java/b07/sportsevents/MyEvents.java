@@ -17,6 +17,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 
+import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.Iterator;
 import java.util.Objects;
@@ -59,7 +60,7 @@ public class MyEvents extends ViewEvents {
         });
     }
 
-    private void addEventToScreenFilterByUser(String id, Event event) {
+    public void addEventToScreenFilterByUser(String id, Event event) {
         if (event.registeredUsers == null) {
             return;
         }
@@ -69,7 +70,7 @@ public class MyEvents extends ViewEvents {
         }
     }
 
-    String getOccupancy(Event event) {
+    public static String getOccupancy(Event event) {
         int numberEnrolled = event.registeredUsers == null ? 0 : event.registeredUsers.size();
         return numberEnrolled + "/" + event.maxPlayers;
     }
@@ -77,8 +78,10 @@ public class MyEvents extends ViewEvents {
     private void addEventToScreen(String id, Event event) {
         String name = event.name;
         String sport = event.sport;
-        String start = String.valueOf(event.startTime);
-        String end = String.valueOf(event.endTime);
+        SimpleDateFormat format = new SimpleDateFormat("MMMM dd, yyyy HH:mm");
+
+        String start =  format.format(event.startTime * 1000L);
+        String end = format.format(event.endTime * 1000L);
         String occupancy = getOccupancy(event);
         //String venue = Venue.getInstance().getVenueNameByID(this, event.venueID);
         String venue = String.valueOf(event.venueID);

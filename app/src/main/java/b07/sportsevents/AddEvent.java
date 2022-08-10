@@ -100,9 +100,12 @@ public class  AddEvent extends AppCompatActivity implements DatePickerDialog.OnD
     View.OnClickListener onConfirmClick = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            String sport = ((Spinner) findViewById(R.id.addEventSport)).getSelectedItem().toString();
+            Object selected = ((Spinner) findViewById(R.id.addEventSport)).getSelectedItem();
+            if (selected == null) {
+                Toast.makeText(AddEvent.this, "No sport selected.", Toast.LENGTH_SHORT).show();
+            }
+            String sport = selected.toString();
             try {
-
                 Event createdEvent = new Event(
                         ((TextView) findViewById(R.id.addEventName)).getText().toString(),
                         sport,
@@ -114,15 +117,12 @@ public class  AddEvent extends AppCompatActivity implements DatePickerDialog.OnD
 
                 Event.getInstance().writeOne(createdEvent, Event.getTableName(), AddEvent.this);
 
-                Sport.addSportToVenue(sport, Long.parseLong(venueID), AddEvent.this, new DBCallback<Task<DataSnapshot>>() {
-                    @Override
-                    public void queriedData(Task<DataSnapshot> value, AppCompatActivity activity) {
-                        Intent intent = new Intent(AddEvent.this, ViewVenues.class);
-                        intent.putExtra("filter", ViewVenues.Filter.ALL);
-                        Toast.makeText(activity, "Event created", Toast.LENGTH_SHORT).show();
-                        startActivity(intent);
-                    }
-                });
+                Intent intent = new Intent(AddEvent.this, ViewVenues.class);
+                intent.putExtra("filter", ViewVenues.Filter.ALL);
+                Toast.makeText(AddEvent.this, "Event created", Toast.LENGTH_SHORT).show();
+                startActivity(intent);
+
+
             } catch (Exception e) {
                 Toast.makeText(AddEvent.this, "Failed to create event. Please try again.", Toast.LENGTH_SHORT).show();
             }
@@ -142,7 +142,6 @@ public class  AddEvent extends AppCompatActivity implements DatePickerDialog.OnD
                 calendar.set(Calendar.MINUTE, minute);
 
                 long time = (calendar.getTimeInMillis() / 1000L);
-                long unixTime = Instant.now().getEpochSecond();
                 switch (timeSelection) {
                     case DAY_START:
                         if (endTime != 0 && time > endTime) {
@@ -161,7 +160,7 @@ public class  AddEvent extends AppCompatActivity implements DatePickerDialog.OnD
                         break;
                 }
 
-                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+                SimpleDateFormat format = new SimpleDateFormat("MMMM dd, yyyy HH:mm");
 
                 ((TextView) findViewById(R.id.addEventStartTimeDate)).setText(startTime == 0 ? "No date selected" : format.format(startTime * 1000L));
                 ((TextView) findViewById(R.id.addEventEndTimeDate)).setText(endTime == 0 ? "No date selected" : format.format(endTime * 1000L));
