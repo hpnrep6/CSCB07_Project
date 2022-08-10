@@ -18,7 +18,7 @@
         <entry key="app/src/main/res/layout/activity_view_by_sport.xml" value="0.15070921985815602" />
         <entry key="app/src/main/res/layout/activity_view_events.xml" value="0.24271844660194175" />
         <entry key="app/src/main/res/layout/activity_view_venues.xml" value="0.38177083333333334" />
-        <entry key="app/src/main/res/layout/event_layout.xml" value="0.45909118652343756" />
+        <entry key="app/src/main/res/layout/event_layout.xml" value="0.1721132897603486" />
         <entry key="app/src/main/res/layout/fragment_add_venue_sports_listing.xml" value="0.22780797101449277" />
         <entry key="app/src/main/res/layout/fragment_manage_events_event.xml" value="0.19610507246376813" />
         <entry key="app/src/main/res/layout/fragment_manage_venues_venue_item.xml" value="0.2418478260869565" />
