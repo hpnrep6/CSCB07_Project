@@ -62,7 +62,6 @@ public class AddVenue extends AppCompatActivity {
                     ((LinearLayout) findViewById(R.id.addVenueSportsContainer)).addView(createdView);
                     String addedString = processedText;
                     ((TextView) createdView.findViewById(R.id.addVenueSportsItem)).setText(addedString);
-                    Toast.makeText(AddVenue.this, "Venue added.", Toast.LENGTH_SHORT).show();
                     AddVenue.this.sportsList.add(addedString);
                 }
             }
@@ -114,6 +113,7 @@ public class AddVenue extends AppCompatActivity {
 
                         Sport.getInstance().writeManyString(sportsList, Sport.getTableName(), AddVenue.this);
 
+                        Toast.makeText(AddVenue.this, "Venue added.", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(AddVenue.this, Home.class);
                         startActivity(intent);
 
