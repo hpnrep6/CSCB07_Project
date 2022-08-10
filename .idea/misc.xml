@@ -16,12 +16,10 @@
         <entry key="app/src/main/res/drawable/my_custom_background.xml" value="0.1375" />
         <entry key="app/src/main/res/drawable/text_input_box.xml" value="0.21432037353515626" />
         <entry key="app/src/main/res/layout/activity_add_event.xml" value="0.33" />
-        <entry key="app/src/main/res/layout/activity_add_venue.xml" value="0.29928436279296877" />
+        <entry key="app/src/main/res/layout/activity_add_venue.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_home.xml" value="0.38125" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.26132246376811596" />
-        <entry key="app/src/main/res/layout/activity_manage_events.xml" value="0.2595718383789063" />
-        <entry key="app/src/main/res/layout/activity_manage_venues.xml" value="0.21875" />
         <entry key="app/src/main/res/layout/activity_my_events.xml" value="0.26132246376811596" />
         <entry key="app/src/main/res/layout/activity_my_profile.xml" value="0.21875" />
         <entry key="app/src/main/res/layout/activity_register.xml" value="0.38177083333333334" />
