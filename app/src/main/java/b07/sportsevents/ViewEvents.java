@@ -42,6 +42,7 @@ import java.util.Objects;
 
 import b07.sportsevents.db.DBCallback;
 import b07.sportsevents.db.Sport;
+import b07.sportsevents.db.User;
 import b07.sportsevents.db.Venue;
 
 public class ViewEvents extends AppCompatActivity{
@@ -290,24 +291,24 @@ public class ViewEvents extends AppCompatActivity{
             }
         }
         ((Button) createdView.findViewById(R.id.viewEventsEventEnrol2)).setOnClickListener(onEnrolClick);
-
+        ((Button) createdView.findViewById(R.id.moreInfo)).setOnClickListener(description);
 
     }
 
-    private final View.OnClickListener description =new View.OnClickListener()
+    private final View.OnClickListener description = new View.OnClickListener()
     {
 
         @Override
         public void onClick(View view) {
             View parent = ((View) view.getParent());
-            String id = ((TextView) parent.findViewById(R.id.viewEventsEventID)).getText().toString();
+            String id = ((TextView) ((View) parent.getParent()).findViewById(R.id.eventID)).getText().toString();
             Event.getDescription(Long.parseLong(id),ViewEvents.this,view);
             //alert(text);
 
         }
     };
     public static void alert(String message, AppCompatActivity A) {
-        AlertDialog dlg = new AlertDialog.Builder(A).setTitle("Description for the event")
+        AlertDialog dlg = new AlertDialog.Builder(A).setTitle("Description")
                 .setMessage(message)
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
 
@@ -331,7 +332,7 @@ public class ViewEvents extends AppCompatActivity{
             }
 
             View parent = ((View) view.getParent());
-            String id = ((TextView) parent.findViewById(R.id.eventID)).getText().toString();
+            String id = ((TextView) ((View) parent.getParent()).findViewById(R.id.eventID)).getText().toString();
             Log.d("event", "" + ((Button) view).getText().toString().equals("Join this Event"));
 
             if (((Button) view).getText().toString().equals("Join this Event")) {
@@ -346,7 +347,7 @@ public class ViewEvents extends AppCompatActivity{
                             public void queriedData(Task<DataSnapshot> value, AppCompatActivity activity) {
                                 Event updatedEvent = value.getResult().getValue(Event.class);
                                 Log.d("event", "asd");
-                                ((TextView) ((View) view.getParent()).findViewById(R.id.eventOccupancy)).setText(
+                                ((TextView) ((View) ((View) view.getParent()).getParent()).findViewById(R.id.eventOccupancy)).setText(
                                         getOccupancy(updatedEvent)
 
                                 );
@@ -368,7 +369,7 @@ public class ViewEvents extends AppCompatActivity{
                             public void queriedData(Task<DataSnapshot> value, AppCompatActivity activity) {
                                 Event updatedEvent = value.getResult().getValue(Event.class);
                                 Log.d("event", "asd");
-                                ((TextView) ((View) view.getParent()).findViewById(R.id.eventOccupancy)).setText(
+                                ((TextView) ((View) ((View) view.getParent()).getParent()).findViewById(R.id.eventOccupancy)).setText(
                                         getOccupancy(updatedEvent)
                                 );
                             }
@@ -389,8 +390,17 @@ public class ViewEvents extends AppCompatActivity{
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        //if (isadmin()){ inflater.inflate(R.menu.menu_admin, menu)} else{;
-        inflater.inflate(R.menu.menu_customer, menu);
+        User.getInstance().queryByID(FirebaseAuth.getInstance().getUid(), User.getTableName(), this, new DBCallback<Task<DataSnapshot>>() {
+            @Override
+            public void queriedData(Task<DataSnapshot> value, AppCompatActivity activity) {
+                if (((String) value.getResult().child("privileges").getValue()).equals("Customer")) {
+                    inflater.inflate(R.menu.menu_customer, menu);
+                } else {
+                    inflater.inflate(R.menu.menu_admin, menu);
+                }
+            }
+        });
+
         return true;
     }
 
@@ -401,6 +411,14 @@ public class ViewEvents extends AppCompatActivity{
             case R.id.My_Events:
                 Intent in = new Intent(this, MyEvents.class);
                 startActivity(in);
+                return true;
+//            case R.id.Manage_events:
+//                Intent me = new Intent(this, Manageevents.class);
+//                startActivity(me);
+//                return true;
+            case R.id.Manage_Venues:
+                Intent mv = new Intent(this, ManageVenues.class);
+                startActivity(mv);
                 return true;
             case R.id.Upcoming_events:
                 Intent intent = new Intent(this, ViewEvents.class);

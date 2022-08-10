@@ -22,58 +22,68 @@
                 android:id="@+id/textView4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Event Name" />
+                android:text="Event Name"
+                android:textColor="@color/white"
+                android:textSize="17dp"/>
 
             <EditText
                 android:id="@+id/addEventName"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="10dp"
                 android:background="@drawable/text_input_box"
                 android:ems="10"
                 android:gravity="start|top"
                 android:inputType="textMultiLine"
+                android:textColor="@color/black"
+                android:textColorHint="#61c2ff"
+                android:hint="Name"
                 android:padding="10dp"
-                android:textColor="@color/white"
-                android:textColorHint="@color/white"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
+                android:layout_marginTop="16dp"
                 android:id="@+id/ddVenueTextVenue"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Event Venue" />
+                android:text="Event Venue"
+                android:textColor="@color/white"
+                android:textSize="17dp"/>
 
             <TextView
+                android:layout_marginTop="10dp"
                 android:id="@+id/addEventVenueName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/text_input_box"
-                android:padding="10dp" />
+                android:textColor="@color/black"
+                android:textColorHint="#61c2ff"
+                android:hint="Venue"
+                android:padding="10dp"
+                android:textSize="17dp"/>
 
             <TextView
                 android:id="@+id/textView6"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Event Sport" />
+                android:text="Event Sport"
+                android:textColor="@color/white"
+                android:textSize="17dp"/>
 
-            <EditText
+            <Spinner
                 android:id="@+id/addEventSport"
                 android:layout_width="match_parent"
                 android:layout_height="41dp"
-                android:background="@drawable/text_input_box"
-                android:ems="10"
                 android:gravity="start|top"
-                android:inputType="textMultiLine"
-                android:padding="10dp"
-                android:textColor="@color/white"
-                android:textColorHint="@color/white" />
+                android:padding="10dp"/>
 
             <TextView
                 android:id="@+id/textView8"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Number of Participants" />
+                android:text="Number of Participants"
+                android:textColor="@color/white"
+                android:textSize="17dp"/>
 
             <EditText
                 android:id="@+id/addEventPlayers"
@@ -81,15 +91,19 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:inputType="number"
-                android:padding="10dp" />
+                android:padding="10dp"
+                android:textColor="@color/white"/>
 
             <TextView
                 android:id="@+id/textView5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Event Description" />
+                android:text="Event Description"
+                android:textColor="@color/white"
+                android:textSize="17dp"/>
 
             <EditText
+                android:layout_marginTop="10dp"
                 android:id="@+id/addEventDescription"
                 android:layout_width="match_parent"
                 android:layout_height="99dp"
@@ -97,27 +111,36 @@
                 android:ems="10"
                 android:gravity="start|top"
                 android:inputType="textMultiLine"
+                android:textColor="@color/black"
+                android:textColorHint="#61c2ff"
+                android:hint="Description"
                 android:padding="10dp"
-                android:textColor="@color/white"
-                android:textColorHint="@color/white" />
+                android:textSize="17dp"/>
 
             <TextView
+                android:layout_marginTop="17dp"
                 android:id="@+id/textView9"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Start Time"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                android:textColor="@color/white"
+                android:textSize="17dp"/>
 
             <LinearLayout
+                android:layout_marginTop="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <TextView
+                    android:background="@drawable/text_input_box"
+                    android:padding="8dp"
                     android:id="@+id/addEventStartTimeDate"
                     android:layout_width="148dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:textColor="@color/black"
                     android:text="Start Date" />
 
                 <Spinner
@@ -127,21 +150,28 @@
             </LinearLayout>
 
             <TextView
+                android:layout_marginTop="10dp"
+                android:textColor="@color/white"
+                android:textSize="17dp"
                 android:id="@+id/textView10"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="End Time" />
 
             <LinearLayout
+                android:layout_marginTop="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
                 <TextView
+                    android:background="@drawable/text_input_box"
+                    android:padding="8dp"
                     android:id="@+id/addEventEndTimeDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:textColor="@color/black"
                     android:text="End Date" />
 
                 <Spinner
@@ -152,11 +182,27 @@
                     app:layout_constraintStart_toStartOf="parent" />
             </LinearLayout>
 
-            <Button
-                android:id="@+id/addEventConfirmButton"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Create Event" />
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <Button
+                    android:layout_margin="10dp"
+                    android:id="@+id/addEventBackButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Back" />
+
+                <Button
+                    android:layout_margin="10dp"
+                    android:id="@+id/addEventConfirmButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Create Event" />
+            </LinearLayout>
 
         </LinearLayout>
     </ScrollView>

@@ -36,8 +36,8 @@
                 android:hint="Name"
                 android:inputType="textMultiLine"
                 android:padding="8dp"
-                android:textColor="#dee3e3"
-                android:textColorHint="#ecbbf2" />
+                android:textColor="#000000"
+                android:textColorHint="#9DC9FF" />
 
             <TextView
                 android:id="@+id/textView2"
@@ -58,8 +58,8 @@
                 android:hint="Location"
                 android:inputType="textMultiLine"
                 android:padding="8dp"
-                android:textColor="#dee3e3"
-                android:textColorHint="#ecbbf2"
+                android:textColor="#000000"
+                android:textColorHint="#9DC9FF"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
 
@@ -83,14 +83,17 @@
                 android:hint="Description"
                 android:inputType="textMultiLine"
                 android:padding="8dp"
-                android:textColor="#dee3e3"
-                android:textColorHint="#ecbbf2" />
+                android:textColor="#000000"
+                android:textColorHint="#9DC9FF" />
 
             <TextView
+                android:layout_marginTop="10dp"
                 android:id="@+id/textView18"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Sports Offered (Press enter to add sport)" />
+                android:text="Sports Offered (Press enter to add sport)"
+                android:textColor="@color/white"
+                android:textSize="17dp"/>
 
             <LinearLayout
                 android:id="@+id/addVenueSportsContainer"
@@ -104,7 +107,8 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:gravity="start|top"
-                android:inputType="textMultiLine" />
+                android:inputType="textMultiLine"
+                android:textColor="@color/white"/>
 
             <LinearLayout
                 android:layout_width="match_parent"

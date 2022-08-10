@@ -16,10 +16,24 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+
+import b07.sportsevents.db.DBCallback;
+import b07.sportsevents.db.User;
+
+import java.util.ArrayList;
+
+import b07.sportsevents.db.Sport;
 import b07.sportsevents.db.Venue;
 
 public class AddVenue extends AppCompatActivity {
+    private ArrayList<String> sportsList = new ArrayList<>();
+
     String Name;
     String Location;
     String Description;
@@ -44,11 +58,19 @@ public class AddVenue extends AppCompatActivity {
                 Log.d("add venue", "" + text.toString().contains("\n"));
 
                 if (text.toString().contains("\n")) {
+                    String processedText = text.toString().replaceAll("\n", "");
+                    if (processedText.isEmpty() || AddVenue.this.sportsList.contains(processedText)) {
+                        ((TextView) findViewById(R.id.addVenueSportField)).setText("");
+                        return;
+                    }
+
                     ((TextView) findViewById(R.id.addVenueSportField)).setText("");
 
                     View createdView = getLayoutInflater().inflate(R.layout.fragment_add_venue_sports_listing, null);
                     ((LinearLayout) findViewById(R.id.addVenueSportsContainer)).addView(createdView);
-                    ((TextView) createdView.findViewById(R.id.addVenueSportsItem)).setText(text.toString());
+                    String addedString = processedText;
+                    ((TextView) createdView.findViewById(R.id.addVenueSportsItem)).setText(addedString);
+                    AddVenue.this.sportsList.add(addedString);
                 }
             }
 
@@ -75,9 +97,11 @@ public class AddVenue extends AppCompatActivity {
                     ((TextView) findViewById(R.id.addVenueLocation)).getText().toString(),
                     ((TextView) findViewById(R.id.addVenueDescription)).getText().toString()
             );
+            venue.sportsOfferedList = sportsList;
+
             Name=((TextView) findViewById(R.id.addVenueName)).getText().toString();
             Location=((TextView) findViewById(R.id.addVenueLocation)).getText().toString();
-            Description=((TextView) findViewById(R.id.addVenueDescription)).getText().toString() ;
+            Description=((TextView) findViewById(R.id.addVenueDescription)).getText().toString();
 
             //Venue.getInstance().writeOne(venue, Venue.getTableName(), AddVenue.this);
             alert(Name+" at "+Location+"\nDescription: "+Description,venue,view);
@@ -90,9 +114,14 @@ public class AddVenue extends AppCompatActivity {
 
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-
                         dialog.dismiss();
+
+
                         Venue.getInstance().writeOne(venue, Venue.getTableName(), AddVenue.this);
+
+                        Sport.getInstance().writeManyString(sportsList, Sport.getTableName(), AddVenue.this);
+
+                        Toast.makeText(AddVenue.this, "Venue added.", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(AddVenue.this, Home.class);
                         startActivity(intent);
 
@@ -106,20 +135,7 @@ public class AddVenue extends AppCompatActivity {
                     }
 
                 })
-//                .setNeutralButton("Yes and Create an Event", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int i) {
-//                        Venue.getInstance().writeOne(venue, Venue.getTableName(), AddVenue.this);
-//                        Intent intent = new Intent(AddVenue.this, AddEvent.class);
-//                        String id=Long.toString(venue.ID);
-//                        String name=venue.name;
-//                        intent.putExtra("id",id);
-//                        intent.putExtra("name",name);
-//                        startActivity(intent);
-//
-//                    }
-//
-//                })
+
                 .create();
         dlg.show();
 
@@ -128,8 +144,17 @@ public class AddVenue extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        //if (isadmin()){ inflater.inflate(R.menu.menu_admin, menu)} else{;
-        inflater.inflate(R.menu.menu_customer, menu);
+        User.getInstance().queryByID(FirebaseAuth.getInstance().getUid(), User.getTableName(), this, new DBCallback<Task<DataSnapshot>>() {
+            @Override
+            public void queriedData(Task<DataSnapshot> value, AppCompatActivity activity) {
+                if (((String) value.getResult().child("privileges").getValue()).equals("Customer")) {
+                    inflater.inflate(R.menu.menu_customer, menu);
+                } else {
+                    inflater.inflate(R.menu.menu_admin, menu);
+                }
+            }
+        });
+
         return true;
     }
 
@@ -140,6 +165,14 @@ public class AddVenue extends AppCompatActivity {
             case R.id.My_Events:
                 Intent in = new Intent(this, MyEvents.class);
                 startActivity(in);
+                return true;
+//            case R.id.Manage_events:
+//                Intent me = new Intent(this, Manageevents.class);
+//                startActivity(me);
+//                return true;
+            case R.id.Manage_Venues:
+                Intent mv = new Intent(this, ManageVenues.class);
+                startActivity(mv);
                 return true;
             case R.id.Upcoming_events:
                 Intent intent = new Intent(this, ViewEvents.class);
