@@ -11,7 +11,6 @@
         <entry key="app/src/main/res/layout/activity_home.xml" value="0.38125" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.26132246376811596" />
-
         <entry key="app/src/main/res/layout/activity_manage_events.xml" value="0.2595718383789063" />
         <entry key="app/src/main/res/layout/activity_manage_venues.xml" value="0.21875" />
         <entry key="app/src/main/res/layout/activity_my_events.xml" value="0.26132246376811596" />
@@ -28,6 +27,7 @@
         <entry key="app/src/main/res/layout/fragment_view_venues_venue.xml" value="0.33" />
         <entry key="app/src/main/res/layout/no_available_events.xml" value="0.322161865234375" />
         <entry key="app/src/main/res/layout/popup_events.xml" value="0.5588768115942029" />
+        <entry key="app/src/main/res/layout/venue_layout.xml" value="0.2543822146216332" />
       </map>
     </option>
   </component>
