@@ -3,37 +3,43 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ManageVenuesVenueItem"
+    tools:context=".ManageEventsEventFragment"
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/manageVenuesVenueName"
+        android:id="@+id/manageEventsEventName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="venue name" />
+        android:text="Name" />
 
     <TextView
-        android:id="@+id/manageVenuesVenueLocation"
+        android:id="@+id/manageEventsEventSport"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="venue location" />
+        android:text="Sport" />
 
     <TextView
-        android:id="@+id/manageVenuesVenueSports"
+        android:id="@+id/manageEventsEventVenue"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="venue sports" />
+        android:text="Venue" />
 
     <TextView
-        android:id="@+id/manageVenuesVenueID"
-        android:layout_height="wrap_content"
+        android:id="@+id/manageEventsEventOccupancy"
         android:layout_width="match_parent"
-        android:textSize="0dp"
-        android:text="TextView" />
+        android:layout_height="wrap_content"
+        android:text="0/12" />
 
     <Button
-        android:id="@+id/venueButton"
+        android:id="@+id/manageEventsEventEnrol"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Delete Venue" />
+        android:text="Join this Event" />
+
+    <TextView
+        android:id="@+id/viewEventsEventID"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:textSize="0sp"/>
 </LinearLayout>

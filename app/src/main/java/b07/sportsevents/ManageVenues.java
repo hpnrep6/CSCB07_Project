@@ -47,21 +47,37 @@ public class ManageVenues extends AppCompatActivity {
                 }
             }
         });
+        ((Button) findViewById(R.id.addVenue)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ManageVenues.this, AddVenue.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void addVenueToScreen(String id, Venue venue) {
         String name = venue.name;
         String location = venue.location;
-        String sports = venue.sportsOfferedList != null ? venue.sportsOfferedList.toString() : "No sports offered";
+        String description = venue.description;
+        String sports = venue.sportsOfferedList != null ? venue.sportsOfferedList.toString() : " No sports offered ";
 
-        View createdView = getLayoutInflater().inflate(R.layout.fragment_manage_venues_venue_item, null);
+        //View createdView = getLayoutInflater().inflate(R.layout.fragment_manage_venues_venue_item, null);
+        View createdView = getLayoutInflater().inflate(R.layout.venue_layout, null);
         ((LinearLayout) findViewById(R.id.manageVenuesContainer)).addView(createdView);
+        ((Button) createdView.findViewById(R.id.venueButton)).setText("Delete Venue");
 
-        ((TextView) createdView.findViewById(R.id.manageVenuesVenueName)).setText(name);
-        ((TextView) createdView.findViewById(R.id.manageVenuesVenueLocation)).setText(location);
-        ((TextView) createdView.findViewById(R.id.manageVenuesVenueSports)).setText(sports);
-        ((TextView) createdView.findViewById(R.id.manageVenuesVenueID)).setText(id);
-        ((Button) createdView.findViewById(R.id.manageVenuesVenueDelete)).setOnClickListener(new View.OnClickListener() {
+        ((TextView) createdView.findViewById(R.id.viewVenueName)).setText(name);
+        ((TextView) createdView.findViewById(R.id.viewVenueLocation)).setText(location);
+        ((TextView) createdView.findViewById(R.id.venueSports2)).setText(sports.substring(1,sports.length()-1));
+        ((TextView) createdView.findViewById(R.id.viewVenueDescription)).setText(description);
+        ((TextView) createdView.findViewById(R.id.viewVenueID)).setText(id);
+
+//        ((TextView) createdView.findViewById(R.id.manageVenuesVenueName)).setText(name);
+//        ((TextView) createdView.findViewById(R.id.manageVenuesVenueLocation)).setText(location);
+//        ((TextView) createdView.findViewById(R.id.manageVenuesVenueSports)).setText(sports);
+//        ((TextView) createdView.findViewById(R.id.manageVenuesVenueID)).setText(id);
+        ((Button) createdView.findViewById(R.id.venueButton)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 View parent = ((View) view.getParent());
@@ -123,5 +139,7 @@ public class ManageVenues extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
+
+
 
 }

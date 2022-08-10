@@ -5,7 +5,9 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     tools:context=".ViewVenuesVenueFragment"
-    android:layout_margin="10dp">
+    android:layout_margin="10dp"
+    android:background="@drawable/display_item"
+    >
 
     <TextView
         android:id="@+id/viewVenueName"
@@ -26,7 +28,7 @@
         android:text="Description" />
 
     <Button
-        android:id="@+id/viewVenueCreateEvent"
+        android:id="@+id/venueButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Create Event at this Venue" />

@@ -121,6 +121,7 @@ public class User extends DBTable<User> {
         return FirebaseAuth.getInstance().getCurrentUser() != null;
     }
 
+
     public boolean isAdmin(AppCompatActivity activity) {
         final boolean[] admin = {false};
         User.getInstance().queryByID(FirebaseAuth.getInstance().getUid(), User.getTableName(), activity, new DBCallback<Task<DataSnapshot>>(){

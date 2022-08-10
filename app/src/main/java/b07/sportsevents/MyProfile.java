@@ -32,14 +32,19 @@ public class MyProfile extends AppCompatActivity {
             String email = user.getEmail();
         ((TextView) findViewById(R.id.userEmail)).setText(email);}
 
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        ((TextView) findViewById(R.id.userEmail)).setText(user.getEmail());
+
         //set name and email
         User.getInstance().queryByID(FirebaseAuth.getInstance().getUid(), User.getTableName(),this, new DBCallback<Task<DataSnapshot>>(){
             @Override
             public void queriedData(Task<DataSnapshot> value, AppCompatActivity activity) {
                 String name = value.getResult().child("name").getValue().toString();
+
                 String userlevel = value.getResult().child("privileges").getValue().toString();
                 ((TextView) findViewById(R.id.userName)).setText(name);
                 ((TextView) findViewById(R.id.usertypeprofile)).setText(userlevel);
+                // ((TextView) findViewById(R.id.userName)).setText(name);
 
             }
         });
@@ -75,32 +80,39 @@ public class MyProfile extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
         switch (item.getItemId()) {
-            case R.id.My_Events:
+            case R.id.My_Events: {
                 Intent in = new Intent(this, MyEvents.class);
                 startActivity(in);
                 return true;
-//            case R.id.Manage_events:
-//                Intent me = new Intent(this, Manageevents.class);
-//                startActivity(me);
-//                return true;
-            case R.id.Manage_Venues:
-                Intent mv = new Intent(this, ManageVenues.class);
-                startActivity(mv);
-                return true;
-            case R.id.Upcoming_events:
+            }
+            case R.id.Upcoming_events: {
+
                 Intent intent = new Intent(this, ViewEvents.class);
                 intent.putExtra("filter", ViewEvents.Filter.ALL);
                 startActivity(intent);
                 return true;
-            case R.id.My_Profile:
+            }
+            case R.id.My_Profile: {
                 Intent mp = new Intent(this, MyProfile.class);
                 startActivity(mp);
                 return true;
-            case R.id.Schedule_Events:
+            }
+            case R.id.Schedule_Events: {
                 Intent i = new Intent(this, ViewVenues.class);
                 i.putExtra("filter", ViewVenues.Filter.ALL);
                 startActivity(i);
                 return true;
+            }
+            case R.id.Manage_events: {
+                Intent intent = new Intent(this, ManageEvents.class);
+                startActivity(intent);
+                return true;
+            }
+            case R.id.Manage_Venues: {
+                Intent intent = new Intent(this, ManageVenues.class);
+                startActivity(intent);
+                return true;
+            }
             default:
                 return super.onOptionsItemSelected(item);
         }
