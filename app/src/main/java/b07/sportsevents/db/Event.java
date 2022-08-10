@@ -17,6 +17,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.text.SimpleDateFormat;
 import java.util.Map;
 
 import b07.sportsevents.R;
@@ -57,13 +58,13 @@ public class Event extends DBTable<Event> {
 
                 if(task.isSuccessful())
                 {
+                    SimpleDateFormat format = new SimpleDateFormat("MMMM dd, yyyy HH:mm");
                         DataSnapshot datasnapshot=task.getResult();
                     text ="Event : "+String.valueOf(datasnapshot.child("venueID").getValue());
                     text +="\nSport: "+String.valueOf(datasnapshot.child("sport").getValue());
                     text += "\nDescription: "+String.valueOf(datasnapshot.child("description").getValue());
-                    text += "\nTime Slot: "+String.valueOf(datasnapshot.child("startTime")
-                            .getValue())+" ~ "+String.valueOf(datasnapshot.child("endTime")
-                            .getValue());
+                    text += "\nTime Slot: "+ format.format(Long.parseLong(datasnapshot.child("startTime").getValue().toString()) * 1000L)
+                            +" to " + format.format(Long.parseLong(datasnapshot.child("endTime").getValue().toString()) * 1000L);
                     text +="\nVenue ID: "+String.valueOf(datasnapshot.child("venueID").getValue());
                     text +="\nPlayers: "+ViewEvents.getOccupancy(task.getResult().getValue(Event.class));
                     ViewEvents.alert(text,A);

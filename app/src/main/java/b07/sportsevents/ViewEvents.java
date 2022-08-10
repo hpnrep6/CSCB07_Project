@@ -277,7 +277,7 @@ public class ViewEvents extends AppCompatActivity{
         ((TextView) createdView.findViewById(R.id.eventName)).setText(name);
         setVenueNameById(event.venueID, "eventVenue", createdView);
         ((TextView) createdView.findViewById(R.id.eventID)).setText(id);
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+        SimpleDateFormat format = new SimpleDateFormat("MMMM dd, yyyy HH:mm");
         ((TextView) createdView.findViewById(R.id.eventStart)).setText(event.startTime == 0 ? "No date selected" : format.format(event.startTime * 1000L));
         ((TextView) createdView.findViewById(R.id.eventEnd)).setText(event.endTime == 0 ? "No date selected" : format.format(event.endTime * 1000L));
 

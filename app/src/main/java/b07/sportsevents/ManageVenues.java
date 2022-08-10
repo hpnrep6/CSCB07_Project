@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -81,10 +82,11 @@ public class ManageVenues extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 View parent = ((View) view.getParent());
-                String id = ((TextView) parent.findViewById(R.id.manageVenuesVenueID)).getText().toString();
+                String id = ((TextView)((View) parent.getParent()).findViewById(R.id.viewVenueID)).getText().toString();
 
                 Venue.getInstance().removeOne(id, Venue.getTableName(), ManageVenues.this);
-                ((ViewGroup) view.getParent().getParent()).removeView((View) view.getParent());
+                ((ViewGroup) view.getParent().getParent().getParent().getParent()).removeView((View) view.getParent().getParent().getParent());
+                Toast.makeText(ManageVenues.this, "Venue deleted.", Toast.LENGTH_SHORT).show();
             }
         });
     }
