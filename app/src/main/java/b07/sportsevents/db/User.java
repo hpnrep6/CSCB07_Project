@@ -1,6 +1,7 @@
 package b07.sportsevents.db;
 
 import android.util.Log;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -11,10 +12,13 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.Exclude;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.List;
+
+import b07.sportsevents.R;
 
 public class User extends DBTable<User> {
     public static enum UserStatus {
@@ -117,5 +121,13 @@ public class User extends DBTable<User> {
     }
 
     public static void isAdmin(UserCallback callback) {
+
+        FirebaseDatabase.getInstance().getReference().addOnCompleteListener(new OnCompleteListener() {
+            @Override
+            public void onComplete(@NonNull Task task) {
+
+            }
+        });
     }
+
 }

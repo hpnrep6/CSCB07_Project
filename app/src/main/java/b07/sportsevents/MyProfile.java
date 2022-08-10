@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 
 import b07.sportsevents.db.DBCallback;
@@ -26,15 +27,20 @@ public class MyProfile extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_profile);
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            String email = user.getEmail();
+        ((TextView) findViewById(R.id.userEmail)).setText(email);}
 
         //set name and email
         User.getInstance().queryByID(FirebaseAuth.getInstance().getUid(), User.getTableName(),this, new DBCallback<Task<DataSnapshot>>(){
             @Override
             public void queriedData(Task<DataSnapshot> value, AppCompatActivity activity) {
                 String name = value.getResult().child("name").getValue().toString();
-                //String email = value.getResult().child("email").getValue().toString();
+                String userlevel = value.getResult().child("privileges").getValue().toString();
                 ((TextView) findViewById(R.id.userName)).setText(name);
-                //((TextView) findViewById(R.id.userEmail)).setText(email);
+                ((TextView) findViewById(R.id.usertypeprofile)).setText(userlevel);
+
             }
         });
 
