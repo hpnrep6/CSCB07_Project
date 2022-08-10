@@ -3,14 +3,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context=".AddVenueSportsListing"
-    android:background="@drawable/item_background">
+    android:layout_marginTop="10dp"
+    android:padding="6dp"
+    tools:context=".AddVenueSportsListing">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
         android:id="@+id/addVenueSportsItem"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Sport" />
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:text="Sport"
+        android:background="@drawable/item_background"/>
 
 </FrameLayout>

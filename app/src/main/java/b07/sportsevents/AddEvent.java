@@ -1,8 +1,10 @@
 package b07.sportsevents;
 
 import b07.sportsevents.db.DBCallback;
+import b07.sportsevents.db.DBTable;
 import b07.sportsevents.db.Event;
 import b07.sportsevents.db.Sport;
+import b07.sportsevents.db.Venue;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
@@ -18,6 +20,7 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.Spinner;
@@ -63,12 +66,27 @@ public class  AddEvent extends AppCompatActivity implements DatePickerDialog.OnD
         venueID = bundle.getString("id");
 
         ((TextView) findViewById(R.id.addEventVenueName)).setText(bundle.getString("name"));
+
+        Event.getInstance().queryByID(venueID, Venue.getTableName(), this, new DBCallback<Task<DataSnapshot>>() {
+            @Override
+            public void queriedData(Task<DataSnapshot> value, AppCompatActivity activity) {
+                Venue venue = (Venue) value.getResult().getValue(Venue.class);
+
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(AddEvent.this, android.R.layout.simple_spinner_item, android.R.id.text1);
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                ((Spinner) findViewById(R.id.addEventSport)).setAdapter(adapter);
+
+                if (venue.sportsOfferedList == null) return;
+
+                adapter.addAll(venue.sportsOfferedList);
+            }
+        });
     }
 
     View.OnClickListener onConfirmClick = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            String sport = ((TextView) findViewById(R.id.addEventSport)).getText().toString();
+            String sport = ((Spinner) findViewById(R.id.addEventSport)).getSelectedItem().toString();
             try {
 
                 Event createdEvent = new Event(
@@ -81,16 +99,10 @@ public class  AddEvent extends AppCompatActivity implements DatePickerDialog.OnD
                         Integer.parseInt(((TextView) findViewById(R.id.addEventPlayers)).getText().toString()));
 
                 Event.getInstance().writeOne(createdEvent, Event.getTableName(), AddEvent.this);
-                
-                Sport.addSportToVenue(sport, Long.parseLong(venueID), AddEvent.this, new DBCallback<Task<DataSnapshot>>() {
-                    @Override
-                    public void queriedData(Task<DataSnapshot> value, AppCompatActivity activity) {
-                        Intent intent = new Intent(AddEvent.this, ViewVenues.class);
-                        intent.putExtra("filter", ViewVenues.Filter.ALL);
-                        Toast.makeText(activity, "Event created", Toast.LENGTH_SHORT).show();
-                        startActivity(intent);
-                    }
-                });
+                Intent intent = new Intent(AddEvent.this, ViewVenues.class);
+                intent.putExtra("filter", ViewVenues.Filter.ALL);
+                Toast.makeText(AddEvent.this, "Event created", Toast.LENGTH_SHORT).show();
+                startActivity(intent);
             } catch (Exception e) {
                 Toast.makeText(AddEvent.this, "Failed to create event. Please try again.", Toast.LENGTH_SHORT).show();
             }

@@ -9,6 +9,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.Exclude;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class DBTable <T extends DBTable> {
@@ -58,9 +59,20 @@ public abstract class DBTable <T extends DBTable> {
             child(Long.valueOf(value.getUniqueID()).toString()).setValue(value);
     }
 
-    protected void writeMany(List<T> values, String tablename, AppCompatActivity activity) {
+    public void writeOneString(String value, String tablename, AppCompatActivity activity) {
+        FirebaseDatabase.getInstance().getReference().child(tablename).
+                child(value).setValue(0);
+    }
+
+    public void writeMany(List<T> values, String tablename, AppCompatActivity activity) {
         for (int i = 0; i < values.size(); ++i) {
             writeOne(values.get(i), tablename, activity);
+        }
+    }
+
+    public void writeManyString(ArrayList<String> values, String tablename, AppCompatActivity activity) {
+        for (int i = 0; i < values.size(); ++i) {
+            writeOneString(values.get(i), tablename, activity);
         }
     }
 
