@@ -322,6 +322,8 @@ public class ViewEvents extends AppCompatActivity{
             }
         }
         ((Button) createdView.findViewById(R.id.viewEventsEventEnrol2)).setOnClickListener(onEnrolClick);
+        ((Button) createdView.findViewById(R.id.moreInfo)).setOnClickListener(description);
+
 
 
     }
@@ -332,7 +334,7 @@ public class ViewEvents extends AppCompatActivity{
         @Override
         public void onClick(View view) {
             View parent = ((View) view.getParent());
-            String id = ((TextView) parent.findViewById(R.id.viewEventsEventID)).getText().toString();
+            String id = ((TextView) parent.findViewById(R.id.eventID)).getText().toString();
             Event.getDescription(Long.parseLong(id),ViewEvents.this,view);
             //alert(text);
 
