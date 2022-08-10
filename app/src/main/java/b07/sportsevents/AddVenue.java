@@ -17,9 +17,14 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
+import b07.sportsevents.db.Sport;
 import b07.sportsevents.db.Venue;
 
 public class AddVenue extends AppCompatActivity {
+    private ArrayList<String> sportsList = new ArrayList<>();
+
     String Name;
     String Location;
     String Description;
@@ -48,7 +53,9 @@ public class AddVenue extends AppCompatActivity {
 
                     View createdView = getLayoutInflater().inflate(R.layout.fragment_add_venue_sports_listing, null);
                     ((LinearLayout) findViewById(R.id.addVenueSportsContainer)).addView(createdView);
-                    ((TextView) createdView.findViewById(R.id.addVenueSportsItem)).setText(text.toString());
+                    String addedString = text.toString().replace("\n", "");
+                    ((TextView) createdView.findViewById(R.id.addVenueSportsItem)).setText(addedString);
+                    AddVenue.this.sportsList.add(addedString);
                 }
             }
 
@@ -75,9 +82,11 @@ public class AddVenue extends AppCompatActivity {
                     ((TextView) findViewById(R.id.addVenueLocation)).getText().toString(),
                     ((TextView) findViewById(R.id.addVenueDescription)).getText().toString()
             );
+            venue.sportsOfferedList = sportsList;
+
             Name=((TextView) findViewById(R.id.addVenueName)).getText().toString();
             Location=((TextView) findViewById(R.id.addVenueLocation)).getText().toString();
-            Description=((TextView) findViewById(R.id.addVenueDescription)).getText().toString() ;
+            Description=((TextView) findViewById(R.id.addVenueDescription)).getText().toString();
 
             //Venue.getInstance().writeOne(venue, Venue.getTableName(), AddVenue.this);
             alert(Name+" at "+Location+"\nDescription: "+Description,venue,view);
@@ -90,9 +99,13 @@ public class AddVenue extends AppCompatActivity {
 
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-
                         dialog.dismiss();
+
+
                         Venue.getInstance().writeOne(venue, Venue.getTableName(), AddVenue.this);
+
+                        Sport.getInstance().writeManyString(sportsList, Sport.getTableName(), AddVenue.this);
+
                         Intent intent = new Intent(AddVenue.this, Home.class);
                         startActivity(intent);
 
@@ -106,20 +119,7 @@ public class AddVenue extends AppCompatActivity {
                     }
 
                 })
-//                .setNeutralButton("Yes and Create an Event", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int i) {
-//                        Venue.getInstance().writeOne(venue, Venue.getTableName(), AddVenue.this);
-//                        Intent intent = new Intent(AddVenue.this, AddEvent.class);
-//                        String id=Long.toString(venue.ID);
-//                        String name=venue.name;
-//                        intent.putExtra("id",id);
-//                        intent.putExtra("name",name);
-//                        startActivity(intent);
-//
-//                    }
-//
-//                })
+
                 .create();
         dlg.show();
 
