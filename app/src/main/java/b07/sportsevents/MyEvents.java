@@ -59,7 +59,7 @@ public class MyEvents extends ViewEvents {
         });
     }
 
-    private void addEventToScreenFilterByUser(String id, Event event) {
+    public void addEventToScreenFilterByUser(String id, Event event) {
         if (event.registeredUsers == null) {
             return;
         }
@@ -69,7 +69,7 @@ public class MyEvents extends ViewEvents {
         }
     }
 
-    String getOccupancy(Event event) {
+    public static String getOccupancy(Event event) {
         int numberEnrolled = event.registeredUsers == null ? 0 : event.registeredUsers.size();
         return numberEnrolled + "/" + event.maxPlayers;
     }
@@ -190,10 +190,10 @@ public class MyEvents extends ViewEvents {
                 Intent in = new Intent(this, MyEvents.class);
                 startActivity(in);
                 return true;
-//            case R.id.Manage_events:
-//                Intent me = new Intent(this, Manageevents.class);
-//                startActivity(me);
-//                return true;
+            case R.id.Manage_events:
+                Intent me = new Intent(this, ManageEvents.class);
+                startActivity(me);
+                return true;
             case R.id.Manage_Venues:
                 Intent mv = new Intent(this, ManageVenues.class);
                 startActivity(mv);

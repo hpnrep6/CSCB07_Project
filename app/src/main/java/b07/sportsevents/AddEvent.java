@@ -233,10 +233,10 @@ public class  AddEvent extends AppCompatActivity implements DatePickerDialog.OnD
                 Intent in = new Intent(this, MyEvents.class);
                 startActivity(in);
                 return true;
-//            case R.id.Manage_events:
-//                Intent me = new Intent(this, Manageevents.class);
-//                startActivity(me);
-//                return true;
+            case R.id.Manage_events:
+                Intent me = new Intent(this, ManageEvents.class);
+                startActivity(me);
+                return true;
             case R.id.Manage_Venues:
                 Intent mv = new Intent(this, ManageVenues.class);
                 startActivity(mv);
