@@ -122,12 +122,12 @@ public class User extends DBTable<User> {
 
     public static void isAdmin(UserCallback callback) {
 
-        FirebaseDatabase.getInstance().getReference().addOnCompleteListener(new OnCompleteListener() {
-            @Override
-            public void onComplete(@NonNull Task task) {
-
-            }
-        });
+//        FirebaseDatabase.getInstance().getReference().addOnCompleteListener(new OnCompleteListener() {
+//            @Override
+//            public void onComplete(@NonNull Task task) {
+//
+//            }
+//        });
     }
 
 }
