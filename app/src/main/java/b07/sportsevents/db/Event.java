@@ -67,6 +67,7 @@ public class Event extends DBTable<Event> {
                     text +="\nVenue ID: "+String.valueOf(datasnapshot.child("venueID").getValue());
                     text +="\nPlayers: "+ViewEvents.getOccupancy(task.getResult().getValue(Event.class));
                     ViewEvents.alert(text,A);
+                    //System.out.println(text);
                 }
 
             }
