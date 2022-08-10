@@ -3,47 +3,30 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.119" />
-        <entry key="app/src/main/res/drawable/border.xml" value="0.256" />
-        <entry key="app/src/main/res/drawable/display_item.xml" value="0.1115" />
         <entry key="app/src/main/res/drawable/gradient.xml" value="0.359" />
-        <entry key="app/src/main/res/drawable/gradient_bkg.xml" value="0.20565948486328128" />
-        <entry key="app/src/main/res/drawable/ic_baseline_event_available_24.xml" value="0.1" />
-        <entry key="app/src/main/res/drawable/ic_baseline_event_note_24.xml" value="0.1" />
-        <entry key="app/src/main/res/drawable/ic_baseline_person_24.xml" value="0.13" />
-        <entry key="app/src/main/res/drawable/ic_baseline_post_add_24.xml" value="0.13" />
-        <entry key="app/src/main/res/drawable/ic_baseline_settings_24.xml" value="0.13" />
-        <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.119" />
-        <entry key="app/src/main/res/drawable/ic_sports_space.xml" value="0.131" />
-        <entry key="app/src/main/res/drawable/ic_sports_space_1_.xml" value="0.131" />
-        <entry key="app/src/main/res/drawable/item_background.xml" value="0.1725" />
-        <entry key="app/src/main/res/drawable/light_bkg.xml" value="0.125" />
-        <entry key="app/src/main/res/drawable/my_custom_background.xml" value="0.1375" />
-        <entry key="app/src/main/res/drawable/text_input_box.xml" value="0.21432037353515626" />
+        <entry key="app/src/main/res/drawable/gradient_bkg.xml" value="0.2625" />
+        <entry key="app/src/main/res/drawable/text_input_box.xml" value="0.359" />
         <entry key="app/src/main/res/layout/activity_add_event.xml" value="0.33" />
-        <entry key="app/src/main/res/layout/activity_add_venue.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/activity_add_venue.xml" value="0.29928436279296877" />
         <entry key="app/src/main/res/layout/activity_home.xml" value="0.38125" />
-        <entry key="app/src/main/res/layout/activity_login.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_login.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.26132246376811596" />
+        <entry key="app/src/main/res/layout/activity_manage_events.xml" value="0.2595718383789063" />
+        <entry key="app/src/main/res/layout/activity_manage_venues.xml" value="0.21875" />
         <entry key="app/src/main/res/layout/activity_my_events.xml" value="0.26132246376811596" />
-        <entry key="app/src/main/res/layout/activity_my_profile.xml" value="0.3394317626953125" />
         <entry key="app/src/main/res/layout/activity_register.xml" value="0.38177083333333334" />
         <entry key="app/src/main/res/layout/activity_view_by_sport.xml" value="0.15070921985815602" />
-        <entry key="app/src/main/res/layout/activity_view_events.xml" value="0.2733974290930707" />
+        <entry key="app/src/main/res/layout/activity_view_events.xml" value="0.24271844660194175" />
         <entry key="app/src/main/res/layout/activity_view_venues.xml" value="0.38177083333333334" />
-        <entry key="app/src/main/res/layout/event_layout.xml" value="0.29305725097656254" />
-        <entry key="app/src/main/res/layout/fragment_add_venue_sports_listing.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/event_layout.xml" value="0.45909118652343756" />
+        <entry key="app/src/main/res/layout/fragment_add_venue_sports_listing.xml" value="0.22780797101449277" />
         <entry key="app/src/main/res/layout/fragment_manage_events_event.xml" value="0.19610507246376813" />
         <entry key="app/src/main/res/layout/fragment_manage_venues_venue_item.xml" value="0.2418478260869565" />
         <entry key="app/src/main/res/layout/fragment_view_events_event.xml" value="0.29213483146067415" />
         <entry key="app/src/main/res/layout/fragment_view_sports_sport.xml" value="0.32765318958471856" />
         <entry key="app/src/main/res/layout/fragment_view_venues_venue.xml" value="0.33" />
-        <entry key="app/src/main/res/layout/popup.xml" value="0.18614130434782608" />
-        <entry key="app/src/main/res/layout/upcoming_events.xml" value="0.26400299072265626" />
-        <entry key="app/src/main/res/layout/venue_layout.xml" value="0.28498382568359376" />
-        <entry key="app/src/main/res/menu/menu_admin.xml" value="0.17962962962962964" />
-        <entry key="app/src/main/res/menu/menu_customer.xml" value="0.17962962962962964" />
-        <entry key="app/src/main/res/mipmap-anydpi-v26/ss_logo.xml" value="0.1365" />
+        <entry key="app/src/main/res/layout/no_available_events.xml" value="0.322161865234375" />
+        <entry key="app/src/main/res/layout/popup_events.xml" value="0.5588768115942029" />
       </map>
     </option>
   </component>

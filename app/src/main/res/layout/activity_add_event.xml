@@ -204,6 +204,11 @@
                     android:text="Create Event" />
             </LinearLayout>
 
+            <TextView
+                android:id="@+id/textView26"
+                android:layout_width="match_parent"
+                android:layout_height="15dp" />
+
         </LinearLayout>
     </ScrollView>
 
