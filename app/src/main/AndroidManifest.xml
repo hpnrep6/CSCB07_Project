@@ -11,6 +11,9 @@
         android:theme="@style/Theme.SportsEvents"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".ManageEvents"
+            android:exported="false" />
+        <activity
             android:name=".ManageVenues"
             android:label="Manage Venues"
             android:exported="false" />

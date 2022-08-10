@@ -5,8 +5,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import b07.sportsevents.db.Event;
 
+
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -29,6 +33,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -46,6 +51,8 @@ public class ViewEvents extends AppCompatActivity{
         VENUE
     }
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,7 +61,7 @@ public class ViewEvents extends AppCompatActivity{
 
         //spinner selection lists
         //spinner 1
-        String[] filter_by = {"View All", "Filter by Sport", "Filter by Venue"};
+        String[] filter_by = {"View All", "Sport", "Venue"};
         //spinner 2
         List<String> all_sports = Sport.getInstance().getAllSportNames(this);
         List<String> venue_names = Venue.getInstance().getAllVenueNames(this);
@@ -89,7 +96,7 @@ public class ViewEvents extends AppCompatActivity{
                 ((TextView) parent.getChildAt(0)).setTextColor(Color.WHITE);
                 String specified_selected = "";
                 String filter_selected = parent.getItemAtPosition(pos).toString();
-                if (filter_selected.equals("Filter by Sport")){
+                if (filter_selected.equals("Sport")){
                     spinner2.setVisibility(View.VISIBLE);
                     // Create an ArrayAdapter using the string array and a default spinner layout
                     ArrayAdapter adapter2 = new ArrayAdapter(ViewEvents.this,
@@ -100,7 +107,7 @@ public class ViewEvents extends AppCompatActivity{
                     spinner2.setAdapter(adapter2);
                     //specified_selected = spinner2.getSelectedItem().toString();
                 }
-                else if (filter_selected.equals("Filter by Venue")){
+                else if (filter_selected.equals("Venue")){
                     spinner2.setVisibility(View.VISIBLE);
                     // Create an ArrayAdapter using the string array and a default spinner layout
                     ArrayAdapter adapter2 = new ArrayAdapter(ViewEvents.this,
@@ -179,7 +186,7 @@ public class ViewEvents extends AppCompatActivity{
     }
 
     void loadScreen(String type, String specified){
-        LinearLayout ll =findViewById(R.id.viewMyEvents);
+        LinearLayout ll=findViewById(R.id.viewMyEvents);
         ll.removeAllViews();
         Event.getInstance().queryAll(Event.getTableName(), this, new DBCallback<Task<DataSnapshot>>() {
             @Override
@@ -193,50 +200,66 @@ public class ViewEvents extends AppCompatActivity{
                 String venue ="";
                 //String selection = spinner.getSelectedItem().toString();
                 Filter filter = Filter.ALL;
-                if (Objects.equals(type, "Filter by Sport")){
+                if (Objects.equals(type, "Sport")){
                     filter = Filter.SPORT;
                     sport = specified;
                 }
-                else if (Objects.equals(type, "Filter by Venue")){
+                else if (Objects.equals(type, "Venue")){
                     filter = Filter.VENUE;
                     venue = specified;
                 }
 
-
+                long unixTime = Instant.now().getEpochSecond();
+                long endTime ;
+                //System.out.println(String.valueOf(unixTime));
                 while (eventIterator.hasNext()) {
+
                     DataSnapshot event = (DataSnapshot) eventIterator.next();
-                    String key = event.getKey();
-                    Event readEvent = event.getValue(Event.class);
+                    endTime =event.getValue(Event.class).endTime;
+                    unixTime = Instant.now().getEpochSecond();
 
-                    switch (filter) {
-                        case ALL: {
-                            addEventToScreen(key, readEvent);
-                            break;
+                    if(unixTime<endTime)
+                    {
+                        String key = event.getKey();
+                        Event readEvent = event.getValue(Event.class);
+
+                        switch (filter) {
+                            case ALL: {
+                                addEventToScreen(key, readEvent);
+                                break;
+                            }
+
+                            case USER: {
+                                addEventToScreenFilterByUser(key, readEvent);
+                                break;
+                            }
+
+                            case SPORT: {
+                                //addEventToScreenFilterBySport(key, readEvent, (String) bundle.get("sport"));
+                                addEventToScreenFilterBySport(key, readEvent, sport);
+                                break;
+                            }
+                            case VENUE:{
+                                addEventToScreenFilterByVenue(key, readEvent, venue);
+                            }
                         }
 
-                        case USER: {
-                            addEventToScreenFilterByUser(key, readEvent);
-                            break;
-                        }
-
-                        case SPORT: {
-                            //addEventToScreenFilterBySport(key, readEvent, (String) bundle.get("sport"));
-                            addEventToScreenFilterBySport(key, readEvent, sport);
-                            break;
-                        }
-                        case VENUE:{
-                            addEventToScreenFilterByVenue(key, readEvent, venue);
-                        }
                     }
+
                 }
             }
         });
     }
 
-    String getOccupancy(Event event) {
+    public static String getOccupancy(Event event) {
         int numberEnrolled = event.registeredUsers == null ? 0 : event.registeredUsers.size();
         return numberEnrolled + "/" + event.maxPlayers;
     }
+    public static boolean checkfull(Event event) {
+        int numberEnrolled = event.registeredUsers == null ? 0 : event.registeredUsers.size();
+        return numberEnrolled <event.maxPlayers;
+    }
+
 
     private void addEventToScreenFilterByVenue(String id, Event event, String venue_name){
         //compares venue names not IDs
@@ -244,7 +267,7 @@ public class ViewEvents extends AppCompatActivity{
         d.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
-                if (snapshot.getValue().toString().equals(venue_name)){
+                if (snapshot.getValue() != null && snapshot.getValue().toString().equals(venue_name)){
                     addEventToScreen(id, event);
                 }
             }
@@ -262,7 +285,7 @@ public class ViewEvents extends AppCompatActivity{
         }
     }
 
-    private void addEventToScreenFilterByUser(String id, Event event) {
+    void addEventToScreenFilterByUser(String id, Event event) {
         if (event.registeredUsers == null) {
             return;
         }
@@ -298,12 +321,41 @@ public class ViewEvents extends AppCompatActivity{
                 ((Button) createdView.findViewById(R.id.viewEventsEventEnrol2)).setText("Drop Event");
             }
         }
-
         ((Button) createdView.findViewById(R.id.viewEventsEventEnrol2)).setOnClickListener(onEnrolClick);
+        ((Button) createdView.findViewById(R.id.moreInfo)).setOnClickListener(description);
 
     }
 
-    private View.OnClickListener onEnrolClick = new View.OnClickListener() {
+    private final View.OnClickListener description = new View.OnClickListener()
+    {
+
+        @Override
+        public void onClick(View view) {
+            View parent = ((View) view.getParent());
+            String id = ((TextView) ((View) parent.getParent()).findViewById(R.id.eventID)).getText().toString();
+            Event.getDescription(Long.parseLong(id),ViewEvents.this,view);
+            //alert(text);
+
+        }
+    };
+    public static void alert(String message, AppCompatActivity A) {
+        AlertDialog dlg = new AlertDialog.Builder(A).setTitle("Description")
+                .setMessage(message)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+
+                .create();
+        dlg.show();
+
+
+    }
+    View.OnClickListener onEnrolClick = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             if (((Button) view).getText().toString().equals("Event Full")) {
@@ -311,7 +363,7 @@ public class ViewEvents extends AppCompatActivity{
             }
 
             View parent = ((View) view.getParent());
-            String id = ((TextView) parent.findViewById(R.id.eventID)).getText().toString();
+            String id = ((TextView) ((View) parent.getParent()).findViewById(R.id.eventID)).getText().toString();
             Log.d("event", "" + ((Button) view).getText().toString().equals("Join this Event"));
 
             if (((Button) view).getText().toString().equals("Join this Event")) {
@@ -326,9 +378,11 @@ public class ViewEvents extends AppCompatActivity{
                             public void queriedData(Task<DataSnapshot> value, AppCompatActivity activity) {
                                 Event updatedEvent = value.getResult().getValue(Event.class);
                                 Log.d("event", "asd");
-                                ((TextView) ((View) view.getParent()).findViewById(R.id.eventOccupancy)).setText(
+                                ((TextView) ((View) ((View) view.getParent()).getParent()).findViewById(R.id.eventOccupancy)).setText(
                                         getOccupancy(updatedEvent)
+
                                 );
+
                             }
                         });
 
@@ -336,7 +390,7 @@ public class ViewEvents extends AppCompatActivity{
                     }
                 });
             } else {
-                Event.dropUser(FirebaseAuth.getInstance().getUid(), Long.parseLong(id), ViewEvents.this, new DBCallback<Task<DataSnapshot>>() {
+                Event.dropUser(FirebaseAuth.getInstance().getUid(), Long.parseLong(id),ViewEvents.this, new DBCallback<Task<DataSnapshot>>() {
                     @Override
                     public void queriedData(Task<DataSnapshot> value, AppCompatActivity activity) {
                         ((Button) view).setText("Join this Event");
@@ -346,18 +400,24 @@ public class ViewEvents extends AppCompatActivity{
                             public void queriedData(Task<DataSnapshot> value, AppCompatActivity activity) {
                                 Event updatedEvent = value.getResult().getValue(Event.class);
                                 Log.d("event", "asd");
-                                ((TextView) ((View) view.getParent()).findViewById(R.id.eventOccupancy)).setText(
+                                ((TextView) ((View) ((View) view.getParent()).getParent()).findViewById(R.id.eventOccupancy)).setText(
                                         getOccupancy(updatedEvent)
                                 );
                             }
                         });
                         Log.d("view events", "joined");
                     }
+
+
                 });
+
             }
             return;
+
+
         }
     };
+
 
     //just for testing onClick
     public void launchPopup(View v){
