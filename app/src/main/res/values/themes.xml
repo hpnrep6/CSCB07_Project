@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.SportsEvents" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Theme.SportsEvents" parent="Theme.MaterialComponents.DayNight">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/sky_blue</item>
         <item name="colorOnPrimary">@color/white</item>

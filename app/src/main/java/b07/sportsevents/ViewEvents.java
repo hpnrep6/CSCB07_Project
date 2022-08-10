@@ -5,10 +5,17 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import b07.sportsevents.db.Event;
 
+
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -16,6 +23,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toolbar;
 
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -41,6 +49,8 @@ public class ViewEvents extends AppCompatActivity{
         SPORT,
         VENUE
     }
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -233,6 +243,11 @@ public class ViewEvents extends AppCompatActivity{
         int numberEnrolled = event.registeredUsers == null ? 0 : event.registeredUsers.size();
         return numberEnrolled + "/" + event.maxPlayers;
     }
+    public static boolean checkfull(Event event) {
+        int numberEnrolled = event.registeredUsers == null ? 0 : event.registeredUsers.size();
+        return numberEnrolled <event.maxPlayers;
+    }
+
 
     private void addEventToScreenFilterByVenue(String id, Event event, String venue_name){
         //compares venue names not IDs
@@ -294,12 +309,41 @@ public class ViewEvents extends AppCompatActivity{
                 ((Button) createdView.findViewById(R.id.viewEventsEventEnrol2)).setText("Drop Event");
             }
         }
-
         ((Button) createdView.findViewById(R.id.viewEventsEventEnrol2)).setOnClickListener(onEnrolClick);
+
 
     }
 
-    private View.OnClickListener onEnrolClick = new View.OnClickListener() {
+    private final View.OnClickListener description =new View.OnClickListener()
+    {
+
+        @Override
+        public void onClick(View view) {
+            View parent = ((View) view.getParent());
+            String id = ((TextView) parent.findViewById(R.id.viewEventsEventID)).getText().toString();
+            Event.getDescription(Long.parseLong(id),ViewEvents.this,view);
+            //alert(text);
+
+        }
+    };
+    public static void alert(String message, AppCompatActivity A) {
+        AlertDialog dlg = new AlertDialog.Builder(A).setTitle("Description for the event")
+                .setMessage(message)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+
+                .create();
+        dlg.show();
+
+
+    }
+    View.OnClickListener onEnrolClick = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             if (((Button) view).getText().toString().equals("Event Full")) {
@@ -324,7 +368,9 @@ public class ViewEvents extends AppCompatActivity{
                                 Log.d("event", "asd");
                                 ((TextView) ((View) view.getParent()).findViewById(R.id.eventOccupancy)).setText(
                                         getOccupancy(updatedEvent)
+
                                 );
+
                             }
                         });
 
@@ -332,7 +378,7 @@ public class ViewEvents extends AppCompatActivity{
                     }
                 });
             } else {
-                Event.dropUser(FirebaseAuth.getInstance().getUid(), Long.parseLong(id), ViewEvents.this, new DBCallback<Task<DataSnapshot>>() {
+                Event.dropUser(FirebaseAuth.getInstance().getUid(), Long.parseLong(id),ViewEvents.this, new DBCallback<Task<DataSnapshot>>() {
                     @Override
                     public void queriedData(Task<DataSnapshot> value, AppCompatActivity activity) {
                         ((Button) view).setText("Join this Event");
@@ -349,11 +395,17 @@ public class ViewEvents extends AppCompatActivity{
                         });
                         Log.d("view events", "joined");
                     }
+
+
                 });
+
             }
             return;
+
+
         }
     };
+
 
     //just for testing onClick
     public void launchPopup(View v){
@@ -363,5 +415,39 @@ public class ViewEvents extends AppCompatActivity{
         //pass the event's id to the popup screen
         intent.putExtra("event_id", id);
         startActivity(intent);
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        //if (isadmin()){ inflater.inflate(R.menu.menu_admin, menu)} else{;
+        inflater.inflate(R.menu.menu_customer, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.My_Events:
+                Intent in = new Intent(this, MyEvents.class);
+                startActivity(in);
+                return true;
+            case R.id.Upcoming_events:
+                Intent intent = new Intent(this, ViewEvents.class);
+                intent.putExtra("filter", ViewEvents.Filter.ALL);
+                startActivity(intent);
+                return true;
+            case R.id.My_Profile:
+                Intent mp = new Intent(this, MyProfile.class);
+                startActivity(mp);
+                return true;
+            case R.id.Schedule_Events:
+                Intent i = new Intent(this, ViewVenues.class);
+                i.putExtra("filter", ViewVenues.Filter.ALL);
+                startActivity(i);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

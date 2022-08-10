@@ -12,6 +12,9 @@ import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
@@ -26,6 +29,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 
 import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.util.Calendar;
 
 public class  AddEvent extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
@@ -102,17 +106,26 @@ public class  AddEvent extends AppCompatActivity implements DatePickerDialog.OnD
         TimePickerDialog timeSelector = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker timePicker, int hour, int minute) {
-                calendar.set(Calendar.HOUR, hour);
+                calendar.set(Calendar.HOUR_OF_DAY, hour);
                 calendar.set(Calendar.MINUTE, minute);
 
                 long time = (calendar.getTimeInMillis() / 1000L);
-
+                long unixTime = Instant.now().getEpochSecond();
                 switch (timeSelection) {
                     case DAY_START:
+                        if (endTime != 0 && time > endTime) {
+                            Toast.makeText(AddEvent.this, "Invalid start time.", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
                         startTime = time;
                         break;
                     case DAY_END:
+                        if (startTime != 0 && startTime > time) {
+                            Toast.makeText(AddEvent.this, "Invalid end time.", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
                         endTime = time;
+
                         break;
                 }
 
@@ -120,7 +133,7 @@ public class  AddEvent extends AppCompatActivity implements DatePickerDialog.OnD
                 ((TextView) findViewById(R.id.addEventStartTimeDate)).setText(startTime == 0 ? "No date selected" : format.format(startTime * 1000L));
                 ((TextView) findViewById(R.id.addEventEndTimeDate)).setText(endTime == 0 ? "No date selected" : format.format(endTime * 1000L));
 
-                Log.d("add event", "" + hour + " " + minute);
+                Log.d("add event", "" + format.format(calendar.getTime()) + " " + hour + " " + minute);
             }
         }, 0, 0, false);
 
@@ -160,4 +173,38 @@ public class  AddEvent extends AppCompatActivity implements DatePickerDialog.OnD
 
         showTimeSelectorDialog(calendar);
     }
-}
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        //if (isadmin()){ inflater.inflate(R.menu.menu_admin, menu)} else{;
+        inflater.inflate(R.menu.menu_customer, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.My_Events:
+                Intent in = new Intent(this, MyEvents.class);
+                startActivity(in);
+                return true;
+            case R.id.Upcoming_events:
+                Intent intent = new Intent(this, ViewEvents.class);
+                intent.putExtra("filter", ViewEvents.Filter.ALL);
+                startActivity(intent);
+                return true;
+            case R.id.My_Profile:
+                Intent mp = new Intent(this, MyProfile.class);
+                startActivity(mp);
+                return true;
+            case R.id.Schedule_Events:
+                Intent i = new Intent(this, ViewVenues.class);
+                i.putExtra("filter", ViewVenues.Filter.ALL);
+                startActivity(i);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+    }
