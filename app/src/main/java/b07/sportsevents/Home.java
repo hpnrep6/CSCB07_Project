@@ -11,7 +11,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+
+import b07.sportsevents.db.DBCallback;
 import b07.sportsevents.db.User;
+import b07.sportsevents.db.UserCallback;
 
 public class Home extends AppCompatActivity {
 
@@ -91,11 +97,21 @@ public class Home extends AppCompatActivity {
             }
         });
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        //if (isadmin()){ inflater.inflate(R.menu.menu_admin, menu)} else{;
-        inflater.inflate(R.menu.menu_customer, menu);
+        User.getInstance().queryByID(FirebaseAuth.getInstance().getUid(), User.getTableName(), this, new DBCallback<Task<DataSnapshot>>() {
+            @Override
+            public void queriedData(Task<DataSnapshot> value, AppCompatActivity activity) {
+                if (((String) value.getResult().child("privileges").getValue()).equals("Customer")) {
+                    inflater.inflate(R.menu.menu_customer, menu);
+                } else {
+                    inflater.inflate(R.menu.menu_admin, menu);
+                }
+            }
+        });
+
         return true;
     }
 
@@ -106,6 +122,14 @@ public class Home extends AppCompatActivity {
             case R.id.My_Events:
                 Intent in = new Intent(this, MyEvents.class);
                 startActivity(in);
+                return true;
+//            case R.id.Manage_events:
+//                Intent me = new Intent(this, Manageevents.class);
+//                startActivity(me);
+//                return true;
+            case R.id.Manage_Venues:
+                Intent mv = new Intent(this, ManageVenues.class);
+                startActivity(mv);
                 return true;
             case R.id.Upcoming_events:
                 Intent intent = new Intent(this, ViewEvents.class);
