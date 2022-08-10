@@ -179,17 +179,15 @@ public class ViewEvents extends AppCompatActivity{
                     venue = specified;
                 }
 
-                long unixTime = Instant.now().getEpochSecond();
-                long endTime ;
+                long currentTime = System.currentTimeMillis();
                 //System.out.println(String.valueOf(unixTime));
                 while (eventIterator.hasNext()) {
 
                     DataSnapshot event = (DataSnapshot) eventIterator.next();
-                    endTime =event.getValue(Event.class).endTime;
-                    unixTime = Instant.now().getEpochSecond();
 
-                    if(unixTime<endTime)
-                    {
+                    long endTime = event.getValue(Event.class).endTime * 1000L;
+
+                    if (currentTime <= endTime) {
                         String key = event.getKey();
                         Event readEvent = event.getValue(Event.class);
 
