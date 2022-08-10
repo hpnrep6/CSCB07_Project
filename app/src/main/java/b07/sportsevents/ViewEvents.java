@@ -33,6 +33,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -65,6 +66,7 @@ public class ViewEvents extends AppCompatActivity{
         String[] filter_by = {"View All", "Sport", "Venue"};
         //spinner 2
         List<String> all_sports = Sport.getInstance().getAllSportNames(this);
+        System.out.println(all_sports);
         List<String> venue_names = Venue.getInstance().getAllVenueNames(this);
 
         Spinner spinner = (Spinner) findViewById(R.id.spinner);
@@ -79,7 +81,7 @@ public class ViewEvents extends AppCompatActivity{
         spinner2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long l) {
-                ((TextView) parent.getChildAt(0)).setTextColor(Color.WHITE);
+                //((TextView) parent.getChildAt(0)).setTextColor(Color.WHITE);
                 String specified_selected = parent.getItemAtPosition(pos).toString();
                 String filter_selected = spinner.getSelectedItem().toString();
                 loadScreen(filter_selected, specified_selected);
@@ -94,7 +96,7 @@ public class ViewEvents extends AppCompatActivity{
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long l) {
-                ((TextView) parent.getChildAt(0)).setTextColor(Color.WHITE);
+                //((TextView) parent.getChildAt(0)).setTextColor(Color.WHITE);
                 String specified_selected = "";
                 String filter_selected = parent.getItemAtPosition(pos).toString();
                 if (filter_selected.equals("Sport")){
@@ -129,47 +131,14 @@ public class ViewEvents extends AppCompatActivity{
             public void onNothingSelected(AdapterView<?> adapterView) {
             }
         });
+        if(((LinearLayout) findViewById(R.id.viewMyEvents)).getChildCount()==0){
+            View createdView = getLayoutInflater().inflate(R.layout.no_available_events, null);
+            ((LinearLayout) findViewById(R.id.viewMyEvents)).addView(createdView);
+        }
+        else{
+            System.out.println(((LinearLayout) findViewById(R.id.viewMyEvents)).getChildCount());
+        }
 
-//        Venue.getInstance().queryAll(Event.getTableName(), this, new DBCallback<Task<DataSnapshot>>() {
-//            @Override
-//            public void queriedData(Task<DataSnapshot> task, AppCompatActivity activity) {
-//
-//                Iterable<DataSnapshot> events = task.getResult().getChildren();
-//                Iterator eventIterator = events.iterator();
-//
-//                //Filter filter = ((Filter) bundle.get("filter"));
-//
-//                String selection = spinner.getSelectedItem().toString();
-//                Filter filter = Filter.ALL;
-//                if (selection == "Sport"){
-//                    filter = Filter.SPORT;
-//                }
-//
-//                while (eventIterator.hasNext()) {
-//                    DataSnapshot event = (DataSnapshot) eventIterator.next();
-//                    String key = event.getKey();
-//                    Event readEvent = event.getValue(Event.class);
-//
-//                    switch (filter) {
-//                        case ALL: {
-//                            addEventToScreen(key, readEvent);
-//                            break;
-//                        }
-//
-//                        case USER: {
-//                            addEventToScreenFilterByUser(key, readEvent);
-//                            break;
-//                        }
-//
-//                        case SPORT: {
-//                            //addEventToScreenFilterBySport(key, readEvent, (String) bundle.get("sport"));
-//                            addEventToScreenFilterBySport(key, readEvent, "basketball");
-//                            break;
-//                        }
-//                    }
-//                }
-//            }
-//        });
     }
 
     public static void setVenueNameById(long id, String view_id, View v) {
@@ -299,8 +268,6 @@ public class ViewEvents extends AppCompatActivity{
     private void addEventToScreen(String id, Event event) {
         String name = event.name;
         String sport = event.sport;
-        String start = String.valueOf(event.startTime);
-        String end = String.valueOf(event.endTime);
         String occupancy = getOccupancy(event);
 
         View createdView = getLayoutInflater().inflate(R.layout.event_layout, null);
@@ -308,10 +275,11 @@ public class ViewEvents extends AppCompatActivity{
         ((LinearLayout) findViewById(R.id.viewMyEvents)).addView(createdView);
 
         ((TextView) createdView.findViewById(R.id.eventName)).setText(name);
-        ((TextView) createdView.findViewById(R.id.eventStart)).setText(start);
         setVenueNameById(event.venueID, "eventVenue", createdView);
-        ((TextView) createdView.findViewById(R.id.eventEnd)).setText(end);
         ((TextView) createdView.findViewById(R.id.eventID)).setText(id);
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+        ((TextView) createdView.findViewById(R.id.eventStart)).setText(event.startTime == 0 ? "No date selected" : format.format(event.startTime * 1000L));
+        ((TextView) createdView.findViewById(R.id.eventEnd)).setText(event.endTime == 0 ? "No date selected" : format.format(event.endTime * 1000L));
 
         if (event.registeredUsers != null) {
             if (event.registeredUsers.size() >= event.maxPlayers) {
@@ -419,16 +387,6 @@ public class ViewEvents extends AppCompatActivity{
         }
     };
 
-
-    //just for testing onClick
-    public void launchPopup(View v){
-        Intent intent = new Intent(this, EventPopupScreen.class);
-        View parent = ((View) v.getParent());
-        String id = ((TextView) parent.findViewById(R.id.eventID)).getText().toString();
-        //pass the event's id to the popup screen
-        intent.putExtra("event_id", id);
-        startActivity(intent);
-    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
