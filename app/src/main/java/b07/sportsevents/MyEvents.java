@@ -17,6 +17,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 
+import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.Iterator;
 import java.util.Objects;
@@ -58,6 +59,7 @@ public class MyEvents extends ViewEvents {
             }
         });
     }
+
 //
 //    private void addEventToScreenFilterByUser(String id, Event event) {
 //        if (event.registeredUsers == null) {
@@ -165,6 +167,7 @@ public class MyEvents extends ViewEvents {
 //            return;
 //        }
 //    };
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
