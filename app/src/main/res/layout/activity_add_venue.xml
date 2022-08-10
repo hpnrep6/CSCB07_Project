@@ -9,7 +9,9 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintBottom_toBottomOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -87,13 +89,13 @@
                 android:textColorHint="#9DC9FF" />
 
             <TextView
-                android:layout_marginTop="10dp"
                 android:id="@+id/textView18"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:text="Sports Offered (Press enter to add sport)"
                 android:textColor="@color/white"
-                android:textSize="17dp"/>
+                android:textSize="17dp" />
 
             <LinearLayout
                 android:id="@+id/addVenueSportsContainer"
@@ -108,18 +110,18 @@
                 android:ems="10"
                 android:gravity="start|top"
                 android:inputType="textMultiLine"
-                android:textColor="@color/white"/>
+                android:textColor="@color/white" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
                 android:orientation="horizontal">
 
                 <Button
                     android:id="@+id/addVenueBackButton"
                     android:layout_width="0dp"
-                    android:layout_height="match_parent"
+                    android:layout_height="58dp"
                     android:layout_marginRight="10dp"
                     android:layout_weight="1"
                     android:text="Back" />
@@ -127,11 +129,16 @@
                 <Button
                     android:id="@+id/addVenueAddButton"
                     android:layout_width="0dp"
-                    android:layout_height="match_parent"
+                    android:layout_height="58dp"
                     android:layout_marginLeft="10dp"
                     android:layout_weight="1"
                     android:text="Add Venue" />
             </LinearLayout>
+
+            <TextView
+                android:id="@+id/textView22"
+                android:layout_width="match_parent"
+                android:layout_height="15dp" />
 
         </LinearLayout>
     </ScrollView>

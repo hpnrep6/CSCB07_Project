@@ -131,13 +131,13 @@ public class ViewEvents extends AppCompatActivity{
             public void onNothingSelected(AdapterView<?> adapterView) {
             }
         });
-        if(((LinearLayout) findViewById(R.id.viewMyEvents)).getChildCount()==0){
-            View createdView = getLayoutInflater().inflate(R.layout.no_available_events, null);
-            ((LinearLayout) findViewById(R.id.viewMyEvents)).addView(createdView);
-        }
-        else{
-            System.out.println(((LinearLayout) findViewById(R.id.viewMyEvents)).getChildCount());
-        }
+//        if(((LinearLayout) findViewById(R.id.viewMyEvents)).getChildCount()==0){
+//            View createdView = getLayoutInflater().inflate(R.layout.no_available_events, null);
+//            ((LinearLayout) findViewById(R.id.viewMyEvents)).addView(createdView);
+//        }
+//        else{
+//            System.out.println(((LinearLayout) findViewById(R.id.viewMyEvents)).getChildCount());
+//        }
 
     }
 
