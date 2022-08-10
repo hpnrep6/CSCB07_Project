@@ -8,6 +8,11 @@
         <entry key="app/src/main/res/drawable/display_item.xml" value="0.1115" />
         <entry key="app/src/main/res/drawable/gradient.xml" value="0.359" />
         <entry key="app/src/main/res/drawable/gradient_bkg.xml" value="0.20565948486328128" />
+        <entry key="app/src/main/res/drawable/ic_baseline_event_available_24.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/ic_baseline_event_note_24.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/ic_baseline_person_24.xml" value="0.13" />
+        <entry key="app/src/main/res/drawable/ic_baseline_post_add_24.xml" value="0.13" />
+        <entry key="app/src/main/res/drawable/ic_baseline_settings_24.xml" value="0.13" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.119" />
         <entry key="app/src/main/res/drawable/ic_sports_space.xml" value="0.131" />
         <entry key="app/src/main/res/drawable/ic_sports_space_1_.xml" value="0.131" />
