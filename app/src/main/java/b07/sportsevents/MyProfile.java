@@ -27,6 +27,10 @@ public class MyProfile extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_profile);
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            String email = user.getEmail();
+        ((TextView) findViewById(R.id.userEmail)).setText(email);}
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         ((TextView) findViewById(R.id.userEmail)).setText(user.getEmail());
@@ -36,7 +40,12 @@ public class MyProfile extends AppCompatActivity {
             @Override
             public void queriedData(Task<DataSnapshot> value, AppCompatActivity activity) {
                 String name = value.getResult().child("name").getValue().toString();
+
+                String userlevel = value.getResult().child("privileges").getValue().toString();
                 ((TextView) findViewById(R.id.userName)).setText(name);
+                ((TextView) findViewById(R.id.usertypeprofile)).setText(userlevel);
+                // ((TextView) findViewById(R.id.userName)).setText(name);
+
             }
         });
 
