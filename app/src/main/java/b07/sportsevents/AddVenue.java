@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -49,12 +50,19 @@ public class AddVenue extends AppCompatActivity {
                 Log.d("add venue", "" + text.toString().contains("\n"));
 
                 if (text.toString().contains("\n")) {
+                    String processedText = text.toString().replaceAll("\n", "");
+                    if (processedText.isEmpty() || AddVenue.this.sportsList.contains(processedText)) {
+                        ((TextView) findViewById(R.id.addVenueSportField)).setText("");
+                        return;
+                    }
+
                     ((TextView) findViewById(R.id.addVenueSportField)).setText("");
 
                     View createdView = getLayoutInflater().inflate(R.layout.fragment_add_venue_sports_listing, null);
                     ((LinearLayout) findViewById(R.id.addVenueSportsContainer)).addView(createdView);
-                    String addedString = text.toString().replace("\n", "");
+                    String addedString = processedText;
                     ((TextView) createdView.findViewById(R.id.addVenueSportsItem)).setText(addedString);
+                    Toast.makeText(AddVenue.this, "Venue added.", Toast.LENGTH_SHORT).show();
                     AddVenue.this.sportsList.add(addedString);
                 }
             }
