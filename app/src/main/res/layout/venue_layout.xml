@@ -13,7 +13,7 @@
         android:id="@+id/viewVenueName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="4dp"
+        android:layout_marginHorizontal="10dp"
         android:layout_marginTop="4dp"
         android:text="Name"
         android:textAppearance="@style/TextAppearance.AppCompat.Large" />
@@ -22,7 +22,7 @@
         android:id="@+id/viewVenueLocation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="4dp"
+        android:layout_marginHorizontal="10dp"
         android:text="Location"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
@@ -30,14 +30,14 @@
         android:id="@+id/textView24"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="4dp"
+        android:layout_marginHorizontal="10dp"
         android:text="Description:" />
 
     <TextView
         android:id="@+id/viewVenueDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="6dp"
+        android:layout_marginHorizontal="12dp"
         android:text="Description"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
@@ -45,14 +45,14 @@
         android:id="@+id/textView23"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="4dp"
+        android:layout_marginHorizontal="10dp"
         android:text="Sports Offered:" />
 
     <TextView
         android:id="@+id/venueSports2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="6dp"
+        android:layout_marginHorizontal="12dp"
         android:text="TextView"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
