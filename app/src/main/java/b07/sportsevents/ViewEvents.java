@@ -324,24 +324,22 @@ public class ViewEvents extends AppCompatActivity{
         ((Button) createdView.findViewById(R.id.viewEventsEventEnrol2)).setOnClickListener(onEnrolClick);
         ((Button) createdView.findViewById(R.id.moreInfo)).setOnClickListener(description);
 
-
-
     }
 
-    private final View.OnClickListener description =new View.OnClickListener()
+    private final View.OnClickListener description = new View.OnClickListener()
     {
 
         @Override
         public void onClick(View view) {
             View parent = ((View) view.getParent());
-            String id = ((TextView) parent.findViewById(R.id.eventID)).getText().toString();
+            String id = ((TextView) ((View) parent.getParent()).findViewById(R.id.eventID)).getText().toString();
             Event.getDescription(Long.parseLong(id),ViewEvents.this,view);
             //alert(text);
 
         }
     };
     public static void alert(String message, AppCompatActivity A) {
-        AlertDialog dlg = new AlertDialog.Builder(A).setTitle("Description for the event")
+        AlertDialog dlg = new AlertDialog.Builder(A).setTitle("Description")
                 .setMessage(message)
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
 
@@ -365,7 +363,7 @@ public class ViewEvents extends AppCompatActivity{
             }
 
             View parent = ((View) view.getParent());
-            String id = ((TextView) parent.findViewById(R.id.eventID)).getText().toString();
+            String id = ((TextView) ((View) parent.getParent()).findViewById(R.id.eventID)).getText().toString();
             Log.d("event", "" + ((Button) view).getText().toString().equals("Join this Event"));
 
             if (((Button) view).getText().toString().equals("Join this Event")) {
@@ -380,7 +378,7 @@ public class ViewEvents extends AppCompatActivity{
                             public void queriedData(Task<DataSnapshot> value, AppCompatActivity activity) {
                                 Event updatedEvent = value.getResult().getValue(Event.class);
                                 Log.d("event", "asd");
-                                ((TextView) ((View) view.getParent()).findViewById(R.id.eventOccupancy)).setText(
+                                ((TextView) ((View) ((View) view.getParent()).getParent()).findViewById(R.id.eventOccupancy)).setText(
                                         getOccupancy(updatedEvent)
 
                                 );
@@ -402,7 +400,7 @@ public class ViewEvents extends AppCompatActivity{
                             public void queriedData(Task<DataSnapshot> value, AppCompatActivity activity) {
                                 Event updatedEvent = value.getResult().getValue(Event.class);
                                 Log.d("event", "asd");
-                                ((TextView) ((View) view.getParent()).findViewById(R.id.eventOccupancy)).setText(
+                                ((TextView) ((View) ((View) view.getParent()).getParent()).findViewById(R.id.eventOccupancy)).setText(
                                         getOccupancy(updatedEvent)
                                 );
                             }
