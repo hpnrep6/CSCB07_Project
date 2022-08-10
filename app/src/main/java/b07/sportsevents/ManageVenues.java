@@ -2,6 +2,7 @@ package b07.sportsevents;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,6 +41,13 @@ public class ManageVenues extends AppCompatActivity {
                 }
             }
         });
+        ((Button) findViewById(R.id.addVenue)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ManageVenues.this, AddVenue.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void addVenueToScreen(String id, Venue venue) {
@@ -74,6 +82,8 @@ public class ManageVenues extends AppCompatActivity {
             }
         });
     }
+
+
 
 
 }
