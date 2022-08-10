@@ -251,7 +251,7 @@ public class ViewEvents extends AppCompatActivity{
         });
     }
 
-    static String getOccupancy(Event event) {
+    public static String getOccupancy(Event event) {
         int numberEnrolled = event.registeredUsers == null ? 0 : event.registeredUsers.size();
         return numberEnrolled + "/" + event.maxPlayers;
     }
