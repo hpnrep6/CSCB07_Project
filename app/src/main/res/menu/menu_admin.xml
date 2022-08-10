@@ -4,14 +4,13 @@
     <item android:id="@+id/My_Profile"
         android:title="My Profile"
         android:icon="@drawable/ic_baseline_person_24"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="always" />
     <item android:id="@+id/Manage_events"
         android:title="Manage Events"
-        android:icon="@drawable/ic_baseline_event_note_24"
-        app:showAsAction="ifRoom"/>
+        android:icon="@drawable/ic_baseline_edit_24"
+        app:showAsAction="always"/>
     <item android:id="@+id/Manage_Venues"
         android:title="Manage Venues"
-        android:icon="@drawable/ic_baseline_event_available_24"
+        android:icon="@drawable/ic_baseline_edit_location_24"
         app:showAsAction="always"/>
-
 </menu>

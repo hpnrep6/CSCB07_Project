@@ -86,6 +86,7 @@ public class MyProfile extends AppCompatActivity {
                 return true;
             }
             case R.id.Upcoming_events: {
+
                 Intent intent = new Intent(this, ViewEvents.class);
                 intent.putExtra("filter", ViewEvents.Filter.ALL);
                 startActivity(intent);

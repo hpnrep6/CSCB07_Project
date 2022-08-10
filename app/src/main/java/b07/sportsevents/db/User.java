@@ -15,6 +15,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.Exclude;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.ktx.Firebase;
 
 import java.util.List;
 
@@ -120,14 +121,19 @@ public class User extends DBTable<User> {
         return FirebaseAuth.getInstance().getCurrentUser() != null;
     }
 
-    public static void isAdmin(UserCallback callback) {
 
-//        FirebaseDatabase.getInstance().getReference().addOnCompleteListener(new OnCompleteListener() {
-//            @Override
-//            public void onComplete(@NonNull Task task) {
-//
-//            }
-//        });
+    public boolean isAdmin(AppCompatActivity activity) {
+        final boolean[] admin = {false};
+        User.getInstance().queryByID(FirebaseAuth.getInstance().getUid(), User.getTableName(), activity, new DBCallback<Task<DataSnapshot>>(){
+            @Override
+            public void queriedData(Task<DataSnapshot> value, AppCompatActivity activity) {
+                String name = value.getResult().child("privileges").getValue().toString();
+                Log.d("privil", name);
+                if (name.equals("admin"))
+                    admin[0] = true;
+            }
+        });
+        return admin[0];
     }
 
 }
