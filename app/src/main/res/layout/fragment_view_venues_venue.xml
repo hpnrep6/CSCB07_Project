@@ -5,7 +5,9 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     tools:context=".ViewVenuesVenueFragment"
-    android:layout_margin="10dp">
+    android:layout_margin="10dp"
+    android:background="@drawable/display_item"
+    >
 
     <TextView
         android:id="@+id/viewVenueName"
