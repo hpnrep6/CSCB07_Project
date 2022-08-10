@@ -57,17 +57,12 @@
                 android:layout_height="wrap_content"
                 android:text="Event Sport" />
 
-            <EditText
+            <Spinner
                 android:id="@+id/addEventSport"
                 android:layout_width="match_parent"
                 android:layout_height="41dp"
-                android:background="@drawable/text_input_box"
-                android:ems="10"
                 android:gravity="start|top"
-                android:inputType="textMultiLine"
-                android:padding="10dp"
-                android:textColor="@color/white"
-                android:textColorHint="@color/white" />
+                android:padding="10dp" />
 
             <TextView
                 android:id="@+id/textView8"
