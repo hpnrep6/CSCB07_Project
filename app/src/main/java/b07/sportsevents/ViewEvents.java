@@ -33,6 +33,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -208,32 +209,43 @@ public class ViewEvents extends AppCompatActivity{
                     venue = specified;
                 }
 
-
+                long unixTime = Instant.now().getEpochSecond();
+                long endTime ;
+                //System.out.println(String.valueOf(unixTime));
                 while (eventIterator.hasNext()) {
+
                     DataSnapshot event = (DataSnapshot) eventIterator.next();
-                    String key = event.getKey();
-                    Event readEvent = event.getValue(Event.class);
+                    endTime =event.getValue(Event.class).endTime;
+                    unixTime = Instant.now().getEpochSecond();
 
-                    switch (filter) {
-                        case ALL: {
-                            addEventToScreen(key, readEvent);
-                            break;
+                    if(unixTime<endTime)
+                    {
+                        String key = event.getKey();
+                        Event readEvent = event.getValue(Event.class);
+
+                        switch (filter) {
+                            case ALL: {
+                                addEventToScreen(key, readEvent);
+                                break;
+                            }
+
+                            case USER: {
+                                addEventToScreenFilterByUser(key, readEvent);
+                                break;
+                            }
+
+                            case SPORT: {
+                                //addEventToScreenFilterBySport(key, readEvent, (String) bundle.get("sport"));
+                                addEventToScreenFilterBySport(key, readEvent, sport);
+                                break;
+                            }
+                            case VENUE:{
+                                addEventToScreenFilterByVenue(key, readEvent, venue);
+                            }
                         }
 
-                        case USER: {
-                            addEventToScreenFilterByUser(key, readEvent);
-                            break;
-                        }
-
-                        case SPORT: {
-                            //addEventToScreenFilterBySport(key, readEvent, (String) bundle.get("sport"));
-                            addEventToScreenFilterBySport(key, readEvent, sport);
-                            break;
-                        }
-                        case VENUE:{
-                            addEventToScreenFilterByVenue(key, readEvent, venue);
-                        }
                     }
+
                 }
             }
         });

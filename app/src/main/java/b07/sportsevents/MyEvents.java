@@ -17,6 +17,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 
+import java.time.Instant;
 import java.util.Iterator;
 import java.util.Objects;
 
@@ -37,13 +38,21 @@ public class MyEvents extends ViewEvents {
 
                 Iterable<DataSnapshot> events = task.getResult().getChildren();
                 Iterator eventIterator = events.iterator();
-
+                long unixTime = Instant.now().getEpochSecond();
+                long endTime ;
                 while (eventIterator.hasNext()) {
                     DataSnapshot event = (DataSnapshot) eventIterator.next();
-                    String key = event.getKey();
-                    Event readEvent = event.getValue(Event.class);
+                    endTime =event.getValue(Event.class).endTime;
+                    unixTime = Instant.now().getEpochSecond();
+                    if(unixTime<endTime)
+                    {
+                        String key = event.getKey();
+                        Event readEvent = event.getValue(Event.class);
 
-                    addEventToScreenFilterByUser(key, readEvent);
+                        addEventToScreenFilterByUser(key, readEvent);
+                    }
+
+
                 }
             }
         });
