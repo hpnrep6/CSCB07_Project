@@ -81,6 +81,16 @@ public class  AddEvent extends AppCompatActivity implements DatePickerDialog.OnD
                 adapter.addAll(venue.sportsOfferedList);
             }
         });
+
+
+        ((Button) findViewById(R.id.addEventBackButton)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(AddEvent.this, ViewVenues.class);
+                intent.putExtra("filter", ViewVenues.Filter.ALL);
+                startActivity(intent);
+            }
+        });
     }
 
     View.OnClickListener onConfirmClick = new View.OnClickListener() {
@@ -142,6 +152,7 @@ public class  AddEvent extends AppCompatActivity implements DatePickerDialog.OnD
                 }
 
                 SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+
                 ((TextView) findViewById(R.id.addEventStartTimeDate)).setText(startTime == 0 ? "No date selected" : format.format(startTime * 1000L));
                 ((TextView) findViewById(R.id.addEventEndTimeDate)).setText(endTime == 0 ? "No date selected" : format.format(endTime * 1000L));
 
