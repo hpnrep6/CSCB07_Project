@@ -32,7 +32,7 @@ public class MyProfile extends AppCompatActivity {
             String email = user.getEmail();
         ((TextView) findViewById(R.id.userEmail)).setText(email);}
 
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        user = FirebaseAuth.getInstance().getCurrentUser();
         ((TextView) findViewById(R.id.userEmail)).setText(user.getEmail());
 
         //set name and email
