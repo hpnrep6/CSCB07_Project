@@ -30,3 +30,11 @@ Pedram & Young: 6. As an admin, I should be able to add a new venue, so that cus
 Gelila & Anabelle: 7. As an admin, I should be able to filter upcoming events by venue, so that I can make the 
                         necessary arrangements at that venue.       
                         
+
+Usage:
+* Sports Space gives access to Users and Admins to login from the same portal (Login Page). 
+* A user is given admin priviliges from the developers when an a admin level account is needed
+* Default Admin account: 
+      User: admin@account.com
+      Pass: 12345678
+  
