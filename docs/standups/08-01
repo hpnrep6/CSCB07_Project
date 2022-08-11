@@ -1,0 +1,32 @@
+
+
+Name: Pedram M.Haghighi
+
+What have you done since Sunday? Finished view venues page and added option to create events at specified venue
+What are you planning on doing today? Implementing Date picker for picking time and day for events/venues
+Any impediments or stumbling blocks? None
+
+Name: Anabelle Hsiao
+
+What have you done since Sunday? Switched to using Android Lists using Adapters and Adapter view for My activities
+What are you planning on doing today? Working on Enrol and UnEnroll for Events so that they show in My events/ w gelila
+Any impediments or stumbling blocks? Recycler view issues 
+
+Name: Young Chen
+
+What have you done since Sunday? Creating Events page and pass information from view venue to Create events page
+What are you planning on doing today? Finishing create events page, testing against firebase for correctness
+                                    , adding field to User database to store events registered in
+Any impediments or stumbling blocks? None
+
+Name: Pieter
+
+What have you done since Sunday? Nothing significant
+What are you planning on doing today? Created home page for all pages to be accessed 
+Any impediments or stumbling blocks? None
+
+Name: Gelila
+
+What have you done since Sunday? Switched to using Android Lists using Adapters and Adapter view for Upcoming events
+What are you planning on doing today? Working on Enrol and UnEnroll for Events so that they show in My events/ w Anabelle
+Any impediments or stumbling blocks? Recycler view issues 
